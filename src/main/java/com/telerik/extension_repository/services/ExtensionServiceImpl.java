@@ -2,7 +2,7 @@ package com.telerik.extension_repository.services;
 
 
 //import com.telerik.extension_repository.controllers.DownloadController;
-import com.telerik.extension_repository.controllers.FileUploadController;
+import com.telerik.extension_repository.controllers.ExtensionController;
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.Tag;
@@ -186,10 +186,12 @@ public List<ExtensionDetailsView> getAllPending() {
     @PreAuthorize("isAuthenticated()")
     public void persist(ExtensionDetailsView addExtensionModel) {
         addExtensionModel.setStatus(Status.PENDING);
-        ModelMapper modelMapper = new ModelMapper();
-        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+//        ModelMapper modelMapper = new ModelMapper();
+        //Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+        Extension extension = new Extension();
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
+        extension.setSource_repository_link(addExtensionModel.getSource_repository_link());
         GitHubData gitHubData = getGitHubData(extension);
         extension.setGitHubData(gitHubData);
         User userEntity = getCurrentUser();
@@ -197,10 +199,12 @@ public List<ExtensionDetailsView> getAllPending() {
         HashSet<Tag> tags = getTags(addExtensionModel);
         extension.setTags(tags);
 //         //MvcUriComponentsBuilder prepares the URL based on the method which is going to actually serve the file for download
-//        String downloadLink =  MvcUriComponentsBuilder.fromMethodName(DownloadController.class,
-//                "downloadFile", addExtensionModel.getMultipartFile().getOriginalFilename()).build().toString();
-       // extension.setDownloadLink(downloadLink);
-        extension.setFileName(addExtensionModel.getFile().toString());
+//        String downloadLink =  MvcUriComponentsBuilder.fromMethodName(ExtensionController.class,
+//                "serveFile", addExtensionModel.getMultipartFile().getOriginalFilename()).build().toString();
+//        extension.setDownloadLink(downloadLink);
+        //System.out.println(addExtensionModel.getFile().getName());
+        System.out.print(addExtensionModel.getFile().getOriginalFilename());
+        extension.setFileName(addExtensionModel.getFile().getOriginalFilename());
         this.extensionRepository.saveAndFlush(extension);
     }
 

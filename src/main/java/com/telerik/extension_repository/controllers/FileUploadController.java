@@ -50,6 +50,15 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
+    //    @GetMapping("/extensions/{id}")
+//    public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
+//        String filename = this.extensionService.findFilename(id);
+//        Resource file = fileStorageService.loadFile(filename);
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+//                .body(file);
+//    }
+
     @PostMapping("")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {

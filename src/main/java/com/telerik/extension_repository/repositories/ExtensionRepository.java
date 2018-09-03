@@ -60,6 +60,11 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     void update(@Param("name") String name, @Param("description") String description,
                 @Param("status") Status status, @Param("id") Long id);
 
+    @Modifying
+    @Query("UPDATE Extension " +
+            "SET numberOfDownloads = :numberOfDownloads + 1 WHERE id = :id")
+    void incrementDownloadsCount(@Param("numberOfDownloads") int numberOfDownloads, @Param("id") Long id);
+
 
 //
 //

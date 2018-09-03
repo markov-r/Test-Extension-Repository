@@ -39,26 +39,26 @@ public class ExtensionController {
     @Autowired
     private TagRepository tagRepository;
 
-////WO
-//    @GetMapping("add")
-//    public String getAddExtensionPage(Model model) {
-//        ExtensionDetailsView addExtensionModel = new ExtensionDetailsView();
-//        model.addAttribute("extension", addExtensionModel);
-//        model.addAttribute("view", "/extensions/extension-add_old");
-////        model.addAttribute("type","Add");
-//        return "base-layout";
-//    }
-//
-//    // WO
-//    @PostMapping("add")
-//    public String addExtension(@Valid @ModelAttribute ExtensionDetailsView addExtensionModel, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()){
-//            System.out.println(bindingResult.toString());
-//        }
-//        this.extensionService.persist(addExtensionModel);
-//        this.storageService.store(addExtensionModel.getMultipartFile());
-//        return "redirect:/extensions/all";
-//    }
+//WO
+    @GetMapping("add")
+    public String getAddExtensionPage(Model model) {
+        ExtensionDetailsView addExtensionModel = new ExtensionDetailsView();
+        model.addAttribute("extension", addExtensionModel);
+        model.addAttribute("view", "/extensions/extension-add_old");
+//        model.addAttribute("type","Add");
+        return "base-layout";
+    }
+
+    // WO
+    @PostMapping("add")
+    public String addExtension(@Valid @ModelAttribute("addExtensionModel") ExtensionDetailsView addExtensionModel, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()){
+            System.out.println(bindingResult.toString());
+        }
+        this.extensionService.persist(addExtensionModel);
+        this.storageService.store(addExtensionModel.getFile());
+        return "redirect:/extensions/all";
+    }
 
 
     // WO
@@ -126,41 +126,41 @@ public class ExtensionController {
         this.extensionService.delete(id);
         return "redirect:/extensions/all";
     }
-//
-//    @GetMapping("add/files")
-//    public String listUploadedFiles(Model model) throws IOException {
-//
-//        model.addAttribute("files", storageService.loadAll().map(
-//                path -> MvcUriComponentsBuilder.fromMethodName(ExtensionController.class,
-//                        "serveFile", path.getFileName().toString()).build().toString())
-//                .collect(Collectors.toList()));
-//
-//        return "/extensions/upload-file";
-//    }
-//
-//    @GetMapping("/files/{filename:.+}")
-//    @ResponseBody
-//    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-//
-//        Resource file = storageService.loadAsResource(filename);
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-//    }
-//
-//    @PostMapping("add/files")
-//    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-//                                   RedirectAttributes redirectAttributes) {
-//
-//        storageService.store(file);
-//        redirectAttributes.addFlashAttribute("message",
-//                "You successfully uploaded " + file.getOriginalFilename() + "!");
-//
-//        return "redirect:/extensions/all";
-//    }
-//
-//    @ExceptionHandler(StorageFileNotFoundException.class)
-//    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-//        return ResponseEntity.notFound().build();
-//    }
+
+    @GetMapping("add/files")
+    public String listUploadedFiles(Model model) throws IOException {
+
+        model.addAttribute("files", storageService.loadAll().map(
+                path -> MvcUriComponentsBuilder.fromMethodName(ExtensionController.class,
+                        "serveFile", path.getFileName().toString()).build().toString())
+                .collect(Collectors.toList()));
+
+        return "/extensions/upload-file";
+    }
+
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @PostMapping("add/files")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   RedirectAttributes redirectAttributes) {
+
+        storageService.store(file);
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+        return "redirect:/extensions/all";
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        return ResponseEntity.notFound().build();
+    }
 
 }

@@ -23,9 +23,11 @@ public class ExtensionDetailsView {
 
     private Set<TagView> tags;
 
-    private byte[] file;
+   // private byte[] file;
 
-    private MultipartFile multipartFile;
+    private MultipartFile file;
+
+   // private String fileName;
 
     private LoggedUser owner;
 
@@ -40,6 +42,14 @@ public class ExtensionDetailsView {
     private boolean isFeatured;
 
     private GitHubData gitHubData;
+
+//    public String getFileName() {
+//        return fileName;
+//    }
+//
+//    public void setFileName(String fileName) {
+//        this.fileName = fileName;
+//    }
 
     public Long getVersion() {
         return version;
@@ -89,21 +99,20 @@ public class ExtensionDetailsView {
         this.description = description;
     }
 
-    public MultipartFile getMultipartFile() {
-        return multipartFile;
-    }
-
-    public void setMultipartFile(MultipartFile multipartFile) {
-        this.multipartFile = multipartFile;
-    }
-
-    public byte[] getFile() {
+    public MultipartFile getFile() {
         return file;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(MultipartFile file) {
         this.file = file;
     }
+//    public byte[] getFile() {
+//        return file;
+//    }
+//
+//    public void setFile(byte[] file) {
+//        this.file = file;
+//    }
 
 
     public GitHubData getGitHubData() {

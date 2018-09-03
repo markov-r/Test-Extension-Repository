@@ -1,6 +1,8 @@
 package com.telerik.extension_repository.entities;
 
 import com.telerik.extension_repository.entities.enums.Status;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -29,14 +31,17 @@ public class Extension {
     @Column(name = "file_name")
     private String fileName;
 
+
+    //private MultipartFile file;
+
     private boolean isFeatured;
 
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    @Lob
-    @Column(nullable = false, columnDefinition = "BLOB")
-    private byte[] file;
+//    @Lob
+//    @Column(nullable = false, columnDefinition = "BLOB")
+//    private byte[] file;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -123,13 +128,13 @@ public class Extension {
         this.owner = owner;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
+//    public byte[] getFile() {
+//        return file;
+//    }
+//
+//    public void setFile(byte[] file) {
+//        this.file = file;
+//    }
 
     public Status getStatus() {
         return status;

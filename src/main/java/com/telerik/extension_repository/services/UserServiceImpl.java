@@ -51,13 +51,12 @@ public class UserServiceImpl implements UserService {
         user.setAccountNonLocked(true);
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
-        user.setAuthorities(this.getAuthorities("ROLE_USER"));
 
-//        if(this.userRepository.findAll().isEmpty()) {
-//            user.setAuthorities(this.getAuthorities("ROLE_ADMIN"));
-//        } else {
-
-//        }
+        if(this.userRepository.findAll().isEmpty()) {
+            user.setAuthorities(this.getAuthorities("ROLE_ADMIN"));
+        } else {
+            user.setAuthorities(this.getAuthorities("ROLE_USER"));
+        }
 
 //        AuthorityModel userRole = this.roleService.findByName("ROLE_USER");
 //        Authority role = this.modelMapper.map(userRole, Authority.class);
