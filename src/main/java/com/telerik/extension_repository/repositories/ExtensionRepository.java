@@ -41,7 +41,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SELECT e FROM Extension AS e " +
                     "JOIN GitHubData g " +
                     "ON e.id = g.id " +
-                    "ORDER BY g.lastCommit")
+                    "ORDER BY g.lastCommit DESC")
     List<Extension> getAllSortedByDate();
 
 
