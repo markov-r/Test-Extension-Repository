@@ -79,4 +79,8 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Query(value = "UPDATE Extension e " +
             "SET e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED WHERE id = :id")
     void approveExtension(@Param("id") long id);
+
+    @Query(value = "SELECT e FROM Extension e " +
+                   "ORDER BY e.numberOfDownloads DESC")
+    List<Extension> getAllSortedByPopularity();
 }

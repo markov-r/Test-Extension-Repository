@@ -187,7 +187,7 @@ public List<ExtensionDetailsView> getAllPending() {
     public void persist(ExtensionDetailsView addExtensionModel) {
         addExtensionModel.setStatus(Status.PENDING);
 //        ModelMapper modelMapper = new ModelMapper();
-        //Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+//        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
         Extension extension = new Extension();
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
@@ -221,6 +221,17 @@ public List<ExtensionDetailsView> getAllPending() {
 //    public void incrementDownloadsCount(ExtensionDetailsView extensionDetailsView) {
         ExtensionDetailsView extensionDetailsView = getByIdToEdit(id);
         this.extensionRepository.incrementDownloadsCount(extensionDetailsView.getNumberOfDownloads() + 1, extensionDetailsView.getId());
+    }
+
+    @Override
+    public List<ExtensionDetailsView> getAllSortedByPopularity() {
+        List<Extension> extensions = this.extensionRepository.getAllSortedByPopularity();
+        List<ExtensionDetailsView> extensionDetailsViewList = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDetailsView extensionDetailsView = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            extensionDetailsViewList.add(extensionDetailsView);
+        }
+        return extensionDetailsViewList;
     }
 
     private User getCurrentUser() {

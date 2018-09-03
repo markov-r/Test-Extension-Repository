@@ -29,6 +29,8 @@ public interface ExtensionService {
 //    void incrementDownloadsCount(ExtensionDetailsView extensionDetailsView);
     void incrementDownloadsCount(Long id);
 
+    List<ExtensionDetailsView> getAllSortedByPopularity();
+
 
 //    Blob downloadFile(Long id) throws IOException, SQLException;
 //    Extension downloadFileAsExtension(Long id);

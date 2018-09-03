@@ -71,15 +71,6 @@ public class ExtensionController {
         return "base-layout";
     }
 
-    @GetMapping("featured")
-    public String getFeaturedExtensionsPage(Model model) {
-        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllFeatured();
-        model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view", "/extensions/extensions-table");
-        return "base-layout";
-    }
-
-
     @GetMapping("new")
     public String getNewestExtensionsPage(Model model) {
         List<ExtensionDetailsView> extensionViews = this.extensionService.getAllSortedByDate();
@@ -87,6 +78,23 @@ public class ExtensionController {
         model.addAttribute("view", "/extensions/extensions-table-list-new");
         return "base-layout";
     }
+
+    @GetMapping("featured")
+    public String getFeaturedExtensions(Model model) {
+        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllFeatured();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
+
+    @GetMapping("popular")
+    public String getPopularExtensions(Model model) {
+        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllSortedByPopularity();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
+
 
 // get Extension details page WO
 //    @GetMapping("{id}")
