@@ -14,7 +14,7 @@ public interface ExtensionService {
     ExtensionDetailsView getByIdToEdit(Long id);
     ExtensionStatusView getById(Long id);
     void update(ExtensionStatusView extensionModel);
-    void approve(ExtensionStatusView addExtensionModel);
+    void approve(Long id);
     List<ExtensionModelView> getAll();
     List<Extension> getAllExtensions();
     ExtensionDetailsView getByIdToDetailsPage(Long id);

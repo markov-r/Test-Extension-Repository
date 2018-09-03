@@ -73,7 +73,7 @@ public class AdminController {
     @GetMapping("pending/approve/{id}")
     public String getApproveExtensionPage(Model model,@PathVariable Long id){
         ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
-        this.extensionService.approve(extensionStatusView);
+        this.extensionService.approve(id);
         model.addAttribute("view","/admin/admin-pending-extensions");
         return "base-layout";
     }
@@ -82,7 +82,7 @@ public class AdminController {
     @PostMapping("pending/approve/{id}")
     public String approveExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
         editPartModel.setId(id);
-        this.extensionService.approve(editPartModel);
+        this.extensionService.approve(id);
         return "redirect:/admin/pending";
     }
 

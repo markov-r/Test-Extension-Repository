@@ -28,8 +28,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void approveExtension(ExtensionStatusView extensionModel) {
-        extensionService.approve(extensionModel);
+    public void approveExtension(Long id) {
+        extensionService.approve(id);
     }
 
     @Override

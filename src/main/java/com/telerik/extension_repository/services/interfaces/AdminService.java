@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public interface AdminService{
 
     @PreAuthorize("hasRole('ADMIN')")
-    void approveExtension(ExtensionStatusView extensionModel);
+    void approveExtension(Long id);
 
     @PreAuthorize("hasRole('ADMIN')")
     void deleteExtension(Long id);

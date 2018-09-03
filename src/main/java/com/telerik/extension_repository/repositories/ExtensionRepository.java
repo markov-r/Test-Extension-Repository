@@ -75,8 +75,8 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.id = :id")
     String findByFilename(@Param("id") Long id);
 
-    @Query(value = "UPDATE Extension " +
-            "SET number_of_downloads = :number_of_downloads WHERE id = :id")
-    void incrementDownloadsCount(@Param("number_of_downloads") int number_of_downloads, @Param("id") long id);
-
+    @Modifying
+    @Query(value = "UPDATE Extension e " +
+            "SET e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED WHERE id = :id")
+    void approveExtension(@Param("id") long id);
 }

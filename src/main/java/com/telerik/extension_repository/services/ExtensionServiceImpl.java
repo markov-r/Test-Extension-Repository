@@ -243,11 +243,12 @@ public List<ExtensionDetailsView> getAllPending() {
     }
 
     @Override
-    public void approve(ExtensionStatusView addExtensionModel) {
-        addExtensionModel.setStatus(Status.APPROVED);
-        ModelMapper modelMapper = new ModelMapper();
-        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
-        this.extensionRepository.saveAndFlush(extension);
+    public void approve(Long id) {
+//        addExtensionModel.setStatus(Status.APPROVED);
+//        ModelMapper modelMapper = new ModelMapper();
+//        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+//        this.extensionRepository.saveAndFlush(extension);
+        this.extensionRepository.approveExtension(id);
     }
     @Override
     public ExtensionDetailsView getByIdToEdit(Long id) {
