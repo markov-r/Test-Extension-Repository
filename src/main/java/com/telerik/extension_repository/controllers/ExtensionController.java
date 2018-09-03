@@ -61,6 +61,7 @@ public class ExtensionController {
     }
 
 
+
     // WO
     @GetMapping("all")
     public String getAllExtensionPage(Model model) {
@@ -138,10 +139,10 @@ public class ExtensionController {
         return "/extensions/upload-file";
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/download/{id}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
+    public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
+        String filename = this.extensionService.findFilename(id);
         Resource file = storageService.loadAsResource(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
