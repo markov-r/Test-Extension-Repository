@@ -88,7 +88,7 @@ public class ExtensionController {
         return "base-layout";
     }
 
-//    // get Extension details page WO
+// get Extension details page WO
 //    @GetMapping("{id}")
 //    public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
 //        ExtensionDetailsView extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
@@ -97,7 +97,7 @@ public class ExtensionController {
 //        return "base-layout";
 //    }
 
-    // get Extension details page WO
+// get Extension details page WO
     @GetMapping("{id}")
     public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
         ExtensionDetailsView extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
@@ -108,7 +108,7 @@ public class ExtensionController {
 
     @GetMapping("edit/{id}")
     public String getEditExtensionPage(Model model, @PathVariable Long id) {
-        EditExtensionModel extensionModel = this.extensionService.getByIdToEdit(id);
+        ExtensionDetailsView extensionModel = this.extensionService.getByIdToEdit(id);
         model.addAttribute("view", "/extensions/extension-edit");
         model.addAttribute("type", "Edit");
         model.addAttribute("extension", extensionModel);
@@ -142,8 +142,11 @@ public class ExtensionController {
     @GetMapping("/download/{id}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
+
         String filename = this.extensionService.findFilename(id);
         Resource file = storageService.loadAsResource(filename);
+//        extensionService.incrementDownloadsCount(extensionDetailsView);
+        extensionService.incrementDownloadsCount(id);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }

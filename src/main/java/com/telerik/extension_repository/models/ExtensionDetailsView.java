@@ -17,7 +17,7 @@ public class ExtensionDetailsView {
 
     private String description;
 
-    private Long numberOfDownloads;
+    private int numberOfDownloads;
 
     private String tagString;
 
@@ -59,11 +59,11 @@ public class ExtensionDetailsView {
         this.version = version;
     }
 
-    public Long getNumberOfDownloads() {
+    public int getNumberOfDownloads() {
         return numberOfDownloads;
     }
 
-    public void setNumberOfDownloads(Long numberOfDownloads) {
+    public void setNumberOfDownloads(int numberOfDownloads) {
         this.numberOfDownloads = numberOfDownloads;
     }
 

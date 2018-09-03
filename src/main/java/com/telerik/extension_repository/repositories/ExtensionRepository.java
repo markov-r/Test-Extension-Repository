@@ -62,14 +62,9 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     @Modifying
     @Query("UPDATE Extension " +
-            "SET numberOfDownloads = :numberOfDownloads + 1 WHERE id = :id")
+            "SET numberOfDownloads = :numberOfDownloads WHERE id = :id")
     void incrementDownloadsCount(@Param("numberOfDownloads") int numberOfDownloads, @Param("id") Long id);
 
-
-//
-//
-//
-//
 //    @Query(value =
 //            "SELECT e.file FROM Extension AS e " +
 //                    "WHERE e.id = :id")
@@ -79,5 +74,9 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SELECT e.fileName FROM Extension AS e " +
                     "WHERE e.id = :id")
     String findByFilename(@Param("id") Long id);
+
+    @Query(value = "UPDATE Extension " +
+            "SET number_of_downloads = :number_of_downloads WHERE id = :id")
+    void incrementDownloadsCount(@Param("number_of_downloads") int number_of_downloads, @Param("id") long id);
 
 }

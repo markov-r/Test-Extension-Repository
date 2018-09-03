@@ -11,7 +11,7 @@ import java.util.List;
 public interface ExtensionService {
 
     void persist(ExtensionDetailsView addExtensionModel);
-    EditExtensionModel getByIdToEdit(Long id);
+    ExtensionDetailsView getByIdToEdit(Long id);
     ExtensionStatusView getById(Long id);
     void update(ExtensionStatusView extensionModel);
     void approve(ExtensionStatusView addExtensionModel);
@@ -26,6 +26,10 @@ public interface ExtensionService {
     List<ExtensionDetailsView> getAllSortedByDate();
     List<ExtensionDetailsView> getAllExt();
     String findFilename(Long id);
+//    void incrementDownloadsCount(ExtensionDetailsView extensionDetailsView);
+    void incrementDownloadsCount(Long id);
+
+
 //    Blob downloadFile(Long id) throws IOException, SQLException;
 //    Extension downloadFileAsExtension(Long id);
 

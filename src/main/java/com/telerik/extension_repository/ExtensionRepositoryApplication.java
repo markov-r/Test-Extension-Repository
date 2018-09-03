@@ -17,7 +17,7 @@ public class ExtensionRepositoryApplication {
 
         SpringApplication.run(ExtensionRepositoryApplication.class, args);
        // GithubApiService ghs = new GithubApiServiceImpl();
-        //ghs.updateGithubDataAll();
+        // ghs.updateGithubDataAll();
 
 
 //        GitHub gitHub = GitHub.connectUsingOAuth("5c1a77eec3047ae6b562a55a7c0e4d4735cb38ef");

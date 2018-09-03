@@ -216,6 +216,13 @@ public List<ExtensionDetailsView> getAllPending() {
         return this.extensionRepository.findByFilename(id);
     }
 
+    @Override
+    public void incrementDownloadsCount(Long id) {
+//    public void incrementDownloadsCount(ExtensionDetailsView extensionDetailsView) {
+        ExtensionDetailsView extensionDetailsView = getByIdToEdit(id);
+        this.extensionRepository.incrementDownloadsCount(extensionDetailsView.getNumberOfDownloads() + 1, extensionDetailsView.getId());
+    }
+
     private User getCurrentUser() {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
@@ -243,12 +250,12 @@ public List<ExtensionDetailsView> getAllPending() {
         this.extensionRepository.saveAndFlush(extension);
     }
     @Override
-    public EditExtensionModel getByIdToEdit(Long id) {
+    public ExtensionDetailsView getByIdToEdit(Long id) {
         Extension extension = this.extensionRepository.getOne(id);
         ModelMapper modelMapper = new ModelMapper();
-        EditExtensionModel extensionModel = null;
+        ExtensionDetailsView extensionModel = null;
         if (extension != null) {
-            extensionModel = modelMapper.map(extension, EditExtensionModel.class);
+            extensionModel = modelMapper.map(extension, ExtensionDetailsView.class);
 
         }
         return extensionModel;
