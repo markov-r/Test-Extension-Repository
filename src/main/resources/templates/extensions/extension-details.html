@@ -1,0 +1,28 @@
+
+<div class="container">
+    <div class="card-group">
+        <div class="card" th:object="${extension}">
+            <div class="card-block">
+                <h4 class="card-title" th:text="*{name}"></h4>
+                <ul class="project-info">
+                    <li><h4 class="card-title" th:text="*{description}"></h4></li>
+                    <!--<li><h4 class="card-title" th:text="*{owner}"></h4></li>-->
+                    <li><h4 class="card-title" th:text="*{version}"></h4></li>
+                    <li><h4 class="card-title" th:text="*{number_of_downloads}"></h4></li>
+                    <li><h4 class="card-title" th:text="*{source_repository_link}"></h4></li>
+                    <li><h4 class="card-title" th:text="*{download_link}"></h4></li>
+                    <li><h4 class="card-title" th:text="*{number_of_open_issues}"></h4></li>
+                    <li><h4 class="card-title" th:text="*{number_of_pull_request}"></h4></li>
+                    <li><h4 class="card-title" th:text="*{last_commit_date}"></h4></li>
+                    <div th:if ="${tags != null}">
+                    <tr th:each="tag : ${tags}">
+                        <td th:text="${tag.name}"></td>
+                    </tr>
+                    </div>
+                </ul>
+                <!--<p class="card-text" th:text="|Bought cars: *{#sets.size(sales)}|"></p>-->
+                <!--<p class="card-text" th:text="|Total spent money:  *{#numbers.formatDecimal(totalSum,0,2)}|"></p>-->
+            </div>
+        </div>
+    </div>
+</div>

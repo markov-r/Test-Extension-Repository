@@ -1,0 +1,32 @@
+<main>
+    <div class="container body-content">
+        <h1>Search by Tag - <th:block th:text="${tag.name}"></th:block></h1>
+        <div class="row">
+            <th:block th:each="extension : ${tag.extensions}">
+                <div class="col-md-6">
+                    <article>
+                        <header>
+                            <h2 th:text="${extension.name}"></h2>
+                        </header>
+
+                        <p th:text="${extension.description}"></p>
+
+                        <small class="author" th:text="${extension.owner.username}"></small>
+
+                        <p>
+                            <a class="btn btn-default btn-xs" th:each="tag:${extension.tags}" th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
+                        </p>
+
+
+                        <footer>
+                            <div class="pull-right">
+                                <a class="btn btn-default btn-xs"
+                                   th:href="@{/extensions/{id}(id=${extension.id})}">Read more &raquo;</a>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</main>
