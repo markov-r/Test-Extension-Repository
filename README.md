@@ -12,7 +12,7 @@ When a new extension is created, it is in pending state and need to be manually 
 The extensions are also assigned different tags, like e.g. "Java", "Intellij-Idea", "Plugin", etc.
 Clicking on one tag leads you to a list of all extensions that share the respective tag.
 
-Extension fields number of open issues, number of pull requests and last commit date are automatically fetched from GitHub *. 
+Extension fields number of open issues, number of pull requests and last commit date are fetched from GitHub*. 
 The admins can disable or delete users and approve or delete all extensions, not only those created (owned) by them.
 
 * Special thanks to Kohsuke Kawaguchi-san for his nice GitHub API.
