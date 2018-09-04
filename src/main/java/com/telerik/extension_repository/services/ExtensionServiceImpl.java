@@ -185,13 +185,14 @@ public List<ExtensionDetailsView> getAllPending() {
     @Override
     @PreAuthorize("isAuthenticated()")
     public void persist(ExtensionDetailsView addExtensionModel) {
-        addExtensionModel.setStatus(Status.PENDING);
 //        ModelMapper modelMapper = new ModelMapper();
 //        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
         Extension extension = new Extension();
+        extension.setStatus(Status.PENDING);
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
         extension.setSource_repository_link(addExtensionModel.getSource_repository_link());
+
         GitHubData gitHubData = getGitHubData(extension);
         extension.setGitHubData(gitHubData);
         User userEntity = getCurrentUser();
