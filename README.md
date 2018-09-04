@@ -13,6 +13,6 @@ The extensions are also assigned different tags, like e.g. "Java", "Intellij-Ide
 Clicking on one tag leads you to a list of all extensions that share the respective tag.
 
 Extension fields number of open issues, number of pull requests and last commit date are automatically fetched from GitHub *. 
-The admins can disable or delete users and approve or delete extensions.
+The admins can disable or delete users and approve or delete all extensions, not only those created (owned) by them.
 
 * Special thanks to Kohsuke Kawaguchi-san for his nice GitHub API.
