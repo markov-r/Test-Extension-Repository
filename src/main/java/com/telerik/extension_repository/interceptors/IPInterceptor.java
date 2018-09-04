@@ -15,7 +15,7 @@ public class IPInterceptor extends HandlerInterceptorAdapter {
 
         String ipAddress  = httpServletRequest.getRemoteAddr();
 
-        modelAndView.addObject("ip",ipAddress);
+        modelAndView.addObject("ip", ipAddress);
     }
 
 }

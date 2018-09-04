@@ -1,6 +1,6 @@
 package com.telerik.extension_repository.controllers;
 
-import com.telerik.extension_repository.models.ExtensionDetailsView;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +21,12 @@ public class RestHomeController {
     }
 
     @GetMapping("/")
-    public List<ExtensionDetailsView> getAllExtensions(){
+    public List<ExtensionDto> getAllExtensions(){
         return this.extensionService.getAllJsons();
     }
 
     @GetMapping("/pending/")
-    List<ExtensionDetailsView> findByName() {
+    List<ExtensionDto> findByName() {
         return extensionService.getAllPending();
     }
 

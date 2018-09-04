@@ -14,8 +14,8 @@ public class VisitedInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
            this.times++;
-           request.setAttribute("times",times );
-           modelAndView.addObject("visited",times );
+           request.setAttribute("times", times );
+           modelAndView.addObject("visited", times );
 
     }
 }

@@ -1,7 +1,7 @@
 package com.telerik.extension_repository.services;
 
 import com.telerik.extension_repository.entities.GitHubData;
-import com.telerik.extension_repository.models.ExtensionDetailsView;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.repositories.GitHubRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
@@ -39,18 +39,18 @@ public class GithubApiServiceImpl implements GithubApiService {
     }
 
     public void updateGithubDataAll() {
-        List<ExtensionDetailsView> extensionDetailsViewList = extensionService.getAllExt();
-        for (ExtensionDetailsView  extensionDetailsView : extensionDetailsViewList) {
-            String fullUrl = extensionDetailsView.getSource_repository_link();
+        List<ExtensionDto> extensionDtoList = extensionService.getAllExt();
+        for (ExtensionDto extensionDto : extensionDtoList) {
+            String fullUrl = extensionDto.getSource_repository_link();
             GitHubData gitHubData = null;
             try {
                 gitHubData = updateGithubData(fullUrl);
-                extensionDetailsView.setGitHubData(gitHubData);
+                extensionDto.setGitHubData(gitHubData);
                 String pullsCount = gitHubData.getPullsCount();
                 String issuesCount = gitHubData.getIssuesCount();
                 Date lastCommitDate = gitHubData.getLastCommit();
                 String lastCommit = lastCommitDate.toString();
-                Long id = extensionDetailsView.getId();
+                Long id = extensionDto.getId();
                 this.gitHubRepository.update(pullsCount, issuesCount, lastCommit, id);
 
             } catch (Exception e) {

@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.Set;
 
-public class ExtensionDetailsView {
+public class ExtensionDto {
 
     private Long id;
 

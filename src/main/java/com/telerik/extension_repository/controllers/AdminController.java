@@ -2,7 +2,7 @@ package com.telerik.extension_repository.controllers;
 
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
-import com.telerik.extension_repository.models.ExtensionDetailsView;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.services.interfaces.AdminService;
@@ -39,7 +39,7 @@ public class AdminController {
 
     @GetMapping("pending")
     public String getPendingExtensions(Model model){
-        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllPending();
+        List<ExtensionDto> extensionViews = this.extensionService.getAllPending();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/admin/admin-pending-extensions");
         return "base-layout";

@@ -1,8 +1,8 @@
 <div class="container">
     <form>
-        <a href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>
-        <a href="/extensions/new" class="btn btn-warning m-1"> New</a>
-        <a href="/extensions/popular" class="btn btn-warning m-1"> Popular</a>
+        <a sec:authorize="isAnonymous()" href="/public/featured" class="btn btn-warning m-1"> Featured</a>
+        <a sec:authorize="isAnonymous()" href="/public/new" class="btn btn-warning m-1"> New</a>
+        <a sec:authorize="isAnonymous()" href="/public/popular" class="btn btn-warning m-1"> Popular</a>
     </form>
 
     <table class="table table-striped table-hover">
@@ -18,19 +18,19 @@
             <th scope="row" th:text="${extension.name}"></th>
             <td th:text="${extension.version}"></td>
             <td>
-                <a th:href="@{/extensions/{id}(id = ${extension.id})}">Details</a>
+                <a sec:authorize="isAnonymous()" th:href="@{/public/{id}(id = ${extension.id})}">Details</a>
             </td>
             <td>
                 <!--<a th:href="${file}" th:text="${file}" />-->
 
-                <a th:href="@{/extensions/download/{id}(id=${extension.id})}">Download</a>
-                <div>
-                    <ul>
-                        <li th:each="file : ${files}">
-                            <a th:href="${file}" th:text="${file}" />
-                        </li>
-                    </ul>
-                </div>
+                <a sec:authorize="isAnonymous()" th:href="@{/public/download/{id}(id=${extension.id})}">Download</a>
+                <!--<div>-->
+                    <!--<ul>-->
+                        <!--<li th:each="file : ${files}">-->
+                            <!--<a th:href="${file}" th:text="${file}" />-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
             </td>
             <td>
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
@@ -42,6 +42,6 @@
         </tbody>
     </table>
 
-    <a href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
+    <a sec:authorize="hasAnyRole('ADMIN','USER')" href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
 </div>
 

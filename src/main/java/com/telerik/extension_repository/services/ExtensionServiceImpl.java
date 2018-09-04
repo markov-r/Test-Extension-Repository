@@ -2,15 +2,12 @@ package com.telerik.extension_repository.services;
 
 
 //import com.telerik.extension_repository.controllers.DownloadController;
-import com.telerik.extension_repository.controllers.ExtensionController;
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.Tag;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
-import com.telerik.extension_repository.models.ExtensionDetailsView;
-import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
 import com.telerik.extension_repository.repositories.TagRepository;
@@ -25,7 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.*;
 
@@ -69,33 +65,33 @@ public class ExtensionServiceImpl implements ExtensionService {
 //    }
 //
 @Override
-public List<ExtensionDetailsView> getAllPending() {
+public List<ExtensionDto> getAllPending() {
     List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.PENDING);
-    List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
+    List<ExtensionDto> extensionModelViews = new ArrayList<>();
     for (Extension extension : extensions) {
-        ExtensionDetailsView extensionModelView = this.modelMapper.map(extension, ExtensionDetailsView.class);
+        ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
         extensionModelViews.add(extensionModelView);
     }
     return extensionModelViews;
 }
 
     @Override
-    public List<ExtensionDetailsView> getAllFeatured() {
+    public List<ExtensionDto> getAllFeatured() {
         List<Extension> extensions = this.extensionRepository.findAllFeatured(true);
-        List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
+        List<ExtensionDto> extensionModelViews = new ArrayList<>();
         for (Extension extension : extensions) {
-            ExtensionDetailsView extensionModelView = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
             extensionModelViews.add(extensionModelView);
         }
         return extensionModelViews;
     }
 
     @Override
-    public List<ExtensionDetailsView> getAllSortedByDate() {
+    public List<ExtensionDto> getAllSortedByDate() {
         List<Extension> extensions = this.extensionRepository.getAllSortedByDate();
-        List<ExtensionDetailsView> modelViews = new ArrayList<>();
+        List<ExtensionDto> modelViews = new ArrayList<>();
         for (Extension extension : extensions) {
-            ExtensionDetailsView model = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            ExtensionDto model = this.modelMapper.map(extension, ExtensionDto.class);
             modelViews.add(model);
         }
         return modelViews;
@@ -114,23 +110,23 @@ public List<ExtensionDetailsView> getAllPending() {
     }
 
     @Override
-    public List<ExtensionDetailsView> getAllExt() {
+    public List<ExtensionDto> getAllExt() {
         List<Extension> extensions = this.extensionRepository.findAll();
-        List<ExtensionDetailsView> extensionDetailsViews = new ArrayList<>();
+        List<ExtensionDto> extensionDtos = new ArrayList<>();
         for (Extension extension : extensions) {
-            ExtensionDetailsView model = this.modelMapper.map(extension, ExtensionDetailsView.class);
-            extensionDetailsViews.add(model);
+            ExtensionDto model = this.modelMapper.map(extension, ExtensionDto.class);
+            extensionDtos.add(model);
         }
-        return extensionDetailsViews;
+        return extensionDtos;
     }
 
     @Override
-    public ExtensionDetailsView getByIdToDetailsPage(Long id) {
+    public ExtensionDto getByIdToDetailsPage(Long id) {
         Extension extension = this.extensionRepository.getOne(id);
         ModelMapper modelMapper = new ModelMapper();
-        ExtensionDetailsView extensionModel = null;
+        ExtensionDto extensionModel = null;
         if (extension != null) {
-            extensionModel = modelMapper.map(extension, ExtensionDetailsView.class);
+            extensionModel = modelMapper.map(extension, ExtensionDto.class);
         }
         return extensionModel;
     }
@@ -166,11 +162,11 @@ public List<ExtensionDetailsView> getAllPending() {
     }
 
     @Override
-    public List<ExtensionDetailsView> getAllJsons() {
+    public List<ExtensionDto> getAllJsons() {
         List<Extension> extensions = this.extensionRepository.findAll();
-        List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
+        List<ExtensionDto> extensionModelViews = new ArrayList<>();
         for (Extension extension : extensions) {
-            ExtensionDetailsView extensionModelView = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
             extensionModelViews.add(extensionModelView);
         }
         return extensionModelViews;
@@ -184,7 +180,7 @@ public List<ExtensionDetailsView> getAllPending() {
 
     @Override
     @PreAuthorize("isAuthenticated()")
-    public void persist(ExtensionDetailsView addExtensionModel) {
+    public void persist(ExtensionDto addExtensionModel) {
 //        ModelMapper modelMapper = new ModelMapper();
 //        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
         Extension extension = new Extension();
@@ -209,7 +205,7 @@ public List<ExtensionDetailsView> getAllPending() {
         this.extensionRepository.saveAndFlush(extension);
     }
 
-    private HashSet<Tag> getTags(ExtensionDetailsView addExtensionModel) {
+    private HashSet<Tag> getTags(ExtensionDto addExtensionModel) {
         return this.findTagsFromString(addExtensionModel.getTagString());
     }
 
@@ -219,20 +215,20 @@ public List<ExtensionDetailsView> getAllPending() {
 
     @Override
     public void incrementDownloadsCount(Long id) {
-//    public void incrementDownloadsCount(ExtensionDetailsView extensionDetailsView) {
-        ExtensionDetailsView extensionDetailsView = getByIdToEdit(id);
-        this.extensionRepository.incrementDownloadsCount(extensionDetailsView.getNumberOfDownloads() + 1, extensionDetailsView.getId());
+//    public void incrementDownloadsCount(ExtensionDto extensionDto) {
+        ExtensionDto extensionDto = getByIdToEdit(id);
+        this.extensionRepository.incrementDownloadsCount(extensionDto.getNumberOfDownloads() + 1, extensionDto.getId());
     }
 
     @Override
-    public List<ExtensionDetailsView> getAllSortedByPopularity() {
+    public List<ExtensionDto> getAllSortedByPopularity() {
         List<Extension> extensions = this.extensionRepository.getAllSortedByPopularity();
-        List<ExtensionDetailsView> extensionDetailsViewList = new ArrayList<>();
+        List<ExtensionDto> extensionDtoList = new ArrayList<>();
         for (Extension extension : extensions) {
-            ExtensionDetailsView extensionDetailsView = this.modelMapper.map(extension, ExtensionDetailsView.class);
-            extensionDetailsViewList.add(extensionDetailsView);
+            ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);
+            extensionDtoList.add(extensionDto);
         }
-        return extensionDetailsViewList;
+        return extensionDtoList;
     }
 
     private User getCurrentUser() {
@@ -263,12 +259,12 @@ public List<ExtensionDetailsView> getAllPending() {
         this.extensionRepository.approveExtension(id);
     }
     @Override
-    public ExtensionDetailsView getByIdToEdit(Long id) {
+    public ExtensionDto getByIdToEdit(Long id) {
         Extension extension = this.extensionRepository.getOne(id);
         ModelMapper modelMapper = new ModelMapper();
-        ExtensionDetailsView extensionModel = null;
+        ExtensionDto extensionModel = null;
         if (extension != null) {
-            extensionModel = modelMapper.map(extension, ExtensionDetailsView.class);
+            extensionModel = modelMapper.map(extension, ExtensionDto.class);
 
         }
         return extensionModel;

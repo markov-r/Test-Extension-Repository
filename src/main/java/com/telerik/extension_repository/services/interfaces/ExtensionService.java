@@ -1,35 +1,34 @@
 package com.telerik.extension_repository.services.interfaces;
 
 import com.telerik.extension_repository.entities.Extension;
-import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
-import com.telerik.extension_repository.models.ExtensionDetailsView;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 
 import java.util.List;
 
 public interface ExtensionService {
 
-    void persist(ExtensionDetailsView addExtensionModel);
-    ExtensionDetailsView getByIdToEdit(Long id);
+    void persist(ExtensionDto addExtensionModel);
+    ExtensionDto getByIdToEdit(Long id);
     ExtensionStatusView getById(Long id);
     void update(ExtensionStatusView extensionModel);
     void approve(Long id);
     List<ExtensionModelView> getAll();
     List<Extension> getAllExtensions();
-    ExtensionDetailsView getByIdToDetailsPage(Long id);
+    ExtensionDto getByIdToDetailsPage(Long id);
     List<ExtensionModelView> getAllByName(String name);
-    List<ExtensionDetailsView> getAllJsons();
+    List<ExtensionDto> getAllJsons();
     void delete(Long id);
-    List<ExtensionDetailsView> getAllPending();
-    List<ExtensionDetailsView> getAllFeatured();
-    List<ExtensionDetailsView> getAllSortedByDate();
-    List<ExtensionDetailsView> getAllExt();
+    List<ExtensionDto> getAllPending();
+    List<ExtensionDto> getAllFeatured();
+    List<ExtensionDto> getAllSortedByDate();
+    List<ExtensionDto> getAllExt();
     String findFilename(Long id);
-//    void incrementDownloadsCount(ExtensionDetailsView extensionDetailsView);
+//    void incrementDownloadsCount(ExtensionDto extensionDetailsView);
     void incrementDownloadsCount(Long id);
 
-    List<ExtensionDetailsView> getAllSortedByPopularity();
+    List<ExtensionDto> getAllSortedByPopularity();
 
 
 //    Blob downloadFile(Long id) throws IOException, SQLException;
