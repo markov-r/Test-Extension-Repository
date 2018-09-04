@@ -10,4 +10,4 @@ Popular extensions are those that have been downloaded the most.
 
 There is a registration form for new users and of course a login form too.
 When logged in the user can add a new extension, list and browse all extensions; they can be downloaded too.
-The admins can disable users and approve or delete extensions.
+The admins can disable or delete users and approve or delete extensions.
