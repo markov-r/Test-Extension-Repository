@@ -12,5 +12,7 @@ There is a registration form for new users and of course a login form too.
 When logged in the user can add a new extension, list and browse all extensions; they can be downloaded too.
 The extensions are also assigned different tags, like e.g. "Java", "Intellij-Idea", "Plugin", etc.
 Click on one tag leads you to a list of all extensions that share the tag in question.
-The fields number of open issues, number of pull requests and last commit date are fetched from GitHub using the source repository link field using Kohsuke's* GitHub API that uses GitHub's own API. 
+The fields number of open issues, number of pull requests and last commit date are automatically fetched from GitHub *. 
 The admins can disable or delete users and approve or delete extensions.
+
+* - Special thanks to Kohsuke Kawaguchi-san for his nice GitHub API.
