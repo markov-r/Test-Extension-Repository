@@ -15,4 +15,4 @@ Click on one tag leads you to a list of all extensions that share the tag in que
 The fields number of open issues, number of pull requests and last commit date are automatically fetched from GitHub *. 
 The admins can disable or delete users and approve or delete extensions.
 
-* - Special thanks to Kohsuke Kawaguchi-san for his nice GitHub API.
+- Special thanks to Kohsuke Kawaguchi-san for his nice GitHub API.
