@@ -65,11 +65,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SET numberOfDownloads = :numberOfDownloads WHERE id = :id")
     void incrementDownloadsCount(@Param("numberOfDownloads") int numberOfDownloads, @Param("id") Long id);
 
-//    @Query(value =
-//            "SELECT e.file FROM Extension AS e " +
-//                    "WHERE e.id = :id")
-//    Blob downloadFile(@Param("id") Long id);
-
     @Query(value =
             "SELECT e.fileName FROM Extension AS e " +
                     "WHERE e.id = :id")
@@ -83,4 +78,15 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Query(value = "SELECT e FROM Extension e " +
                    "ORDER BY e.numberOfDownloads DESC")
     List<Extension> getAllSortedByPopularity();
+
+    @Modifying
+    @Query(value = "UPDATE Extension e " +
+            "SET e.isFeatured = true WHERE id = :id")
+    void setFeatured(@Param("id") long id);
+
+    @Modifying
+    @Query(value = "UPDATE Extension e " +
+            "SET e.isFeatured = false WHERE id = :id")
+    void removeFeatured(@Param("id") Long id);
 }
+

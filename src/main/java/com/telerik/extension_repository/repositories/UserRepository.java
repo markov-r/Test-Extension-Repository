@@ -28,6 +28,12 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findById(Long id);
 
+    @Modifying
+    @Query(value = "UPDATE User " +
+            "SET name = :name, email = :email, password =:password WHERE id = :id")
+    void update(@Param("name") String name, @Param("email") String description,
+                @Param("password") Status status, @Param("id") Long id);
+
     // Admin
     @Query(value = "SELECT u FROM User AS u")
     List<User> findAll();
@@ -39,7 +45,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Modifying
     @Query(value = "UPDATE User " +
             "SET isEnabled = false WHERE id =:id")
-    void update(@Param("id") Long id);
+    void disableUser(@Param("id") Long id);
+
 
     @Query(value = "SELECT u.extensions FROM User AS u")
     Set<Extension> findAllByExtensionsAndId();

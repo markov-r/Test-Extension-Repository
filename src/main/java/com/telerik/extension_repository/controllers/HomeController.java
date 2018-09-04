@@ -35,7 +35,7 @@ public class HomeController {
     // WO
     @GetMapping("/")
     public String getAllExtensionPage(Model model) {
-        List<ExtensionModelView> extensionViews = this.extensionService.getAll();
+        List<ExtensionDto> extensionViews = this.extensionService.getAll();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view", "/extensions/extensions-table");
         return "base-layout";

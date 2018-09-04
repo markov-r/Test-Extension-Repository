@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void disableUser(Long id) {
-        this.userRepository.update(id);
+        this.userRepository.disableUser(id);
     }
 
     private String getUserAuthority(String userId) {

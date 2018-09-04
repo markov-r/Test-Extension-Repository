@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.services.interfaces;
 
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -17,7 +18,9 @@ public interface AdminService{
 //
 //    void disableUser(UserModelView userView);
 
-    void editExtension(ExtensionStatusView extensionStatusView);
+    void editExtension(ExtensionDto extensionStatusView);
 
     void deleteUserById(Long id);
+
+    void setFeatured(Long id);
 }

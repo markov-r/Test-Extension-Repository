@@ -81,7 +81,7 @@ public class ExtensionController {
     }
 
     @PostMapping("edit/{id}")
-    public String editExtension(@ModelAttribute ExtensionStatusView extensionModel, @PathVariable Long id) {
+    public String editExtension(@ModelAttribute ExtensionDto extensionModel, @PathVariable Long id) {
         extensionModel.setId(id);
         this.extensionService.update(extensionModel);
         return "redirect:/extensions/all";

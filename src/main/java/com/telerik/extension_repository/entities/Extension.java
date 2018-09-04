@@ -31,17 +31,11 @@ public class Extension {
     @Column(name = "file_name")
     private String fileName;
 
-
-    //private MultipartFile file;
-
+    @Column(name = "is_featured")
     private boolean isFeatured;
 
     @Enumerated(value = EnumType.STRING)
     private Status status;
-
-//    @Lob
-//    @Column(nullable = false, columnDefinition = "BLOB")
-//    private byte[] file;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -127,14 +121,6 @@ public class Extension {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
-//    public byte[] getFile() {
-//        return file;
-//    }
-//
-//    public void setFile(byte[] file) {
-//        this.file = file;
-//    }
 
     public Status getStatus() {
         return status;

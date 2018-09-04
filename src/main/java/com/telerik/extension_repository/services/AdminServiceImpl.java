@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.services;
 
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.services.interfaces.AdminService;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
@@ -45,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public void editExtension(ExtensionStatusView extensionStatusView) {
+    public void editExtension(ExtensionDto extensionDto) {
 
     }
 
@@ -54,4 +55,8 @@ public class AdminServiceImpl implements AdminService {
      this.userService.deleteUserById(id);
     }
 
+    @Override
+    public void setFeatured(Long id) {
+        extensionService.setFeatured(id);
+    }
 }

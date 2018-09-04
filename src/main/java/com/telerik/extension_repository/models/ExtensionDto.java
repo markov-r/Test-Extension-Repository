@@ -43,14 +43,6 @@ public class ExtensionDto {
 
     private GitHubData gitHubData;
 
-//    public String getFileName() {
-//        return fileName;
-//    }
-//
-//    public void setFileName(String fileName) {
-//        this.fileName = fileName;
-//    }
-
     public Long getVersion() {
         return version;
     }
@@ -106,14 +98,6 @@ public class ExtensionDto {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-//    public byte[] getFile() {
-//        return file;
-//    }
-//
-//    public void setFile(byte[] file) {
-//        this.file = file;
-//    }
-
 
     public GitHubData getGitHubData() {
         return gitHubData;
@@ -123,7 +107,6 @@ public class ExtensionDto {
         this.gitHubData = gitHubData;
     }
 
-
     public Set<TagView> getTags() {
         return tags;
     }
@@ -131,7 +114,6 @@ public class ExtensionDto {
     public void setTags(Set<TagView> tags) {
         this.tags = tags;
     }
-
 
     public LoggedUser getOwner() {
         return owner;

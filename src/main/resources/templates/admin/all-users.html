@@ -24,8 +24,7 @@
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.Enabled}"></td>
 
-                <td style="padding: 2px; vertical-align: middle; empty-cells: show"
-                    th:if="*{isEnabled() == true and isAdmin() == false}">
+                <td style="padding: 2px; vertical-align: middle; empty-cells: show" th:if="*{isEnabled() == true and isAdmin() == false}">
                     <form method="post" th:action="@{/admin/users/disableUser/{id} (id=${user.id})}">
                         <button type="submit" class="card-button btn btn-warning" name="Disable">Disable</button>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

@@ -31,11 +31,13 @@ public class AdminController {
 
     @GetMapping("extensions")
     public String getAdminPage(Model model){
-        List<ExtensionModelView> extensionViews = this.extensionService.getAll();
+        List<ExtensionDto> extensionViews = this.extensionService.getAll();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");
         return "base-layout";
     }
+
+
 
     @GetMapping("pending")
     public String getPendingExtensions(Model model){
@@ -47,7 +49,7 @@ public class AdminController {
 
     @GetMapping("pending/edit/{id}")
     public String getEditPage(Model model, @PathVariable Long id){
-        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+        ExtensionDto extensionStatusView = this.extensionService.getById(id);
         model.addAttribute("type","Edit");
         model.addAttribute("view","/admin/admin-extensions-modifiable");
         model.addAttribute("extension", extensionStatusView);
@@ -55,7 +57,7 @@ public class AdminController {
     }
 
     @PostMapping("pending/edit/{id}")
-    public String editExtension(@Valid @ModelAttribute("extensionStatusView") ExtensionStatusView extensionStatusView, @PathVariable Long id){
+    public String editExtension(@Valid @ModelAttribute("extensionStatusView") ExtensionDto extensionStatusView, @PathVariable Long id){
         extensionStatusView.setId(id);
         this.extensionService.update(extensionStatusView);
         return "redirect:/admin/pending";
@@ -72,7 +74,7 @@ public class AdminController {
 
     @GetMapping("pending/approve/{id}")
     public String getApproveExtensionPage(Model model,@PathVariable Long id){
-        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+        ExtensionDto extensionStatusView = this.extensionService.getById(id);
         this.extensionService.approve(id);
         model.addAttribute("view","/admin/admin-pending-extensions");
         return "base-layout";
@@ -80,18 +82,22 @@ public class AdminController {
 
 
     @PostMapping("pending/approve/{id}")
-    public String approveExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
-        editPartModel.setId(id);
+    public String approveExtension(@PathVariable Long id){
         this.extensionService.approve(id);
         return "redirect:/admin/pending";
     }
 
-//    @PostMapping("pending/delete/{id}")
-//    public String deleteExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
-//        editPartModel.setId(id);
-//        this.extensionService.delete(id);
-//        return "redirect:/admin/pending";
-//    }
+    @PostMapping("makeFeatured/{id}")
+    public String makeFeatured(@PathVariable Long id){
+        this.extensionService.setFeatured(id);
+        return "redirect:/admin/extensions";
+    }
+
+    @PostMapping("removeFeatured/{id}")
+    public String removeFeatured(@PathVariable Long id){
+        this.extensionService.removeFeatured(id);
+        return "redirect:/admin/extensions";
+    }
 
 // WO
 //    @GetMapping("pending/delete/{id}")

@@ -11,13 +11,13 @@ public interface ExtensionService {
 
     void persist(ExtensionDto addExtensionModel);
     ExtensionDto getByIdToEdit(Long id);
-    ExtensionStatusView getById(Long id);
-    void update(ExtensionStatusView extensionModel);
+    ExtensionDto getById(Long id);
+    void update(ExtensionDto extensionModel);
     void approve(Long id);
-    List<ExtensionModelView> getAll();
+    List<ExtensionDto> getAll();
     List<Extension> getAllExtensions();
     ExtensionDto getByIdToDetailsPage(Long id);
-    List<ExtensionModelView> getAllByName(String name);
+    List<ExtensionDto> getAllByName(String name);
     List<ExtensionDto> getAllJsons();
     void delete(Long id);
     List<ExtensionDto> getAllPending();
@@ -25,10 +25,12 @@ public interface ExtensionService {
     List<ExtensionDto> getAllSortedByDate();
     List<ExtensionDto> getAllExt();
     String findFilename(Long id);
-//    void incrementDownloadsCount(ExtensionDto extensionDetailsView);
+    void setFeatured(Long id);
+    void removeFeatured(Long id);
     void incrementDownloadsCount(Long id);
 
     List<ExtensionDto> getAllSortedByPopularity();
+
 
 
 //    Blob downloadFile(Long id) throws IOException, SQLException;
