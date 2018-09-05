@@ -23,5 +23,7 @@ public interface UserService extends UserDetailsService {
     boolean isEnabled(Long id);
     List<ExtensionStatusView> getOwnsExtensions(Long id);
     User findByUsername(String username);
+    User getCurrentUser();
+
 
 }

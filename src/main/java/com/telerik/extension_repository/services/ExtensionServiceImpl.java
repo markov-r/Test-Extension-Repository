@@ -2,6 +2,7 @@ package com.telerik.extension_repository.services;
 
 
 //import com.telerik.extension_repository.controllers.DownloadController;
+
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.Tag;
@@ -38,9 +39,9 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Autowired
     public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository, @Lazy
-                                ModelMapper modelMapper, @Lazy
-                                GithubApiService githubApiService, @Lazy
-                                UserRepository userRepository, @Lazy TagRepository tagRepository,
+            ModelMapper modelMapper, @Lazy
+                                        GithubApiService githubApiService, @Lazy
+                                        UserRepository userRepository, @Lazy TagRepository tagRepository,
                                 @Lazy FileSystemStorageService fileStorageService) {
         this.extensionRepository = extensionRepository;
         this.modelMapper = modelMapper;
@@ -50,30 +51,16 @@ public class ExtensionServiceImpl implements ExtensionService {
         this.fileStorageService = fileStorageService;
     }
 
-//    @Autowired
-//    public ExtensionServiceImpl(ExtensionRepository extensionRepository, ModelMapper modelMapper, GithubApiService githubApiService) {
-//        this.extensionRepository = extensionRepository;
-//        this.modelMapper = modelMapper;
-//        this.githubApiService = githubApiService;
-//    }
-
-//    public void persist(ExtensionModel extensionModel) {
-//        ModelMapper modelMapper = new ModelMapper();
-//        Extension extension = modelMapper.map(extensionModel, Extension.class);
-//        this.extensionRepository.saveAndFlush(extension);
-//
-//    }
-//
-@Override
-public List<ExtensionDto> getAllPending() {
-    List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.PENDING);
-    List<ExtensionDto> extensionModelViews = new ArrayList<>();
-    for (Extension extension : extensions) {
-        ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
-        extensionModelViews.add(extensionModelView);
+    @Override
+    public List<ExtensionDto> getAllPending() {
+        List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.PENDING);
+        List<ExtensionDto> extensionModelViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
+            extensionModelViews.add(extensionModelView);
+        }
+        return extensionModelViews;
     }
-    return extensionModelViews;
-}
 
     @Override
     public List<ExtensionDto> getAllFeatured() {
@@ -99,7 +86,7 @@ public List<ExtensionDto> getAllPending() {
 
 
     @Override
-      public List<ExtensionDto> getAll() {
+    public List<ExtensionDto> getAll() {
         List<Extension> extensions = this.extensionRepository.findAll();
         List<ExtensionDto> extensionModelViews = new ArrayList<>();
         for (Extension extension : extensions) {
@@ -130,18 +117,6 @@ public List<ExtensionDto> getAllPending() {
         }
         return extensionModel;
     }
-
-
-//    @Override
-//    public Set<ExtensionModelView> getAllByName(String name) {
-//        List<Extension> extensions_old = this.extensionRepository.getAllByNameOrderByNameAsc(name);
-//        Set<ExtensionModelView> extensionsModelViews = new HashSet<>();
-//        for (Extension extension : extensions_old) {
-//            ExtensionModelView extensionsModelView = this.modelMapper.map(extension, ExtensionModelView.class);
-//            extensionsModelViews.add(extensionsModelView);
-//        }
-//        return extensionsModelViews;
-//    }
 
     @Override
     public List<ExtensionDto> getAllByName(String name) {
@@ -181,17 +156,17 @@ public List<ExtensionDto> getAllPending() {
     @Override
     @PreAuthorize("isAuthenticated()")
     public void persist(ExtensionDto addExtensionModel) {
-//        ModelMapper modelMapper = new ModelMapper();
-//        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
-        Extension extension = new Extension();
+        ModelMapper modelMapper = new ModelMapper();
+        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+        //Extension extension = new Extension();
         extension.setStatus(Status.PENDING);
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
         extension.setSource_repository_link(addExtensionModel.getSource_repository_link());
 
-        GitHubData gitHubData = getGitHubData(extension);
+        GitHubData gitHubData = this.getGitHubData(extension);
         extension.setGitHubData(gitHubData);
-        User userEntity = getCurrentUser();
+        User userEntity = this.getCurrentUser();
         extension.setOwner(userEntity);
         HashSet<Tag> tags = getTags(addExtensionModel);
         extension.setTags(tags);
@@ -209,14 +184,20 @@ public List<ExtensionDto> getAllPending() {
         return this.findTagsFromString(addExtensionModel.getTagString());
     }
 
-    public String findFilename(Long id){
+    private User getCurrentUser() {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return this.userRepository.findOneByUsername(user.getUsername());
+    }
+
+    public String findFilename(Long id) {
         return this.extensionRepository.findByFilename(id);
     }
 
     @Override
     public void incrementDownloadsCount(Long id) {
 //    public void incrementDownloadsCount(ExtensionDto extensionDto) {
-        ExtensionDto extensionDto = getByIdToEdit(id);
+        ExtensionDto extensionDto = this.getById(id);
         this.extensionRepository.incrementDownloadsCount(extensionDto.getNumberOfDownloads() + 1, extensionDto.getId());
     }
 
@@ -229,12 +210,6 @@ public List<ExtensionDto> getAllPending() {
             extensionDtoList.add(extensionDto);
         }
         return extensionDtoList;
-    }
-
-    private User getCurrentUser() {
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        return this.userRepository.findOneByUsername(user.getUsername());
     }
 
     private GitHubData getGitHubData(Extension extension) {
@@ -258,21 +233,22 @@ public List<ExtensionDto> getAllPending() {
 //        this.extensionRepository.saveAndFlush(extension);
         this.extensionRepository.approveExtension(id);
     }
-    @Override
-    public ExtensionDto getByIdToEdit(Long id) {
-        Extension extension = this.extensionRepository.getOne(id);
-        ModelMapper modelMapper = new ModelMapper();
-        ExtensionDto extensionModel = null;
-        if (extension != null) {
-            extensionModel = modelMapper.map(extension, ExtensionDto.class);
 
-        }
-        return extensionModel;
+//    @Override
+//    public ExtensionDto getByIdToEdit(Long id) {
+//        Extension extension = this.extensionRepository.getOne(id);
+//        ModelMapper modelMapper = new ModelMapper();
+//        ExtensionDto extensionModel = null;
+//        if (extension != null) {
+//            extensionModel = modelMapper.map(extension, ExtensionDto.class);
+//
+//        }
+//        return extensionModel;
+//
+//
+//    }
 
-
-    }
-
-    private boolean isUserAuthorOrAdmin(Extension article){
+    private boolean isUserAuthorOrAdmin(Extension article) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
 
@@ -290,7 +266,7 @@ public List<ExtensionDto> getAllPending() {
 
     @Override
     public void update(ExtensionDto extensionModel) {
-        this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(),extensionModel.getStatus() ,extensionModel.getId());
+        this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(), extensionModel.getStatus(), extensionModel.getId());
     }
 
     @Override

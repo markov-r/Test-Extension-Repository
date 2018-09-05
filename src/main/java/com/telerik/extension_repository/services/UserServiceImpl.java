@@ -12,6 +12,8 @@ import com.telerik.extension_repository.services.interfaces.AuthorityService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -95,6 +97,23 @@ public class UserServiceImpl implements UserService {
         return user.isEnabled();
     }
 
+    public User getCurrentUser() {
+        if (!(SecurityContextHolder.getContext().getAuthentication()
+                instanceof AnonymousAuthenticationToken)) {
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            return this.userRepository.findOneByUsername(principal.getUsername());
+        }
+        return null;
+    }
+
+//    private User getCurrentUser() {
+//        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+//                .getAuthentication().getPrincipal();
+//        return this.userRepository.findOneByUsername(user.getUsername());
+//    }
+
     @Override
     public List<ExtensionStatusView> getOwnsExtensions(Long id) {
         return null;
@@ -107,7 +126,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void edit(RegisterUserModel registerUserModel) {
-
+        this.userRepository.update(registerUserModel.getUsername(), registerUserModel.getEmail(), registerUserModel.getPassword(), registerUserModel.getId());
     }
 
     @Override

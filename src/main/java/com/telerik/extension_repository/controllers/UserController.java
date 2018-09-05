@@ -1,10 +1,15 @@
 package com.telerik.extension_repository.controllers;
 
 
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +29,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String getRegisterPage(@ModelAttribute RegisterUserModel registerUserModel, Model model){
+        model.addAttribute("type", "Register");
         model.addAttribute("view","user/register-user");
         return "base-layout";
     }
@@ -35,7 +41,6 @@ public class UserController {
             model.addAttribute("view","user/register-user");
             return "base-layout";
         }
-
         this.userService.register(registerUserModel);
 
         return "redirect:/login";
@@ -52,22 +57,39 @@ public class UserController {
         return "base-layout";
     }
 
-    @ModelAttribute(name = "roles")
+
+    @GetMapping("user/profile")
+    @PreAuthorize("isAuthenticated()")
+    public String profilePage(Model model) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        RegisterUserModel user = this.userService.getUserByUsername(principal.getUsername());
+
+        model.addAttribute("user", user);
+        model.addAttribute("view", "user/profile");
+
+        return "base-layout";
+    }
+
+    //@ModelAttribute(name = "roles")
     private List<AuthorityModel> getRoles(){
         return this.roleService.getAll();
     }
 
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("user/edit/{id}")
     private String getEditUserPage(Model model, @PathVariable Long id){
         RegisterUserModel registerUserModel = this.userService.getById(id);
+        model.addAttribute("type", "Edit");
         model.addAttribute("user", registerUserModel);
-        model.addAttribute("view","edit-user");
+        model.addAttribute("view","register-user");
         return "base-layout";
     }
 
-    @PostMapping("/users/edit/{id}")
-    public String  editUser(@PathVariable Long id, @ModelAttribute RegisterUserModel registerUserModel){
-        registerUserModel.setId(id);
+    @PostMapping("user/edit/{id}")
+    public String  editUser(Model model, @PathVariable Long id){
+        RegisterUserModel registerUserModel = this.userService.getById(id);
         this.userService.edit(registerUserModel);
         return "redirect:/users";
     }

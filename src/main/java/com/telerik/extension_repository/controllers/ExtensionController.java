@@ -73,7 +73,7 @@ public class ExtensionController {
 
     @GetMapping("edit/{id}")
     public String getEditExtensionPage(Model model, @PathVariable Long id) {
-        ExtensionDto extensionModel = this.extensionService.getByIdToEdit(id);
+        ExtensionDto extensionModel = this.extensionService.getById(id);
         model.addAttribute("view", "/extensions/extension-edit");
         model.addAttribute("type", "Edit");
         model.addAttribute("extension", extensionModel);

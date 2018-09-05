@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @IsUsernameExisting
 @ExtendedEmailValidator
-@IsPasswordMatching
+//@IsPasswordMatching
 public class RegisterUserModel {
 
     private Long id;
