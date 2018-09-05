@@ -93,10 +93,4 @@ public class ExtensionController {
         return "redirect:/extensions/all";
     }
 
-
-//    @ExceptionHandler(StorageFileNotFoundException.class)
-//    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-//        return ResponseEntity.notFound().build();
-//    }
-
 }
