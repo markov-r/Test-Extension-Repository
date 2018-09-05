@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(EditUserModel registrationModel) {
+    public void register(RegisterUserModel registrationModel) {
         User user = this.modelMapper.map(registrationModel, User.class);
         String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
@@ -67,25 +67,25 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<EditUserModel> getAll() {
+    public List<RegisterUserModel> getAll() {
         List<User> users = this.userRepository.findAll();
-        List<EditUserModel> userModelViews = new ArrayList<>();
+        List<RegisterUserModel> userModelViews = new ArrayList<>();
         for (User user : users) {
-            EditUserModel userModelView = this.modelMapper.map(user, EditUserModel.class);
+            RegisterUserModel userModelView = this.modelMapper.map(user, RegisterUserModel.class);
             userModelViews.add(userModelView);
         }
         return userModelViews;
     }
 
     @Override
-    public EditUserModel getById(Long id) {
+    public RegisterUserModel getById(Long id) {
         User user = this.userRepository.findById(id);
 
         if (user == null) {
             throw new UserNotFoundException();
         }
 
-        EditUserModel userModelView = this.modelMapper.map(user, EditUserModel.class);
+        RegisterUserModel userModelView = this.modelMapper.map(user, RegisterUserModel.class);
         return userModelView;
     }
 
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void edit(EditUserModel editUserModel) {
+    public void edit(RegisterUserModel registerUserModel) {
 
     }
 
@@ -133,12 +133,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public EditUserModel getUserByUsername(String username) {
+    public RegisterUserModel getUserByUsername(String username) {
         Optional<User> user = this.userRepository.findByUsername(username);
         ModelMapper modelMapper = new ModelMapper();
-        EditUserModel userByName = null;
+        RegisterUserModel userByName = null;
         if (user != null){
-            userByName = modelMapper.map(user, EditUserModel.class);
+            userByName = modelMapper.map(user, RegisterUserModel.class);
         }
         return userByName;
     }

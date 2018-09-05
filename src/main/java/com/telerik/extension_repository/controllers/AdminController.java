@@ -1,10 +1,8 @@
 package com.telerik.extension_repository.controllers;
 
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
-import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.ExtensionDto;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.services.interfaces.AdminService;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.UserService;
@@ -117,7 +115,7 @@ public class AdminController {
 
     @GetMapping("/users")
     public String getAllUsersPage(Model model){
-        List<EditUserModel> users = this.userService.getAll();
+        List<RegisterUserModel> users = this.userService.getAll();
         model.addAttribute("users", users);
         model.addAttribute("view","/admin/all-users");
         return "base-layout";
@@ -125,7 +123,7 @@ public class AdminController {
 
     @GetMapping("/user")
     public String getUserByUsername(Model model, @RequestParam(value = "username", required = true) String username){
-        EditUserModel userModel = this.userService.getUserByUsername(username);
+        RegisterUserModel userModel = this.userService.getUserByUsername(username);
         model.addAttribute("user", userModel);
         model.addAttribute("view","/admin/all-users");
         return "base-layout";
@@ -133,7 +131,7 @@ public class AdminController {
 
     @PostMapping("/users/delete/{userId}")
     public String deleteUser(@PathVariable Long userId, Model model) {
-        EditUserModel user = this.userService.getById(userId);
+        RegisterUserModel user = this.userService.getById(userId);
         if (user != null) {
             this.adminService.deleteUserById(userId);
         }
@@ -143,7 +141,7 @@ public class AdminController {
 
     @PostMapping("/users/disableUser/{userId}")
     public String changeUserAccountAccess(@PathVariable Long userId, Model model) {
-        EditUserModel user = this.userService.getById(userId);
+        RegisterUserModel user = this.userService.getById(userId);
         if (user != null) {
             this.adminService.disableUser(userId);
         }

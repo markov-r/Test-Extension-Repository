@@ -1,8 +1,8 @@
 package com.telerik.extension_repository.validations;
 
 
-import com.telerik.extension_repository.validations.annotations.IsPasswordMatching;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
+import com.telerik.extension_repository.validations.annotations.IsPasswordMatching;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
