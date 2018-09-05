@@ -1,3 +1,6 @@
+<main class="col-4 offset-4 text-center">
+    <h1>User Registration</h1>
+    <br/>
 <div class="container">
     <form method="post" th:object="${registerUserModel}">
         <div class="form-group" th:classappend="${#fields.hasErrors('username')} ? 'has-danger'">
@@ -24,3 +27,4 @@
     </form>
 
 </div>
+</main>

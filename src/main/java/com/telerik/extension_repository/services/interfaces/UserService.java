@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    void register(EditUserModel registationModel);
+    void register(RegisterUserModel registationModel);
     List<EditUserModel> getAll();
     EditUserModel getById(Long id);
     void  edit(EditUserModel editUserModel);
