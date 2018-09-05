@@ -33,15 +33,19 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     List<Extension> findAllByStatus(@Param("pending") Status pending);
 
     @Query(value =
-            "SELECT e FROM Extension AS e " +
-                    "WHERE e.isFeatured = :isFeatured")
+            "SELECT * FROM extensions AS e " +
+                    "WHERE e.is_featured = :isFeatured " +
+                    "LIMIT 8",
+                    nativeQuery = true)
     List<Extension> findAllFeatured(@Param("isFeatured") boolean isFeatured);
 
     @Query(value =
-            "SELECT e FROM Extension AS e " +
-                    "JOIN GitHubData g " +
+            "SELECT * FROM extensions AS e " +
+                    "JOIN git_hub_data AS g " +
                     "ON e.id = g.id " +
-                    "ORDER BY g.lastCommit DESC")
+                    "ORDER BY g.latest_commit DESC " +
+                    "LIMIT 8",
+                    nativeQuery = true)
     List<Extension> getAllSortedByDate();
 
 
@@ -75,8 +79,10 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SET e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED WHERE id = :id")
     void approveExtension(@Param("id") long id);
 
-    @Query(value = "SELECT e FROM Extension e " +
-                   "ORDER BY e.numberOfDownloads DESC")
+    @Query(value = "SELECT * FROM extensions e " +
+                   "ORDER BY e.number_of_downloads DESC " +
+                   "LIMIT 8",
+                    nativeQuery = true)
     List<Extension> getAllSortedByPopularity();
 
     @Modifying
