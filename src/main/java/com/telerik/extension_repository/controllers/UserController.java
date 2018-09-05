@@ -32,7 +32,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegisterUserModel registerUserModel, BindingResult bindingResult,Model model){
+    public String registerUser(@Valid @ModelAttribute EditUserModel registerUserModel, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("view","user/register-user");
             return "base-layout";

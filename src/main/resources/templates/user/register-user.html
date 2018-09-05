@@ -7,8 +7,13 @@
             <label class="form-control-label" for="username">Username</label>
             <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" th:field="*{username}"/>
             <div id="usernameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('username')}" th:text="${error}">Error Message</div>
+            <div id="usernameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('global')}" th:text="${error}">Error Message</div>
         </div>
-
+        <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
+            <label class="form-control-label" for="email">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" th:field="*{email}"/>
+        <div id="emailHelp" class="form-control-feedback" th:each="error : ${#fields.errors('email')}" th:text="${error}">Error Message</div>
+        </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-danger'" >
             <label class="form-control-label" for="password">Password</label>
             <input type="password" class="form-control" id="password" aria-describedby="passwordHelp" th:field="*{password}"/>

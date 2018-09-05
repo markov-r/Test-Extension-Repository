@@ -19,8 +19,7 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-    // TODO documentation
-    User findOneByUsername(String username);
+    User findOneByUsername(@Param("username") String username);
 
     User findByUsernameAndPassword(String username, String password);
 
@@ -30,8 +29,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Modifying
     @Query(value = "UPDATE User " +
-            "SET name = :name, email = :email, password =:password WHERE id = :id")
-    void update(@Param("name") String name, @Param("email") String description,
+            "SET username = :username, email = :email, password =:password WHERE id = :id")
+    void update(@Param("username") String username, @Param("email") String description,
                 @Param("password") Status status, @Param("id") Long id);
 
     // Admin

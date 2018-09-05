@@ -9,10 +9,28 @@ import java.util.stream.Collectors;
 public class EditUserModel {
     private Long id;
     private String username;
+    private String email;
     private String password;
+    private String confirmPassword;
 
     private Boolean isEnabled;
     private Set<Authority> authorities;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
     public Long getId() {
         return id;
