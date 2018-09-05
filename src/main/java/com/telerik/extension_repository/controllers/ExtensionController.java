@@ -93,29 +93,7 @@ public class ExtensionController {
         return "redirect:/extensions/all";
     }
 
-//    @GetMapping("add/files")
-//    public String listUploadedFiles(Model model) throws IOException {
-//
-//        model.addAttribute("files", storageService.loadAll().map(
-//                path -> MvcUriComponentsBuilder.fromMethodName(ExtensionController.class,
-//                        "serveFile", path.getFileName().toString()).build().toString())
-//                .collect(Collectors.toList()));
-//
-//        return "/extensions/upload-file";
-//    }
-//
-//
-//    @PostMapping("add/files")
-//    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-//                                   RedirectAttributes redirectAttributes) {
-//
-//        storageService.store(file);
-//        redirectAttributes.addFlashAttribute("message",
-//                "You successfully uploaded " + file.getOriginalFilename() + "!");
-//
-//        return "redirect:/extensions/all";
-//    }
-//
+
 //    @ExceptionHandler(StorageFileNotFoundException.class)
 //    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
 //        return ResponseEntity.notFound().build();
