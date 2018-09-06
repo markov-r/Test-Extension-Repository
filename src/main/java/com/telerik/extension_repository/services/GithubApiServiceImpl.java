@@ -9,6 +9,7 @@ import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import com.telerik.extension_repository.services.interfaces.PropertiesService;
 import org.kohsuke.github.GHIssueState;
 import org.kohsuke.github.GitHub;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import static com.telerik.extension_repository.utils.Constants.GITHUB_URL;
 import static com.telerik.extension_repository.utils.Constants.GIT_KEY;
 
 @Service
-public class GithubApiServiceImpl implements GithubApiService {
+public class GithubApiServiceImpl implements GithubApiService, InitializingBean {
 
     @Autowired
     private ExtensionService extensionService;
@@ -30,6 +31,11 @@ public class GithubApiServiceImpl implements GithubApiService {
 
     @Autowired
     private PropertiesService propertiesService;
+
+    @Override
+    public void afterPropertiesSet() {
+        triggerGitUpdate();
+    }
 
     @Override
     public GitHub getGHConnection() throws IOException {
@@ -49,7 +55,7 @@ public class GithubApiServiceImpl implements GithubApiService {
 //                String lastCommit = lastCommitDate.toString();
                 Long id = extensionDto.getId();
                 this.gitHubRepository.update(pullsCount, issuesCount, lastCommitDate, id);
-                 System.out.println("### GH DATA UPDATED ### " + extensionDto.getId());
+                 System.out.println("### GH DATA UPDATED ### " + extensionDto.getName());
             } catch (Exception e) {
                  System.out.println(e.getMessage());
                 e.getMessage();
@@ -63,8 +69,8 @@ public class GithubApiServiceImpl implements GithubApiService {
 //        }
 //    }
 
-    @PostConstruct
-    public void triggerGitUpdate() {
+//    @PostConstruct
+    private void triggerGitUpdate() {
 
         Thread gitThread = new Thread(() -> {
             System.out.println("#######" + Thread.currentThread().getName() + "########");
@@ -106,7 +112,6 @@ public class GithubApiServiceImpl implements GithubApiService {
     @Override
     public Date getCommitDate(String url) throws IOException {
         GitHub git = getGHConnection();
-//        return null;
         return git.getRepository(url).getUpdatedAt();
     }
 
@@ -115,4 +120,5 @@ public class GithubApiServiceImpl implements GithubApiService {
         GitHub git = getGHConnection();
         return Integer.toString(git.getRepository(url).getPullRequests(GHIssueState.ALL).size());
     }
+
 }
