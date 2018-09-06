@@ -37,7 +37,7 @@ public class HomeController {
     public String getAllExtensionPage(Model model) {
         List<ExtensionDto> extensionViews = this.extensionService.getAll();
         model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view", "/extensions/extensions-table");
+        model.addAttribute("view", "/extensions/carousel");
         return "base-layout";
     }
 

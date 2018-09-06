@@ -2,6 +2,7 @@ package com.telerik.extension_repository.models.bindingModels.user;
 
 public class LoggedUser {
     private Integer id;
+
     private String username;
 
     public Integer getId() {
