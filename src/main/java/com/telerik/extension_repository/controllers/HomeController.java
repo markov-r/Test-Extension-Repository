@@ -80,7 +80,6 @@ public class HomeController {
 
         String filename = this.extensionService.findFilename(id);
         Resource file = storageService.loadAsResource(filename);
-//        extensionService.incrementDownloadsCount(extensionDetailsView);
         extensionService.incrementDownloadsCount(id);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
