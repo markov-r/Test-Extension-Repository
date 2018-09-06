@@ -15,5 +15,11 @@ Clicking on one tag leads you to a list of all extensions that share the respect
 Extension fields number of open issues, number of pull requests and last commit date are fetched from GitHub. 
 The admins can disable or delete users and approve or delete all extensions, not only those created (owned) by them.
 When a user is disabled he is not allowed to login, but his user data is still kept.
+Admin panel also shows GitHub Synchronization Details:
+- synchronization interval (shown in miliseconds)
+- last successful synchronization date and time
+- last failed synchronization date and time
+- details about last failed sync
+The synchronization interval can be changed on the same page, and the entered value is in minutes.
 
-The used technologies are Spring MVC/Spring Security, Hibernate, JPA, Thymeleaf and Bootstrap.
+The used technologies are Spring Boot, Spring Security, Hibernate, JPA, Thymeleaf and Bootstrap.
