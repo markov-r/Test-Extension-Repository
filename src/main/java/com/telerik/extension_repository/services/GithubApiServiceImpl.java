@@ -69,6 +69,10 @@ public class GithubApiServiceImpl implements GithubApiService, InitializingBean 
 //        }
 //    }
 
+/** Start a new thread for running GitHub synchronization only.
+    Thread is set to daemon so that when main thread ends
+    this should not stop JVM from shutting down. */
+
 //    @PostConstruct
     private void triggerGitUpdate() {
 
