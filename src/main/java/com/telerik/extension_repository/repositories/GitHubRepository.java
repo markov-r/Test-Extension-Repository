@@ -4,6 +4,7 @@ import com.telerik.extension_repository.entities.GitHubData;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -24,10 +25,11 @@ public interface GitHubRepository extends JpaRepository<GitHubData, Long> {
                     "WHERE g.id = :id")
     GitHubData getById(@Param("id")int id);
 
+    @Transactional
     @Modifying
     @Query ("UPDATE GitHubData " +
-            "SET pullsCount = :pullsCount, issuesCount = :issuesCount, lastCommit = :lastCommit where id =:id")
+            "SET pullsCount = :pullsCount, issuesCount = :issuesCount, lastCommit = :lastCommit WHERE id =:id")
     void update(@Param("pullsCount") String pullsCount, @Param("issuesCount") String issuesCount,
-                @Param("lastCommit") String lastCommit, @Param("id") long id);
+                @Param("lastCommit") Date lastCommit, @Param("id") long id);
 
 }

@@ -16,9 +16,8 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-
-import static com.telerik.extension_repository.utils.Constants.*;
+import static com.telerik.extension_repository.utils.Constants.GITHUB_URL;
+import static com.telerik.extension_repository.utils.Constants.GIT_KEY;
 
 @Service
 public class GithubApiServiceImpl implements GithubApiService {
@@ -32,37 +31,27 @@ public class GithubApiServiceImpl implements GithubApiService {
     @Autowired
     private PropertiesService propertiesService;
 
-//    @Autowired
-//    public GithubApiServiceImpl(ExtensionService extensionService, GitHubRepository gitHubRepository) {
-//        this.extensionService = extensionService;
-//        this.gitHubRepository = gitHubRepository;
-//    }
-
-    public GithubApiServiceImpl() {
-
-    }
-
     @Override
     public GitHub getGHConnection() throws IOException {
         return GitHub.connectUsingOAuth(GIT_KEY);
     }
 
     public void updateGithubDataAll() {
-        List<ExtensionDto> extensionDtoList = extensionService.getAllExt();
+        List<ExtensionDto> extensionDtoList = this.extensionService.getAllExt();
         for (ExtensionDto extensionDto : extensionDtoList) {
             String fullUrl = extensionDto.getSource_repository_link();
-            GitHubData gitHubData = null;
-            try {
-                gitHubData = updateGithubData(fullUrl);
+             try {
+                GitHubData gitHubData = updateGithubData(fullUrl);
                 extensionDto.setGitHubData(gitHubData);
                 String pullsCount = gitHubData.getPullsCount();
                 String issuesCount = gitHubData.getIssuesCount();
                 Date lastCommitDate = gitHubData.getLastCommit();
-                String lastCommit = lastCommitDate.toString();
+//                String lastCommit = lastCommitDate.toString();
                 Long id = extensionDto.getId();
-                this.gitHubRepository.update(pullsCount, issuesCount, lastCommit, id);
-
+                this.gitHubRepository.update(pullsCount, issuesCount, lastCommitDate, id);
+                 System.out.println("### GH DATA UPDATED ### " + extensionDto.getId());
             } catch (Exception e) {
+                 System.out.println(e.getMessage());
                 e.getMessage();
             }
         }
@@ -75,15 +64,16 @@ public class GithubApiServiceImpl implements GithubApiService {
 //    }
 
     @PostConstruct
-    public void startGitUpdate() {
-        Properties properties = this.propertiesService.getProperties();
-        long interval = properties.getUpdateInterval();
+    public void triggerGitUpdate() {
+
         Thread gitThread = new Thread(() -> {
-            System.out.println( Thread.currentThread().getName());
+            System.out.println("#######" + Thread.currentThread().getName() + "########");
             while (true) {
                 try {
                     updateGithubDataAll();
                     propertiesService.updateLastSuccSync(new Date());
+                    long interval = this.propertiesService.getProperties().getUpdateInterval();
+                    System.out.println("INTERVAL IS -> " + interval);
                     Thread.sleep(interval);
                 } catch (InterruptedException e) {
                     System.out.println("Thread is interupted!");
@@ -96,8 +86,6 @@ public class GithubApiServiceImpl implements GithubApiService {
         gitThread.setDaemon(true);
         gitThread.start();
     }
-
-//    public void changeInterval()
 
     @Override
     public GitHubData updateGithubData(String fullUrl) throws IOException {
