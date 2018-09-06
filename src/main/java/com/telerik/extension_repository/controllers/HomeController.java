@@ -34,12 +34,25 @@ public class HomeController {
 
     // WO
     @GetMapping("/")
-    public String getAllExtensionPage(Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAll();
-        model.addAttribute("extensions", extensionViews);
+    public String getCarouselPage(Model model) {
+        List<ExtensionDto> featuredExtensions = this.extensionService.getAllFeatured();
+        List<ExtensionDto> newestExtensions = this.extensionService.getAllSortedByDate();
+        List<ExtensionDto> popularExtensions = this.extensionService.getAllSortedByPopularity();
+        model.addAttribute("featured", featuredExtensions);
+        model.addAttribute("latest", newestExtensions);
+        model.addAttribute("popular", popularExtensions);
         model.addAttribute("view", "/extensions/carousel");
         return "base-layout";
     }
+
+    @GetMapping("/extensions")
+    public String getAllExtensionPage(Model model) {
+        List<ExtensionDto> extensionViews = this.extensionService.getAll();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
+
 
     @GetMapping("public/new")
     public String getNewestExtensionsPage(Model model) {
