@@ -22,7 +22,7 @@ public class PropertiesServiceImpl implements PropertiesService {
 
     @Override
     public void updateInterval(long updateInterval) {
-        this.propertiesRepository.updateInterval(updateInterval);
+        this.propertiesRepository.updateInterval(updateInterval * 60000);   //turn minutes to miliseconds
     }
 
     public PropertiesDto getProperties() {
