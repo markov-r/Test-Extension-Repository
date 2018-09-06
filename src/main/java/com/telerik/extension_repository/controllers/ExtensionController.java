@@ -53,7 +53,7 @@ public class ExtensionController {
         }
         this.extensionService.persist(addExtensionModel);
         this.storageService.store(addExtensionModel.getFile());
-        return "redirect:/extensions/all";
+        return "redirect:/";
     }
 
 

@@ -29,7 +29,7 @@ public class ExtensionDto {
 
     private Status status;
 
-    private Long version;
+    private String version;
 
     private String downloadLink;
 
@@ -39,11 +39,11 @@ public class ExtensionDto {
 
     private GitHubData gitHubData;
 
-    public Long getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 

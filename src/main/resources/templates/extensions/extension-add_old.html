@@ -4,18 +4,20 @@
             <div class="col-12">
                 <div class="text-center"><h1 class="display-3">Add Extension</h1></div>
                 <br/>
-                <form th:method="post" enctype="multipart/form-data" th:object="${extension}" th:action="@{/extensions/add}">
+                <form th:method="post" enctype="multipart/form-data" th:object="${extension}"
+                      th:action="@{/extensions/add}">
                     <div class="form-group row">
                         <label class="form-control-label">Name</label>
                         <input type="text" class="form-control" th:field="*{name}" required/>
                     </div>
-                    <!--<div class="form-group row">-->
-                        <!--<label class="form-control-label">Description</label>-->
-                        <!--<input type="text" step="0.01" min="0"  class="form-control" th:field="*{description}" required/>-->
-                    <!--</div>-->
                     <div class="form-group row">
                         <label class="form-control-label" for="extension_description">Description</label>
-                            <textarea class="form-control" rows="6" id="extension_description" name="description" th:field="*{description}"></textarea>
+                        <textarea class="form-control" rows="6" id="extension_description" name="description"
+                                  th:field="*{description}"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label">Version</label>
+                        <input type="text" class="form-control" th:field="*{version}" required/>
                     </div>
                     <div class="form-group row">
                         <label class="form-control-label">Source Repository Link</label>
@@ -23,51 +25,36 @@
                     </div>
                     <!--TODO Categories-->
                     <!--<div class="form-group">-->
-                        <!--<label class="col-sm-4 control-label" for="article_category">Category</label>-->
-                        <!--<div class="col-sm-6">-->
-                            <!--<select class="form-control" id="article_category" name="categoryId">-->
-                                <!--<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>-->
-                            <!--</select>-->
-                        <!--</div>-->
+                    <!--<label class="col-sm-4 control-label" for="article_category">Category</label>-->
+                    <!--<div class="col-sm-6">-->
+                    <!--<select class="form-control" id="article_category" name="categoryId">-->
+                    <!--<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>-->
+                    <!--</select>-->
                     <!--</div>-->
-                    <div class="form-group">
+                    <!--</div>-->
+                    <div class="form-group row">
                         <label class="col-sm-4 control-label" for="extension_tags">Tags</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="extension_tags" placeholder="Tags" name="tagString"/>
+                            <input type="text" class="form-control" id="extension_tags" placeholder="Tags"
+                                   name="tagString"/>
                         </div>
                     </div>
-                    <!--<div th:if="${message}">-->
-                        <!--<h2 th:text="${message}"/>-->
-                    <!--</div>-->
                     <div>
-                        <!--<form method="POST" enctype="multipart/form-data" th:action="@{/extensions/add}" th:object="${extension}">-->
-                            <table>
-                                <tr>
-                                    <td>File to upload:</td>
-                                    <td><input type="file" name="file" th:field="*{file}"/></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a class="btn btn-default" th:href="@{/extensions/all/}">Cancel</a>
-                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                        <input type="submit" class="btn btn-outline-warning btn-lg btn-block"
-                                               th:value="Add"/>
-                                    </td>
-                                </tr>
-                            </table>
-                            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-                        <!--</form>-->
+                        <table>
+                            <tr>
+                                <td>File to upload:</td>
+                                <td><input type="file" name="file" th:field="*{file}"/></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-danger" th:href="@{/extensions/all/}">Cancel</a>
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <input type="submit" class="btn btn-outline-warning btn-lg btn-block"
+                                           th:value="Add"/>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <!--<div>-->
-                        <!--<ul>-->
-                            <!--<li th:each="file : ${files}">-->
-                                <!--<a th:href="${file}" th:text="${file}" />-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-                    <!--<input type="submit" class="btn btn-outline-warning btn-lg btn-block"-->
-                           <!--th:value="Add"/>-->
                 </form>
                 <br/>
             </div>
