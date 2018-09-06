@@ -25,9 +25,6 @@ public class Extension {
 
     private String source_repository_link;
 
-    @Column(name = "download_link")
-    private String downloadLink;
-
     @Column(name = "file_name")
     private String fileName;
 
@@ -96,14 +93,6 @@ public class Extension {
 
     public void setNumberOfDownloads(int numberOfDownloads) {
         this.numberOfDownloads = numberOfDownloads;
-    }
-
-    public String getDownloadLink() {
-        return downloadLink;
-    }
-
-    public void setDownloadLink(String downloadLink) {
-        this.downloadLink = downloadLink;
     }
 
     public String getFileName() {
