@@ -23,11 +23,7 @@ public class ExtensionDto {
 
     private Set<TagView> tags;
 
-   // private byte[] file;
-
     private MultipartFile file;
-
-   // private String fileName;
 
     private LoggedUser owner;
 
