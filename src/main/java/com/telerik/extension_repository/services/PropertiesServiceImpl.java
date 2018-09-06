@@ -1,8 +1,10 @@
 package com.telerik.extension_repository.services;
 
 import com.telerik.extension_repository.entities.Properties;
+import com.telerik.extension_repository.models.PropertiesDto;
 import com.telerik.extension_repository.repositories.PropertiesRepository;
 import com.telerik.extension_repository.services.interfaces.PropertiesService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,18 @@ public class PropertiesServiceImpl implements PropertiesService {
     @Autowired
     PropertiesRepository propertiesRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+
     @Override
     public void updateInterval(long updateInterval) {
         this.propertiesRepository.updateInterval(updateInterval);
     }
 
-    public Properties getProperties() {
-        return this.propertiesRepository.getProperties();
+    public PropertiesDto getProperties() {
+        Properties properties = this.propertiesRepository.getProperties();
+        return this.modelMapper.map(properties, PropertiesDto.class);
     }
 
     @Override
