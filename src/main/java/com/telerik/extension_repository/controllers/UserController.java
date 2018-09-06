@@ -5,10 +5,10 @@ import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.services.UserServiceImpl;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
-import com.telerik.extension_repository.services.interfaces.NotificationService;
+//import com.telerik.extension_repository.services.interfaces.NotificationService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import com.telerik.extension_repository.utils.Messages;
-import com.telerik.extension_repository.utils.UserSession;
+//import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -32,8 +32,8 @@ public class UserController {
     @Autowired
     private AuthorityService roleService;
 
-    @Autowired
-    private NotificationService notificationService;
+//    @Autowired
+//    private NotificationService notificationService;
 
 
     @GetMapping("/register")
@@ -67,37 +67,37 @@ public class UserController {
     }
 
 
-    @GetMapping("user/profile")
-    @PreAuthorize("isAuthenticated()")
-    public String profilePage(Model model) {
-        UserDetails userDetails = UserSession.getCurrentUser();
-        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-        model.addAttribute("user", currUser);
-        model.addAttribute("view", "user/profile");
-
-        return "base-layout";
-    }
+//    @GetMapping("user/profile")
+//    @PreAuthorize("isAuthenticated()")
+//    public String profilePage(Model model) {
+//        UserDetails userDetails = UserSession.getCurrentUser();
+//        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
+//        model.addAttribute("user", currUser);
+//        model.addAttribute("view", "user/profile");
+//
+//        return "base-layout";
+//    }
 
     //@ModelAttribute(name = "roles")
     private List<AuthorityModel> getRoles(){
         return this.roleService.getAll();
     }
 
-    @GetMapping("user/edit/{id}")
-    @PreAuthorize("isAuthenticated()")
-    private String getEditUserPage(Model model, @PathVariable Long id, @RequestParam(defaultValue = "false") boolean checkbox){
-        if (!this.userService.exists(id)) {
-            this.notificationService.addErrorMessage(Messages.NOT_FOUND);
-            return "redirect:/";
-        }
-        UserDetails userDetails = UserSession.getCurrentUser();
-        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-//        RegisterUserModel registerUserModel = this.userService.getById(id);
-        model.addAttribute("type", "Edit");
-        model.addAttribute("user", currUser);
-        model.addAttribute("view","register-user");
-        return "base-layout";
-    }
+//    @GetMapping("user/edit/{id}")
+//    @PreAuthorize("isAuthenticated()")
+//    private String getEditUserPage(Model model, @PathVariable Long id, @RequestParam(defaultValue = "false") boolean checkbox){
+//        if (!this.userService.exists(id)) {
+//            this.notificationService.addErrorMessage(Messages.NOT_FOUND);
+//            return "redirect:/";
+//        }
+//        UserDetails userDetails = UserSession.getCurrentUser();
+//        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
+////        RegisterUserModel registerUserModel = this.userService.getById(id);
+//        model.addAttribute("type", "Edit");
+//        model.addAttribute("user", currUser);
+//        model.addAttribute("view","register-user");
+//        return "base-layout";
+//    }
 
 //    @GetMapping("/user/edit/{id}")
 //    @PreAuthorize("isAuthenticated()")
