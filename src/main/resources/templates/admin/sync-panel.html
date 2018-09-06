@@ -6,8 +6,16 @@
                     <header>
                         <h2 th:text="|GitHub Synchronization Info|">GitHub Synchronization Info</h2>
                     </header>
+                    <footer>
+                        <div class="pull-right">
+                            <th:block sec:authorize="hasRole('ADMIN')">
+                                <a class="btn btn-success btn-xs" th:href="@{/admin/git-sync-interval}">Edit</a>
+                            </th:block>
+                        </div>
+                    </footer>
                     <label class="col-sm-4"><strong>Update Interval</strong></label>
                     <p th:text="${properties.getUpdateInterval()}">UpdateInterval</p>
+
                     <label class="col-sm-4"><strong>Last Successful Sync</strong></label>
                     <p th:text="${properties.getLastSuccSync()}">LastSuccSync</p>
                     <label class="col-sm-4"><strong>Last Failed Sync</strong></label>
@@ -15,15 +23,7 @@
                     <label class="col-sm-4"><strong>Failure Details</strong></label>
                     <p th:text="${properties.getFailureDetails()}">LastFailedSync</p>
 
-                    <footer>
-                        <div class="pull-right">
 
-                            <th:block sec:authorize="hasRole('ADMIN')">
-                            <a class="btn btn-success btn-xs" th:href="@{/admin/git-sync-interval}">Edit</a>
-                            </th:block>
-
-                        </div>
-                    </footer>
                 </article>
             </div>
         </div>
