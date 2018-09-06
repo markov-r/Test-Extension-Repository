@@ -16,4 +16,4 @@ Extension fields number of open issues, number of pull requests and last commit 
 The admins can disable or delete users and approve or delete all extensions, not only those created (owned) by them.
 When a user is disabled he is not allowed to login, but his user data is still kept.
 
-The used technologies are Spring MVC/Spring Security, Hibernate, JPA, Thymeleaf and Bootstrap 
+The used technologies are Spring MVC/Spring Security, Hibernate, JPA, Thymeleaf and Bootstrap.
