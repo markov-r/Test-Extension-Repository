@@ -1,10 +1,13 @@
 package com.telerik.extension_repository.controllers;
 
+import com.telerik.extension_repository.entities.Properties;
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
+import com.telerik.extension_repository.models.PropertiesDto;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.services.interfaces.AdminService;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
+import com.telerik.extension_repository.services.interfaces.PropertiesService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,10 @@ public class AdminController {
 
     @Autowired
     private ExtensionService extensionService;
+
+    @Autowired
+    private PropertiesService propertiesService;
+
 
     @GetMapping("extensions")
     public String getAdminPage(Model model){
@@ -174,4 +181,26 @@ public class AdminController {
 //        model.addAttribute("view","/extensions/extensions-table");
 //        return "base-layout";
 //    }
+
+    @GetMapping("/sync-panel")
+    public String getSyncPanel(Model model){
+        PropertiesDto propertiesDto = this.propertiesService.getProperties();
+        model.addAttribute("properties", propertiesDto);
+        model.addAttribute("view","/admin/sync-panel");
+        return "base-layout";
+    }
+
+    @GetMapping("/git-sync-interval")
+    public String getUpdateIntervalPage(Model model) {
+        PropertiesDto propertiesDto = this.propertiesService.getProperties();
+        model.addAttribute("properties", propertiesDto);
+        model.addAttribute("view","/admin/git-sync-form");
+        return "base-layout";
+    }
+
+    @PostMapping("/git-sync-interval")
+    public String updateSyncInterval(Model model, PropertiesDto propertiesDto) {
+        this.propertiesService.updateInterval(propertiesDto.getUpdateInterval());
+        return "redirect:/admin/sync-panel";
+    }
 }
