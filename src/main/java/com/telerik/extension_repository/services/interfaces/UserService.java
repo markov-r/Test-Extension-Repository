@@ -24,6 +24,6 @@ public interface UserService extends UserDetailsService {
     List<ExtensionStatusView> getOwnsExtensions(Long id);
     User findByUsername(String username);
     User getCurrentUser();
-
+    boolean exists(Long id);
 
 }

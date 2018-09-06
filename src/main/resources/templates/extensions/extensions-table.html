@@ -9,13 +9,20 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Description</th>
             <th>Version</th>
+            <th>Author</th>
+            <th>Number of downloads</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="extension : ${extensions}" th:object="${extension}">
             <th scope="row" th:text="${extension.name}"></th>
-            <td th:text="${extension.version}"></td>
+            <th scope="row" th:text="${extension.description}"></th>
+            <th scope="row" th:text="${extension.version}"></th>
+            <th scope="row" th:text="${extension.owner.username}"></th>
+            <th scope="row" th:text="${extension.numberOfDownloads}"></th>
+            <!--<td th:text="${extension.version}"></td>-->
             <td>
                 <a th:href="@{/public/{id}(id = ${extension.id})}">Details</a>
             </td>

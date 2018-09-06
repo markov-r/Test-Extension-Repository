@@ -115,14 +115,14 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-    @Transient
+    //@Transient
     public boolean isAdmin() {
         return this.getAuthorities()
                 .stream()
                 .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
     }
 
-    @Transient
+    //@Transient
     public boolean isAuthor(Extension extension) {
         return Objects.equals(this.getId(),
                 extension.getOwner().getId());

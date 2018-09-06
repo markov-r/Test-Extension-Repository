@@ -1,7 +1,23 @@
 <footer th:fragment="footer">
     <!--<script th:src="@{/vendor/jquery/jquery.min.js}"></script>-->
     <!--<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>-->
+    <div class="container modal-footer">
+        <p>&copy; 2018 - TeamWork Project "Extension Repository"</p>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div id="search-3" class="widget widgetFooter widget_search"><h4 class="widgettitle">Search :</h4>
 
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Keyword :</span>
+                    <input class="form-control" placeholder="Keyword for search ..." type="text">
+                    <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button">Search !</button>
+                                  </span>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--===============================================================================================-->
     <script th:src="@{/login/vendor/jquery/jquery-3.2.1.min.js}"></script>
     <!--===============================================================================================-->

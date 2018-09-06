@@ -26,7 +26,9 @@ public class RegisterUserModel {
     private String password;
 
     private String confirmPassword;
+
     private Boolean isEnabled;
+
     private Set<Authority> authorities;
 
     public Long getId() {
@@ -44,6 +46,7 @@ public class RegisterUserModel {
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getEmail() {
         return email;
     }
@@ -68,7 +71,6 @@ public class RegisterUserModel {
         this.confirmPassword = confirmPassword;
     }
 
-
     public void setEnabled(Boolean enabled) {
         isEnabled = enabled;
     }
@@ -77,11 +79,9 @@ public class RegisterUserModel {
         this.id = id;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;

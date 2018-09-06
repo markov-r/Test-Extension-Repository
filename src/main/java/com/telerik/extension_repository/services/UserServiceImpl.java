@@ -108,7 +108,12 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-//    private User getCurrentUser() {
+    @Override
+    public boolean exists(Long id) {
+        return this.userRepository.existsById(String.valueOf(id));
+    }
+
+    //    private User getCurrentUser() {
 //        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
 //                .getAuthentication().getPrincipal();
 //        return this.userRepository.findOneByUsername(user.getUsername());
