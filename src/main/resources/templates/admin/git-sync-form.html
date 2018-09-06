@@ -7,7 +7,7 @@
 
         <form th:method="post" th:object="${properties}">
             <div class="form-group row">
-                <label class="form-control-label">Git Sync Interval</label>
+                <label class="form-control-label">Git Sync Interval (in minutes)</label>
                 <input type="text" class="form-control" th:field="*{updateInterval}" required/>
             </div>
             <form method="post" th:action="@{/admin/git-sync-interval}">
