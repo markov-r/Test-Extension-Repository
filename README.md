@@ -22,4 +22,4 @@ Admin panel also shows GitHub Synchronization Details:
 - details about last failed sync
 The synchronization interval can be changed on the same page, and the entered value is in minutes.
 
-The used technologies are Spring Boot, Spring Security, Hibernate, JPA, Thymeleaf and Bootstrap.
+The used technologies are Spring Boot, Spring Security, Hibernate, Thymeleaf and Bootstrap.
