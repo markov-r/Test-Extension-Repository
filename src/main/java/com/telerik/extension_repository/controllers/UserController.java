@@ -2,6 +2,7 @@ package com.telerik.extension_repository.controllers;
 
 
 import com.telerik.extension_repository.entities.User;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.services.UserServiceImpl;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
@@ -9,6 +10,7 @@ import com.telerik.extension_repository.services.interfaces.AuthorityService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import com.telerik.extension_repository.utils.Messages;
 //import com.telerik.extension_repository.utils.UserSession;
+import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -35,6 +38,15 @@ public class UserController {
 //    @Autowired
 //    private NotificationService notificationService;
 
+    @GetMapping("user/all")
+    public String getAllExtensionPage(Model model) {
+        UserDetails userDetails = UserSession.getCurrentUser();
+        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
+        Set<ExtensionDto> extensionViews = this.userService.getOwnExtensions(currUser.getId());
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
 
     @GetMapping("/register")
     public String getRegisterPage(@ModelAttribute RegisterUserModel registerUserModel, Model model){

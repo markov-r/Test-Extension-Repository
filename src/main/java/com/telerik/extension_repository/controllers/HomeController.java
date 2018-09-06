@@ -45,15 +45,6 @@ public class HomeController {
         return "base-layout";
     }
 
-    @GetMapping("/extensions")
-    public String getAllExtensionPage(Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAll();
-        model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view", "/extensions/extensions-table");
-        return "base-layout";
-    }
-
-
     @GetMapping("public/new")
     public String getNewestExtensionsPage(Model model) {
         List<ExtensionDto> extensionViews = this.extensionService.getAllSortedByDate();
