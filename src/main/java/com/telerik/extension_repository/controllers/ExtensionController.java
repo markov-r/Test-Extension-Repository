@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,7 +36,16 @@ public class ExtensionController {
     @Autowired
     private TagRepository tagRepository;
 
-//WO
+    @GetMapping("/all")
+    public String getAllExtensionPage(Model model) {
+        List<ExtensionDto> extensionViews = this.extensionService.getAll();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
+
+
+    //WO
     @GetMapping("add")
     public String getAddExtensionPage(Model model) {
         ExtensionDto addExtensionModel = new ExtensionDto();
@@ -55,8 +65,6 @@ public class ExtensionController {
         this.storageService.store(addExtensionModel.getFile());
         return "redirect:/";
     }
-
-
 
 
 

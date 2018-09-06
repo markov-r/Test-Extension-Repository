@@ -1,9 +1,11 @@
 package com.telerik.extension_repository.services;
 
 import com.telerik.extension_repository.entities.Authority;
+import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
+import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
@@ -120,8 +122,15 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public List<ExtensionStatusView> getOwnsExtensions(Long id) {
-        return null;
+    public Set<ExtensionDto> getOwnExtensions(Long id) {
+        Set<Extension> extensions = this.userRepository.findOwnExtensions(id);
+        ModelMapper modelMapper = new ModelMapper();
+        Set<ExtensionDto> extensionDtos = new HashSet<>();
+        for (Extension extension : extensions) {
+            ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);
+            extensionDtos.add(extensionDto);
+        }
+        return extensionDtos;
     }
 
     @Override

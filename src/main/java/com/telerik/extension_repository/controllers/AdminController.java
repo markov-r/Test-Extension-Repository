@@ -36,7 +36,6 @@ public class AdminController {
     }
 
 
-
     @GetMapping("pending")
     public String getPendingExtensions(Model model){
         List<ExtensionDto> extensionViews = this.extensionService.getAllPending();
