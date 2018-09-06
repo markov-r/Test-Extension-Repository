@@ -45,30 +45,6 @@ public class HomeController {
         return "base-layout";
     }
 
-    @GetMapping("public/new")
-    public String getNewestExtensionsPage(Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAllSortedByDate();
-        model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view", "/extensions/extensions-table");
-        return "base-layout";
-    }
-
-    @GetMapping("public/featured")
-    public String getFeaturedExtensions(Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAllFeatured();
-        model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view", "/extensions/extensions-table");
-        return "base-layout";
-    }
-
-    @GetMapping("public/popular")
-    public String getPopularExtensions(Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAllSortedByPopularity();
-        model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view", "/extensions/extensions-table");
-        return "base-layout";
-    }
-
     // get Extension details page WO
     @GetMapping("public/{id}")
     public String getExtensionDetailsPage(Model model, @PathVariable Long id) {

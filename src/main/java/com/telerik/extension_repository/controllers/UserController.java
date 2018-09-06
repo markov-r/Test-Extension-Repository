@@ -43,6 +43,7 @@ public class UserController {
         UserDetails userDetails = UserSession.getCurrentUser();
         RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
         Set<ExtensionDto> extensionViews = this.userService.getOwnExtensions(currUser.getId());
+        model.addAttribute("type", "Own");
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view", "/extensions/extensions-table");
         return "base-layout";

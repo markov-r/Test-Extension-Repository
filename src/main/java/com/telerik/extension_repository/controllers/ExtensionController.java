@@ -66,7 +66,32 @@ public class ExtensionController {
         return "redirect:/";
     }
 
+    @GetMapping("new")
+    public String getNewestExtensionsPage(Model model) {
+        List<ExtensionDto> extensionViews = this.extensionService.getAllSortedByDate();
+        model.addAttribute("type", "New");
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
 
+    @GetMapping("featured")
+    public String getFeaturedExtensions(Model model) {
+        List<ExtensionDto> extensionViews = this.extensionService.getAllFeatured();
+        model.addAttribute("type", "Featured");
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
+
+    @GetMapping("/popular")
+    public String getPopularExtensions(Model model) {
+        List<ExtensionDto> extensionViews = this.extensionService.getAllSortedByPopularity();
+        model.addAttribute("type", "Popular");
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
 
 // get Extension details page WO
 //    @GetMapping("{id}")
