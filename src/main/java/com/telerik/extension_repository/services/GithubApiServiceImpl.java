@@ -1,17 +1,23 @@
 package com.telerik.extension_repository.services;
 
 import com.telerik.extension_repository.entities.GitHubData;
+import com.telerik.extension_repository.entities.Properties;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.repositories.GitHubRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
+import com.telerik.extension_repository.services.interfaces.PropertiesService;
 import org.kohsuke.github.GHIssueState;
 import org.kohsuke.github.GitHub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+
 import static com.telerik.extension_repository.utils.Constants.*;
 
 @Service
@@ -22,6 +28,9 @@ public class GithubApiServiceImpl implements GithubApiService {
 
     @Autowired
     private GitHubRepository gitHubRepository;
+
+    @Autowired
+    private PropertiesService propertiesService;
 
 //    @Autowired
 //    public GithubApiServiceImpl(ExtensionService extensionService, GitHubRepository gitHubRepository) {
@@ -54,10 +63,41 @@ public class GithubApiServiceImpl implements GithubApiService {
                 this.gitHubRepository.update(pullsCount, issuesCount, lastCommit, id);
 
             } catch (Exception e) {
-                e.getStackTrace();
+                e.getMessage();
             }
         }
     }
+
+//    public class MyThread extends Thread {
+//        public void run(){
+//            System.out.println("MyThread running");
+//        }
+//    }
+
+    @PostConstruct
+    public void startGitUpdate() {
+        Properties properties = this.propertiesService.getProperties();
+        long interval = properties.getUpdateInterval();
+        Thread gitThread = new Thread(() -> {
+            System.out.println( Thread.currentThread().getName());
+            while (true) {
+                try {
+                    updateGithubDataAll();
+                    propertiesService.updateLastSuccSync(new Date());
+                    Thread.sleep(interval);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread is interupted!");
+                    e.getMessage();
+                    propertiesService.updateFailureDetails("Git Data update failed due to an interrupted thread.");
+                    propertiesService.updateLastFailedSync(new Date());
+                }
+            }
+        });
+        gitThread.setDaemon(true);
+        gitThread.start();
+    }
+
+//    public void changeInterval()
 
     @Override
     public GitHubData updateGithubData(String fullUrl) throws IOException {
@@ -80,7 +120,7 @@ public class GithubApiServiceImpl implements GithubApiService {
         GitHub git = getGHConnection();
 //        return null;
         return git.getRepository(url).getUpdatedAt();
-     }
+    }
 
     @Override
     public String getPullsCount(String url) throws IOException {

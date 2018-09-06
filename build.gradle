@@ -36,14 +36,20 @@ dependencies {
     compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.2'
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.0.8.RELEASE'
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.12.Final'
-    // https://mvnrepository.com/artifact/org.kohsuke/github-api
+//    https://mvnrepository.com/artifact/org.kohsuke/github-api
     compile group: 'org.kohsuke', name: 'github-api', version: '1.93'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 }
 
-
 test {
     testLogging.showStandardStreams = true
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class' : 'com.telerik.extension_repository.ExtensionRepositoryApplication'
+    }
 }
