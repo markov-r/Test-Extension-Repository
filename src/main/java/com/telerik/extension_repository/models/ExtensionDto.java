@@ -31,8 +31,6 @@ public class ExtensionDto {
 
     private String version;
 
-    private String downloadLink;
-
     private String source_repository_link;
 
     private boolean isFeatured;
@@ -53,14 +51,6 @@ public class ExtensionDto {
 
     public void setNumberOfDownloads(int numberOfDownloads) {
         this.numberOfDownloads = numberOfDownloads;
-    }
-
-    public String getDownloadLink() {
-        return downloadLink;
-    }
-
-    public void setDownloadLink(String downloadLink) {
-        this.downloadLink = downloadLink;
     }
 
     public Long getId() {
