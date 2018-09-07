@@ -7,7 +7,6 @@ import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;

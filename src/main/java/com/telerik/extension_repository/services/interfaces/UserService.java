@@ -5,7 +5,6 @@ import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

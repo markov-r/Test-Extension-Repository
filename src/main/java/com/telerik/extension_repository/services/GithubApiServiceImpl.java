@@ -3,6 +3,7 @@ package com.telerik.extension_repository.services;
 import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.Properties;
 import com.telerik.extension_repository.models.ExtensionDto;
+import com.telerik.extension_repository.models.PropertiesDto;
 import com.telerik.extension_repository.repositories.GitHubRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
@@ -21,7 +22,7 @@ import static com.telerik.extension_repository.utils.Constants.GITHUB_URL;
 import static com.telerik.extension_repository.utils.Constants.GIT_KEY;
 
 @Service
-public class GithubApiServiceImpl implements GithubApiService, InitializingBean {
+public class GithubApiServiceImpl implements GithubApiService/*, InitializingBean */{
 
     @Autowired
     private ExtensionService extensionService;
@@ -32,10 +33,10 @@ public class GithubApiServiceImpl implements GithubApiService, InitializingBean 
     @Autowired
     private PropertiesService propertiesService;
 
-    @Override
-    public void afterPropertiesSet() {
-        triggerGitUpdate();
-    }
+//    @Override
+//    public void afterPropertiesSet() {
+//        triggerGitUpdate();
+//    }
 
     @Override
     public GitHub getGHConnection() throws IOException {
@@ -73,16 +74,17 @@ public class GithubApiServiceImpl implements GithubApiService, InitializingBean 
     Thread is set to daemon so that when main thread ends
     this should not stop JVM from shutting down. */
 
-//    @PostConstruct
+    @PostConstruct
     private void triggerGitUpdate() {
 
-        Thread gitThread = new Thread(() -> {   //TODO: replace anonymous class creation with standard class that extends Thread.
+        Thread gitThread = new Thread(() -> {   //TODO: replace anonymous class creation with standard class extending Thread.
             System.out.println("#######" + Thread.currentThread().getName() + "########");
             while (true) {
                 try {
                     updateGithubDataAll();
                     propertiesService.updateLastSuccSync(new Date());
-                    long interval = this.propertiesService.getProperties().getUpdateInterval();
+                    PropertiesDto prop = this.propertiesService.getProperties();
+                    long interval = prop.getUpdateInterval();
                     System.out.println("INTERVAL IS -> " + interval);
                     Thread.sleep(interval);
                 } catch (InterruptedException e) {
@@ -94,7 +96,7 @@ public class GithubApiServiceImpl implements GithubApiService, InitializingBean 
                 }
             }
         });
-        gitThread.setDaemon(true);
+//        gitThread.setDaemon(true);
         gitThread.start();
     }
 

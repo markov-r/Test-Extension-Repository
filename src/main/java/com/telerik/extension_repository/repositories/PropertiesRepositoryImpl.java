@@ -8,15 +8,14 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
+import static javax.persistence.CacheRetrieveMode.BYPASS;
 
 @Repository
 public class PropertiesRepositoryImpl implements PropertiesRepository {
 
     private EntityManagerFactory emf;
-
     private EntityManager em;
 
     @Autowired
@@ -27,12 +26,17 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
     @PostConstruct
     private void init() {
         this.em = emf.createEntityManager();
+//        em.setProperty("javax.persistence.CacheRetrieveMode", "BYPASS");
     }
 
     @Override
-    public Properties getProperties() {
-        Properties p = em.createQuery("SELECT p from Properties p", Properties.class).getSingleResult();
-        return p;
+    public Properties getProperties() {   //TODO: select works the first time only
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.setProperty("javax.persistence.CacheRetrieveMode", "javax.persistence.CacheStoreMode.BYPASS");
+        List<Properties> p = em.createQuery("SELECT p from Properties p", Properties.class).getResultList()/*.getSingleResult()*/;
+        et.commit();
+        return p.get(0);
     }
 
     @Override
@@ -63,7 +67,7 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
                 try {
                     Thread.sleep((long) (Math.random() * 50));
                 } catch (InterruptedException ie) {
-                    System.out.println(ie.getMessage());//TODO: logger
+                    System.out.println(ie.getMessage());//TODO: logger instead of system.out
                 }
             }
 
@@ -72,16 +76,31 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
 
     @Override
     public void updateLastSuccSync(Date lastSuccSync) {
-
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.createQuery("UPDATE Properties p SET p.lastSuccSync = :lastSuccSync")
+                .setParameter("lastSuccSync", lastSuccSync)
+                .executeUpdate();
+        et.commit();
     }
 
     @Override
     public void updateLastFailedSync(Date lastFailedSync) {
-
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.createQuery("UPDATE Properties p SET p.lastFailedSync = :lastFailedSync")
+                .setParameter("lastFailedSync", lastFailedSync)
+                .executeUpdate();
+        et.commit();
     }
 
     @Override
     public void updateFailureDetails(String failureDetails) {
-
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.createQuery("UPDATE Properties p SET p.failureDetails = :failureDetails")
+                .setParameter("failureDetails", failureDetails)
+                .executeUpdate();
+        et.commit();
     }
 }

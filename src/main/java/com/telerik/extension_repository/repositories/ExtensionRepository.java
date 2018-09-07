@@ -26,7 +26,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "ORDER BY e.name")
     List<Extension> findAll();
 
-
     @Query(value =
             "SELECT e FROM Extension AS e " +
                     "WHERE e.status = :pending")
@@ -38,6 +37,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "ON (u.id  = e.user_id) " +
             "WHERE u.username = :name", nativeQuery = true)
     List<Extension> findExtensionsByOwner(@Param("name") String name);
+    // NOTE when returning collection of Entities, it should be in the corresponding Entity Repository
 
 
     // FEATURED
