@@ -29,6 +29,8 @@ public interface ExtensionService {
 
     List<ExtensionDto> getAllSortedByPopularity();
 
+    void updateLink(String newLink, Long id);
+
 
 
 //    Blob downloadFile(Long id) throws IOException, SQLException;

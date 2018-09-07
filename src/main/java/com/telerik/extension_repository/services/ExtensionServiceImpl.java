@@ -81,6 +81,11 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
+    public void updateLink(String newLink, Long id) {
+        this.extensionRepository.updateSourceLink(newLink, id);
+    }
+
+    @Override
     public List<ExtensionDto> getAllFeatured() {
        return this.extensionRepository.findAllFeatured()
                 .stream()

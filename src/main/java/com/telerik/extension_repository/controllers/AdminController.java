@@ -6,16 +6,15 @@ import com.telerik.extension_repository.models.PropertiesDto;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
-import com.telerik.extension_repository.services.interfaces.AdminService;
-import com.telerik.extension_repository.services.interfaces.ExtensionService;
-import com.telerik.extension_repository.services.interfaces.PropertiesService;
-import com.telerik.extension_repository.services.interfaces.UserService;
+import com.telerik.extension_repository.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -33,6 +32,9 @@ public class AdminController {
 
     @Autowired
     private PropertiesService propertiesService;
+
+    @Autowired
+    private GithubApiService githubApiService;
 
 
     @GetMapping("extensions")
@@ -203,4 +205,12 @@ public class AdminController {
         this.propertiesService.updateInterval(propertiesDto.getUpdateInterval());
         return "redirect:/admin/sync-panel";
     }
+
+    @PostMapping("/synchronizeGitData/{id}")
+    public String synchronizeGitData(@PathVariable("id") Long id) throws IOException {
+        ExtensionDto extensionDto = this.extensionService.getById(id);
+        this.githubApiService.updateGithubData(extensionDto.getSource_repository_link());
+        return "redirect:/admin/extensions";
+    }
+
 }

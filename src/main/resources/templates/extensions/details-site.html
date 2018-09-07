@@ -50,8 +50,12 @@
                th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}">Feature</a>
             <a sec:authorize="hasRole('ADMIN')"
                th:href="@{/extension/update/{id}(id = ${extension.getId()})}" class="btn btn-warning">Edit</a>
-            <a sec:authorize="hasRole('ADMIN')"
-               th:href="@{/admin/sync/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>
+
+            <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}">
+                <button type="submit" class="card-button btn btn-success" name="Synchronize">Synchronize</button>
+            </form>
+            <!--<a sec:authorize="hasRole('ADMIN')"-->
+               <!--th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>-->
             <a sec:authorize="hasRole('ADMIN')"
                th:href="@{/extension/delete/{id}(id = ${extension.getId()})}" class="btn btn-danger">Delete</a>
         </div>
