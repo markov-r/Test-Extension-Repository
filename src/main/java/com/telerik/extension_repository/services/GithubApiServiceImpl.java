@@ -76,7 +76,7 @@ public class GithubApiServiceImpl implements GithubApiService, InitializingBean 
 //    @PostConstruct
     private void triggerGitUpdate() {
 
-        Thread gitThread = new Thread(() -> {
+        Thread gitThread = new Thread(() -> {   //TODO: replace anonymous class creation with standard class that extends Thread.
             System.out.println("#######" + Thread.currentThread().getName() + "########");
             while (true) {
                 try {

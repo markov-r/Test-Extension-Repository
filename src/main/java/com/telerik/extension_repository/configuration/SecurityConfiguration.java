@@ -98,6 +98,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .buildSessionFactory();
 //    }
 
-
-
 }

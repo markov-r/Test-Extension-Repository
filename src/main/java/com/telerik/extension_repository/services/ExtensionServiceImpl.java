@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -75,14 +76,13 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public List<ExtensionDto> getAllFeatured() {
-        List<Extension> extensions = this.extensionRepository.findAllFeatured(true);
-        List<ExtensionDto> extensionModelViews = new ArrayList<>();
-        for (Extension extension : extensions) {
-            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
-            extensionModelViews.add(extensionModelView);
-        }
-        return extensionModelViews;
-    }
+
+       return this.extensionRepository.findAllFeatured()
+                .stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .limit(8)
+                .collect(Collectors.toList());
+       }
 
     @Override
     public List<ExtensionDto> getAllSortedByDate() {

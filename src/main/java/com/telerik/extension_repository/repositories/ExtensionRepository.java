@@ -32,13 +32,14 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.status = :pending")
     List<Extension> findAllByStatus(@Param("pending") Status pending);
 
+    // FEATURED
     @Query(value =
-            "SELECT * FROM extensions AS e " +
-                    "WHERE e.is_featured = :isFeatured " +
-                    "LIMIT 8",
-                    nativeQuery = true)
-    List<Extension> findAllFeatured(@Param("isFeatured") boolean isFeatured);
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.isFeatured = true AND " +
+                    "e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED")
+    List<Extension> findAllFeatured();
 
+    // NEW
     @Query(value =
             "SELECT * FROM extensions AS e " +
                     "JOIN git_hub_data AS g " +
@@ -47,6 +48,14 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "LIMIT 8",
                     nativeQuery = true)
     List<Extension> getAllSortedByDate();
+
+    // POPULAR
+    @Query(value = "SELECT * FROM extensions e " +
+            "ORDER BY e.number_of_downloads DESC " +
+            "LIMIT 8",
+            nativeQuery = true)
+    List<Extension> getAllSortedByPopularity();
+
 
     @Query(value =
             "SELECT e FROM Extension AS e " +
@@ -80,12 +89,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Query(value = "UPDATE Extension e " +
             "SET e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED WHERE id = :id")
     void approveExtension(@Param("id") long id);
-
-    @Query(value = "SELECT * FROM extensions e " +
-                   "ORDER BY e.number_of_downloads DESC " +
-                   "LIMIT 8",
-                    nativeQuery = true)
-    List<Extension> getAllSortedByPopularity();
 
     @Modifying
     @Query(value = "UPDATE Extension e " +

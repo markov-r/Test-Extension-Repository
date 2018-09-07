@@ -1,22 +1,12 @@
 package com.telerik.extension_repository.controllers;
 
-
-import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
-//import com.telerik.extension_repository.services.NotificationServiceImpl;
-import com.telerik.extension_repository.services.UserServiceImpl;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
-//import com.telerik.extension_repository.services.interfaces.NotificationService;
-//import com.telerik.extension_repository.services.interfaces.NotificationService;
 import com.telerik.extension_repository.services.interfaces.UserService;
-import com.telerik.extension_repository.utils.Messages;
-//import com.telerik.extension_repository.utils.UserSession;
 import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -36,12 +25,6 @@ public class UserController {
 
     @Autowired
     private AuthorityService roleService;
-
-//    @Autowired
-//    private NotificationService notificationService;
-
-//    @Autowired
-//    private NotificationService notificationService;
 
     @GetMapping("user/all")
     public String getAllExtensionPage(Model model) {
