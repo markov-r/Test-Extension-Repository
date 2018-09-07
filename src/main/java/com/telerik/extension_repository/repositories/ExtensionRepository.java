@@ -44,6 +44,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SELECT * FROM extensions AS e " +
                     "JOIN git_hub_data AS g " +
                     "ON e.id = g.id " +
+                    "WHERE e.status = 'APPROVED' " +     //the proper place for WHERE clause
                     "ORDER BY g.latest_commit DESC " +
                     "LIMIT 8",
                     nativeQuery = true)
@@ -51,6 +52,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     // POPULAR
     @Query(value = "SELECT * FROM extensions e " +
+            "WHERE e.status = 'APPROVED' " +
             "ORDER BY e.number_of_downloads DESC " +
             "LIMIT 8",
             nativeQuery = true)

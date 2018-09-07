@@ -1,15 +1,11 @@
 package com.telerik.extension_repository.services;
 
-
-//import com.telerik.extension_repository.controllers.DownloadController;
-
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.Tag;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.ExtensionDto;
-import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
 import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
@@ -39,10 +35,11 @@ public class ExtensionServiceImpl implements ExtensionService {
     private FileSystemStorageService fileStorageService;
 
     @Autowired
-    public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository, @Lazy
-            ModelMapper modelMapper, @Lazy
-                                        GithubApiService githubApiService, @Lazy
-                                        UserRepository userRepository, @Lazy TagRepository tagRepository,
+    public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository,
+                                @Lazy ModelMapper modelMapper,
+                                @Lazy GithubApiService githubApiService,
+                                @Lazy UserRepository userRepository,
+                                @Lazy TagRepository tagRepository,
                                 @Lazy FileSystemStorageService fileStorageService) {
         this.extensionRepository = extensionRepository;
         this.modelMapper = modelMapper;
@@ -63,20 +60,19 @@ public class ExtensionServiceImpl implements ExtensionService {
         return extensionModelViews;
     }
 
-    @Override
-    public List<ExtensionDto> getAllApproved() {
-        List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.APPROVED);
-        List<ExtensionDto> extensionModelViews = new ArrayList<>();
-        for (Extension extension : extensions) {
-            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
-            extensionModelViews.add(extensionModelView);
-        }
-        return extensionModelViews;
-    }
+//    @Override
+//    public List<ExtensionDto> getAllApproved() {
+//        List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.APPROVED);
+//        List<ExtensionDto> extensionModelViews = new ArrayList<>();
+//        for (Extension extension : extensions) {
+//            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
+//            extensionModelViews.add(extensionModelView);
+//        }
+//        return extensionModelViews;
+//    }
 
     @Override
     public List<ExtensionDto> getAllFeatured() {
-
        return this.extensionRepository.findAllFeatured()
                 .stream()
                 .map(e -> this.modelMapper.map(e, ExtensionDto.class))
@@ -86,25 +82,11 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public List<ExtensionDto> getAllSortedByDate() {
-        List<Extension> extensions = this.extensionRepository.getAllSortedByDate();
-        List<ExtensionDto> modelViews = new ArrayList<>();
-        for (Extension extension : extensions) {
-            ExtensionDto model = this.modelMapper.map(extension, ExtensionDto.class);
-            modelViews.add(model);
-        }
-        return modelViews;
-    }
-
-
-    @Override
-    public List<ExtensionDto> getAll() {
-        List<Extension> extensions = this.extensionRepository.findAll();
-        List<ExtensionDto> extensionModelViews = new ArrayList<>();
-        for (Extension extension : extensions) {
-            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
-            extensionModelViews.add(extensionModelView);
-        }
-        return extensionModelViews;
+        return this.extensionRepository.getAllSortedByDate()
+                .stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .limit(8)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -159,10 +141,10 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
 
-    @Override
-    public List<Extension> getAllExtensions() {
-        return this.extensionRepository.findAll();
-    }
+//    @Override
+//    public List<Extension> getAllExtensions() {
+//        return this.extensionRepository.findAll();
+//    }
 
     @Override
     @PreAuthorize("isAuthenticated()")
@@ -214,13 +196,11 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public List<ExtensionDto> getAllSortedByPopularity() {
-        List<Extension> extensions = this.extensionRepository.getAllSortedByPopularity();
-        List<ExtensionDto> extensionDtoList = new ArrayList<>();
-        for (Extension extension : extensions) {
-            ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);
-            extensionDtoList.add(extensionDto);
-        }
-        return extensionDtoList;
+        return this.extensionRepository.getAllSortedByPopularity()
+                .stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .limit(8)
+                .collect(Collectors.toList());
     }
 
     private GitHubData getGitHubData(Extension extension) {
@@ -230,7 +210,7 @@ public class ExtensionServiceImpl implements ExtensionService {
         try {
             gitHubData = githubApiService.updateGithubData(fullUrl);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()); //TODO: use logger
             e.printStackTrace();
         }
         return gitHubData;
@@ -238,41 +218,22 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void approve(Long id) {
-//        addExtensionModel.setStatus(Status.APPROVED);
-//        ModelMapper modelMapper = new ModelMapper();
-//        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
-//        this.extensionRepository.saveAndFlush(extension);
         this.extensionRepository.approveExtension(id);
     }
 
-//    @Override
-//    public ExtensionDto getByIdToEdit(Long id) {
-//        Extension extension = this.extensionRepository.getOne(id);
-//        ModelMapper modelMapper = new ModelMapper();
-//        ExtensionDto extensionModel = null;
-//        if (extension != null) {
-//            extensionModel = modelMapper.map(extension, ExtensionDto.class);
+//    private boolean isUserAuthorOrAdmin(Extension article) {
+//        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+//                .getAuthentication().getPrincipal();
 //
-//        }
-//        return extensionModel;
+//        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
 //
-//
+//        return userEntity.isAdmin() || userEntity.isAuthor(article);
 //    }
-
-    private boolean isUserAuthorOrAdmin(Extension article) {
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-
-        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
-
-        return userEntity.isAdmin() || userEntity.isAuthor(article);
-    }
 
     @Override
     public ExtensionDto getById(Long id) {
         Optional<Extension> extension = this.extensionRepository.findById(id);
-        ExtensionDto extensionStatusView = modelMapper.map(extension, ExtensionDto.class);
-        return extensionStatusView;
+        return modelMapper.map(extension, ExtensionDto.class);
     }
 
     @Override
@@ -313,6 +274,4 @@ public class ExtensionServiceImpl implements ExtensionService {
 
         return tags;
     }
-
-
 }

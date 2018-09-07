@@ -10,13 +10,10 @@ import java.util.List;
 public interface ExtensionService {
 
     void persist(ExtensionDto addExtensionModel);
-   // ExtensionDto getByIdToEdit(Long id);
     ExtensionDto getById(Long id);
     void update(ExtensionDto extensionModel);
     void approve(Long id);
-     List<ExtensionDto> getAll();
-     List<ExtensionDto> getAllApproved();
-    List<Extension> getAllExtensions();
+//    List<ExtensionDto> getAllApproved();
     ExtensionDto getByIdToDetailsPage(Long id);
     List<ExtensionDto> getAllByName(String name);
     List<ExtensionDto> getAllJsons();

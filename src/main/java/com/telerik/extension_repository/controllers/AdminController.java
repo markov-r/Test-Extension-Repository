@@ -36,7 +36,7 @@ public class AdminController {
 
     @GetMapping("extensions")
     public String getAdminPage(Model model){
-        List<ExtensionDto> extensionViews = this.extensionService.getAll();
+        List<ExtensionDto> extensionViews = this.extensionService.getAllExt();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");
         return "base-layout";

@@ -39,7 +39,7 @@ public class ExtensionController {
 
     @GetMapping("/all")
     public String getAllExtensionPage(Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAll();
+        List<ExtensionDto> extensionViews = this.extensionService.getAllExt();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view", "/extensions/extensions-table");
         return "base-layout";
@@ -113,7 +113,7 @@ public class ExtensionController {
 
         model.addAttribute("view", "extensions/edit")
                 .addAttribute("extension", extensionDto);
-        model.addAttribute("extensions", this.extensionService.getAll());
+        model.addAttribute("extensions", this.extensionService.getAllExt());
         return "extensions/extension-add_old";
     }
 
