@@ -1,12 +1,12 @@
 <div th:include="~{fragments/search}"></div>
 <div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
     <form>
-        <a href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>
-        <a href="/extensions/new" class="btn btn-warning m-1"> New</a>
-        <a href="/extensions/popular" class="btn btn-warning m-1"> Popular</a>
-        <a href="/user/all" class="btn btn-warning m-1"> Own</a>
+        <a sec:authorize="hasRole('ADMIN')" href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>
+        <a sec:authorize="hasRole('ADMIN')" href="/extensions/new" class="btn btn-warning m-1"> New</a>
+        <a sec:authorize="hasRole('ADMIN')" href="/extensions/popular" class="btn btn-warning m-1"> Popular</a>
+        <!--<a href="/user/all" class="btn btn-warning m-1"> Own</a>-->
     </form>
-    <div class="text-center"><h5 class="display-3" th:text="|${type} extensions|"> </h5></div>
+    <p class="text-center"><h6 class="display-4" th:text="|${type} extensions|"> </h6></p>
 
     <table class="table table-striped table-hover">
         <thead>
