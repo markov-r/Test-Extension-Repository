@@ -6,16 +6,13 @@
     <a class="navbar-brand" href="/">Extension Repository</a>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="/">Home</a>-->
-            <!--</li>-->
             <li class="nav-item dropdown" sec:authorize="hasAnyRole('ADMIN','USER')">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Extensions
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
-                    <a class="dropdown-item" href="/">Show</a>
-                    <a class="dropdown-item" href="/extensions/add">Add</a>
+                    <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admin/all">All Extensions</a>
+                    <a class="dropdown-item" sec:authorize="hasAnyRole('ADMIN','USER')" href="/extensions/add">Add</a>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ADMIN')">
@@ -41,7 +38,7 @@
                     My Profile
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1" >
-                    <a class="dropdown-item" href="/user/all">Own Extensions</a>
+                    <a class="dropdown-item" href="/user/own">Own Extensions</a>
                     <a class="dropdown-item" href="/user/profile">My profile details</a>
                 </div>
             </li>

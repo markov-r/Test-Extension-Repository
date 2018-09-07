@@ -8,9 +8,18 @@
                 <input class="form-control" placeholder="Keyword for search ..." type="text">
                 <span class="input-group-btn">
                                     <button class="btn btn-primary" type="button">Search</button>
-                                  </span>
+
+                </span>
             </div>
         </div>
+
+    <li class="nav-item">
+        <a href="#" class="nav-link" data-toggle="dropdown">Search</a>
+        <ul class="dropdown-menu">
+            <li><a th:href="@{/search/name}">Extension's Name</a></li>
+            <li><a th:href="@{/search/}">Tag</a></li>
+        </ul>
+    </li>
     </div>
 </div>
 </div>

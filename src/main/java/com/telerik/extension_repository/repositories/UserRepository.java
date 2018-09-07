@@ -38,8 +38,11 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findAll();
 
 
-    @Query(value = "SELECT * FROM extensions AS e WHERE e.user_id = :id", nativeQuery = true)
-    Set<Extension> findOwnExtensions(@Param("id") Long id);
+    @Query(value = "SELECT * FROM extensions AS e " +
+            "JOIN users AS u " +
+            "ON (u.id as userid = e.user_id as extuserid) " +
+            "WHERE u.username = :name", nativeQuery = true)
+    Set<Extension> findOwnExtensions(@Param("name") String name);
 
     @Query(value = "SELECT u FROM User AS u " +
             "WHERE u.username LIKE CONCAT('%', :searchWord, '%')")

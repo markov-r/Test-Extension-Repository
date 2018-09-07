@@ -26,11 +26,11 @@ public class UserController {
     @Autowired
     private AuthorityService roleService;
 
-    @GetMapping("user/all")
-    public String getAllExtensionPage(Model model) {
+    @GetMapping("user/own")
+    public String getOwnExtensionPage(Model model) {
         UserDetails userDetails = UserSession.getCurrentUser();
         RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-        Set<ExtensionDto> extensionViews = this.userService.getOwnExtensions(currUser.getId());
+        Set<ExtensionDto> extensionViews = this.userService.getOwnExtensions(userDetails.getUsername());
         model.addAttribute("type", "Own");
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view", "/extensions/extensions-table");

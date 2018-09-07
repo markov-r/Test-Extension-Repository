@@ -122,8 +122,8 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public Set<ExtensionDto> getOwnExtensions(Long id) {
-        Set<Extension> extensions = this.userRepository.findOwnExtensions(id);
+    public Set<ExtensionDto> getOwnExtensions(String username) {
+        Set<Extension> extensions = this.userRepository.findOwnExtensions(username);
         Set<ExtensionDto> extensionDtos = new HashSet<>();
         for (Extension extension : extensions) {
             ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);

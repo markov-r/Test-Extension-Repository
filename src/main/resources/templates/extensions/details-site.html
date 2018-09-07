@@ -43,7 +43,7 @@
         </div>
         <div>
             <a th:href="${extension.getSource_repository_link()}" class="btn btn-info">Repository</a>
-            <a th:href="@{/extension/download/{id}(id = ${extension.getId()})}" class="btn btn-primary">Download</a>
+            <a th:href="@{/public/download/{id}(id = ${extension.getId()})}" class="btn btn-primary">Download</a>
             <a sec:authorize="hasRole('ADMIN')"
                th:text="${extension.isFeatured() ? 'Remove Feature' : 'Make Feature'}"
                th:class="${extension.isFeatured() ? 'btn btn-primary' : 'btn btn-info'}"

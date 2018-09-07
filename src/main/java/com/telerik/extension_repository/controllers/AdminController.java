@@ -5,6 +5,7 @@ import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.PropertiesDto;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.ExtensionDto;
+import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.services.interfaces.AdminService;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.PropertiesService;
@@ -173,13 +174,13 @@ public class AdminController {
 //        return "redirect:/users/login";
 //    }
 //
-//    @GetMapping("all")
-//    public String getAllExtensionPage(Model model){
-//        List<ExtensionModelView> extensionViews = this.extensionService.getAll();
-//        model.addAttribute("extensions", extensionViews);
-//        model.addAttribute("view","/extensions/extensions-table");
-//        return "base-layout";
-//    }
+    @GetMapping("all")
+    public String getAllExtensionPage(Model model){
+        List<ExtensionDto> extensionViews = this.extensionService.getAllExt();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view","/extensions/extensions-table");
+        return "base-layout";
+    }
 
     @GetMapping("/sync-panel")
     public String getSyncPanel(Model model){
