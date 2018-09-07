@@ -27,7 +27,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     List<Extension> findAll();
 
 
-       @Query(value =
+    @Query(value =
             "SELECT e FROM Extension AS e " +
                     "WHERE e.status = :pending")
     List<Extension> findAllByStatus(@Param("pending") Status pending);
@@ -48,8 +48,10 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     nativeQuery = true)
     List<Extension> getAllSortedByDate();
 
-
-
+    @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.status = :approved")
+    List<Extension> findAllByStatusApproved(@Param("approved") Status pending);
 
 
     List<Extension> getAllByTags(String tag);

@@ -50,9 +50,20 @@ public class HomeController {
     public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
         ExtensionDto extensionDto = this.extensionService.getByIdToDetailsPage(id);
         model.addAttribute("extension", extensionDto);
-        model.addAttribute("view", "/extensions/details");
+        model.addAttribute("view", "/extensions/details-site");
         return "base-layout";
     }
+
+
+//    //get Extension details page WO
+//    @GetMapping("details/{id}")
+//    public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
+//        ExtensionDto extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
+//        model.addAttribute("extension", extensionDetailsView);
+//        model.addAttribute("view", "/extensions/details");
+//        return "base-layout";
+//    }
+//
 
     @GetMapping("public/download/{id}")
     @ResponseBody

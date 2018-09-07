@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -93,25 +94,63 @@ public class ExtensionController {
         return "base-layout";
     }
 
-// get Extension details page WO
-//    @GetMapping("{id}")
-//    public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
-//        ExtensionDto extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
-//        model.addAttribute("extension", extensionDetailsView);
-//        model.addAttribute("view", "/extensions/extension-details");
-//        return "base-layout";
-//    }
-
-
 
     @GetMapping("edit/{id}")
-    public String getEditExtensionPage(Model model, @PathVariable Long id) {
-        ExtensionDto extensionModel = this.extensionService.getById(id);
-        model.addAttribute("view", "/extensions/extension-edit");
-        model.addAttribute("type", "Edit");
-        model.addAttribute("extension", extensionModel);
-        return "base-layout";
+    @PreAuthorize("isAuthenticated()")
+    public String edit(Model model, @PathVariable Long id) {
+
+//        if (!this.isCurrentUserAdmin()) {
+//            this.notifyService.addErrorMessage(Messages.YOU_HAVE_NO_PERMISSION);
+//            return "redirect:/login";
+//        }
+//
+//        if (!this.extensionService.(id)) {
+//            this.notifyService.addErrorMessage(Messages.NOT_FOUND);
+//            return "redirect:/";
+//        }
+
+        ExtensionDto extensionDto = this.extensionService.getById(id);
+
+        model.addAttribute("view", "extensions/edit")
+                .addAttribute("extension", extensionDto);
+        model.addAttribute("extensions", this.extensionService.getAll());
+        return "extensions/extension-add_old";
     }
+
+//    @PostMapping("/article/edit/{id}")
+//    @PreAuthorize("isAuthenticated()")
+//    public String editAction(ArticleBindingModel articleBindingModel, @PathVariable Integer id) {
+//
+//        if (!this.isCurrentUserAdmin()) {
+//            this.notifyService.addErrorMessage(Messages.YOU_HAVE_NO_PERMISSION);
+//            return "redirect:/login";
+//        }
+//
+//        if (!this.articleRepository.exists(id)) {
+//            this.notifyService.addErrorMessage(Messages.NOT_FOUND);
+//            return "redirect:/";
+//        }
+//
+//        Article article = this.articleRepository.findOne(id);
+//
+//        article.setTitle(articleBindingModel.getTitle());
+//        article.setContent(articleBindingModel.getContent());
+//        Destination destination = this.destinationRepository.findOne(articleBindingModel.getDestinationId());
+//        article.setDestination(destination);
+//        this.articleRepository.saveAndFlush(article);
+//        this.notifyService.addInfoMessage(Messages.SUCCESSFULLY_EDITED_ARTICLE);
+//        return "redirect:/article/" + article.getId();
+//
+//    }
+
+//    @GetMapping("edit/{id}")
+//    public String getEditExtensionPage(Model model, @PathVariable Long id) {
+//        ExtensionDto extensionModel = this.extensionService.getById(id);
+//        model.addAttribute("view", "/extensions/extension-edit");
+//        model.addAttribute("type", "Edit");
+//        model.addAttribute("extension", extensionModel);
+//        return "base-layout";
+//    }
 
     @PostMapping("edit/{id}")
     public String editExtension(@ModelAttribute ExtensionDto extensionModel, @PathVariable Long id) {

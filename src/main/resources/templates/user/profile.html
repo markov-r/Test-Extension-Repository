@@ -1,10 +1,17 @@
 <div class="container body-container">
     <div class="row">
-        <div id="main" class="col-sm-9">
-            <div>
-                <span th:text="${user.email}"></span>
-                <br/>
-                <span th:text="${user.username}"></span>
+        <div id="main" class="col-sm-12">
+
+            <article>
+                <header>
+                    <h2 th:text="${user.username}"></h2>
+                </header>
+
+                <p th:text="${user.email}"></p>
+
+                <!--<small class="author" th:text="${comment.author.fullName}"></small>-->
+                <!--<small class="destination">Article:</small>-->
+                <!--<small class="destination" th:text="${comment.article.title}"></small>-->
 
                 <footer>
 
@@ -13,12 +20,30 @@
                         <th:block sec:authorize="isAuthenticated()">
                             <a class="btn btn-success btn-xs" th:href="@{/user/edit/{id}(id = ${user.id})}">Edit
                                 profile</a>
-                            <!--<a class="btn btn-danger btn-xs" th:href="@{/user/delete/{id}(id = ${user.id})}">Delete profile</a>-->
                         </th:block>
 
+                        <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
                     </div>
                 </footer>
-            </div>
+            </article>
+            --------------------------------------
+            <!--<div th:object="${user}">-->
+                <!--<span th:text="*{username}"></span>-->
+                <!--<br/>-->
+                <!--<span th:text="*{email}"></span>-->
+                <!--<footer>-->
+
+                    <!--<div class="pull-right">-->
+
+                        <!--<th:block sec:authorize="isAuthenticated()">-->
+                            <!--<a class="btn btn-success btn-xs" th:href="@{/user/edit/{id}(id = ${user.id})}">Edit-->
+                                <!--profile</a>-->
+                            <!--&lt;!&ndash;<a class="btn btn-danger btn-xs" th:href="@{/user/delete/{id}(id = ${user.id})}">Delete profile</a>&ndash;&gt;-->
+                        <!--</th:block>-->
+
+                    <!--</div>-->
+                <!--</footer>-->
+            <!--</div>-->
         </div>
     </div>
 </div>

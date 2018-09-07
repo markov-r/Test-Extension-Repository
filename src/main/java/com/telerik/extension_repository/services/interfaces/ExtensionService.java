@@ -15,6 +15,7 @@ public interface ExtensionService {
     void update(ExtensionDto extensionModel);
     void approve(Long id);
      List<ExtensionDto> getAll();
+     List<ExtensionDto> getAllApproved();
     List<Extension> getAllExtensions();
     ExtensionDto getByIdToDetailsPage(Long id);
     List<ExtensionDto> getAllByName(String name);

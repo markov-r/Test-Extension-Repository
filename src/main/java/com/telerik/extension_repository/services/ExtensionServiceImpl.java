@@ -63,6 +63,17 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
+    public List<ExtensionDto> getAllApproved() {
+        List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.APPROVED);
+        List<ExtensionDto> extensionModelViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
+            extensionModelViews.add(extensionModelView);
+        }
+        return extensionModelViews;
+    }
+
+    @Override
     public List<ExtensionDto> getAllFeatured() {
         List<Extension> extensions = this.extensionRepository.findAllFeatured(true);
         List<ExtensionDto> extensionModelViews = new ArrayList<>();
