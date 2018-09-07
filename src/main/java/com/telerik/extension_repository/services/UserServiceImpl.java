@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
 
-        if(this.userRepository.findAll().isEmpty()) {
+        if (this.userRepository.findAll().isEmpty()) {
             user.setAuthorities(this.getAuthorities("ROLE_ADMIN"));
         } else {
             user.setAuthorities(this.getAuthorities("ROLE_USER"));
@@ -67,7 +67,6 @@ public class UserServiceImpl implements UserService {
 //        user.addRole(role);
         this.userRepository.save(user);
     }
-
 
 
     @Override
@@ -115,22 +114,22 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.existsById(String.valueOf(id));
     }
 
-    //    private User getCurrentUser() {
+//    private User getCurrentUser() {
 //        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
 //                .getAuthentication().getPrincipal();
 //        return this.userRepository.findOneByUsername(user.getUsername());
 //    }
 
-    @Override
-    public Set<ExtensionDto> getOwnExtensions(String username) {
-        Set<Extension> extensions = this.userRepository.findOwnExtensions(username);
-        Set<ExtensionDto> extensionDtos = new HashSet<>();
-        for (Extension extension : extensions) {
-            ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);
-            extensionDtos.add(extensionDto);
-        }
-        return extensionDtos;
-    }
+//    @Override
+//    public List<ExtensionDto> getOwnExtensions(String username) {
+//        List<Extension> extensions = this.userRepository.findOwnExtensions(username);
+//        List<ExtensionDto> extensionDtos = new ArrayList<>();
+//        for (Extension extension : extensions) {
+//            ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);
+//            extensionDtos.add(extensionDto);
+//        }
+//        return extensionDtos;
+//    }
 
     @Override
     public User findByUsername(String username) {
@@ -144,11 +143,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoggedUser getByUsernameAndPassword(String username, String password) {
-        User user = this.userRepository.findByUsernameAndPassword(username,password);
+        User user = this.userRepository.findByUsernameAndPassword(username, password);
         ModelMapper modelMapper = new ModelMapper();
         LoggedUser loggedUser = null;
         if (user != null) {
-            loggedUser = modelMapper.map(user,LoggedUser.class);
+            loggedUser = modelMapper.map(user, LoggedUser.class);
         }
         return loggedUser;
     }
@@ -158,7 +157,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = this.userRepository.findByUsername(username);
         ModelMapper modelMapper = new ModelMapper();
         LoginUser loginUser = null;
-        if (user != null){
+        if (user != null) {
             loginUser = modelMapper.map(user, LoginUser.class);
         }
         return loginUser;
@@ -169,7 +168,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = this.userRepository.findByUsername(username);
         ModelMapper modelMapper = new ModelMapper();
         RegisterUserModel userByName = null;
-        if (user != null){
+        if (user != null) {
             userByName = modelMapper.map(user, RegisterUserModel.class);
         }
         return userByName;
@@ -183,7 +182,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findOneByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException(Errors.INVALID_CREDENTIALS);
         }
 

@@ -3,6 +3,7 @@ package com.telerik.extension_repository.controllers;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
+import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,16 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    ExtensionService extensionService;
+
+    @Autowired
     private AuthorityService roleService;
 
     @GetMapping("user/own")
     public String getOwnExtensionPage(Model model) {
         UserDetails userDetails = UserSession.getCurrentUser();
         RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-        Set<ExtensionDto> extensionViews = this.userService.getOwnExtensions(userDetails.getUsername());
+        List<ExtensionDto> extensionViews = this.extensionService.findExtensionsByOwner(userDetails.getUsername());
         model.addAttribute("type", "Own");
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view", "/extensions/extensions-table");

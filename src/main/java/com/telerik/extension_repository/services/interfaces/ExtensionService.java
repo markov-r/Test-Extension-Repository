@@ -13,7 +13,7 @@ public interface ExtensionService {
     ExtensionDto getById(Long id);
     void update(ExtensionDto extensionModel);
     void approve(Long id);
-//    List<ExtensionDto> getAllApproved();
+    List<ExtensionDto> findExtensionsByOwner(String username);
     ExtensionDto getByIdToDetailsPage(Long id);
     List<ExtensionDto> getAllByName(String name);
     List<ExtensionDto> getAllJsons();

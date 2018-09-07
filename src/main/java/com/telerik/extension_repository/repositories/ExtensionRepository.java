@@ -32,6 +32,14 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.status = :pending")
     List<Extension> findAllByStatus(@Param("pending") Status pending);
 
+    @Query(value =
+            "SELECT * FROM extensions AS e " +
+            "JOIN users AS u " +
+            "ON (u.id  = e.user_id) " +
+            "WHERE u.username = :name", nativeQuery = true)
+    List<Extension> findExtensionsByOwner(@Param("name") String name);
+
+
     // FEATURED
     @Query(value =
             "SELECT e FROM Extension AS e " +

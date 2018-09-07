@@ -71,6 +71,15 @@ public class ExtensionServiceImpl implements ExtensionService {
 //        return extensionModelViews;
 //    }
 
+
+    @Override
+    public List<ExtensionDto> findExtensionsByOwner(String username) {
+        return this.extensionRepository.findExtensionsByOwner(username)
+                .stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<ExtensionDto> getAllFeatured() {
        return this.extensionRepository.findAllFeatured()
