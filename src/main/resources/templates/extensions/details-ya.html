@@ -1,0 +1,64 @@
+<main class="col-4 offset-4 text-center">
+    <div class="container">
+<div class="moviecard" th:object="${extension}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div id="movie-content">
+        <div class="movie-ratings">
+            <span class="glyphicon glyphicon-download-alt"></span>
+            <span th:text="${extension.getNumberOfDownloads()}">Number of Downloads</span>
+        </div>
+        <div  class="movie-title">
+            <a th:text="${extension.getName()}">Extension name</a>
+        </div>
+        <span
+                class="movie-year" th:text="${extension.getVersion()}">Version</span>
+        <div class="movie-details">
+
+        </div>
+        <div class="movie-castcrew"><span class="title">Author</span>
+            <span class="name" th:text="${extension.getOwner().getUsername()}">John Doe</span>
+        </div>
+        <!--<div class="movie-castcrew"><span class="title">Date</span>-->
+            <!--<span class="name" th:text="${#dates.format(extension.getDate(), 'dd-MMM-yyyy')}">19-Aug-2018</span>-->
+        <!--</div>-->
+        <div class="movie-synopsis" th:text="${extension.getDescription()}">Description
+        </div>
+        <div class="movie-issues">
+            <div class="movie-details">
+                <span class="movie-rating">Open Issues:
+                <span class="badge" th:text="${extension.getGitHubData().getIssuesCount()}">0</span>
+                </span>
+                <span class="movie-duration">Pull Requests:
+                <span class="badge" th:text="${extension.getGitHubData().getPullsCount()}">0</span>
+                </span>
+                <span class="movie-genre">Last Commit Date:
+                <span class="badge" th:text="${#dates.format(extension.getGitHubData().getLastCommit(), 'dd-MMM-yyyy')}">0</span>
+                </span>
+            </div>
+        </div>
+        <div class="movie-details">
+            <p>
+                <a class="btn btn-basic btn-xs" th:each="tag:${extension.getTags()}" th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
+            </p>
+            <a class="badge badge-info" th:each="tag : ${extension.getTags()}"
+               th:text="${tag.getName()}" th:href="@{/tag/{name}(name = ${tag.getName()})}">Info</a>
+
+        </div>
+        <!--<div>-->
+            <!--<a th:href="${extension.getSource_repository_link()}" class="btn btn-info">Repository</a>-->
+            <!--<a th:href="@{/extension/download/{id}(id = ${extension.getId()})}" class="btn btn-primary">Download</a>-->
+            <!--<a sec:authorize="hasRole('ADMIN')"-->
+               <!--th:text="${extension.isFeatured() ? 'Remove Feature' : 'Make Feature'}"-->
+               <!--th:class="${extension.isFeatured() ? 'btn btn-primary' : 'btn btn-info'}"-->
+               <!--th:href="@{/admin/featured/toggle-status/{id}(id=${extension.getId()})}">Feature</a>-->
+            <!--<a sec:authorize="hasRole('ADMIN')"-->
+               <!--th:href="@{/extension/update/{id}(id = ${extension.getId()})}" class="btn btn-warning">Edit</a>-->
+            <!--<a sec:authorize="hasRole('ADMIN')"-->
+               <!--th:href="@{/admin/sync/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>-->
+            <!--<a sec:authorize="hasRole('ADMIN')"-->
+               <!--th:href="@{/extension/delete/{id}(id = ${extension.getId()})}" class="btn btn-danger">Delete</a>-->
+        <!--</div>-->
+    </div>
+    </div>
+
+</div>
+</main>

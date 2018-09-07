@@ -8,7 +8,9 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class PropertiesRepositoryImpl implements PropertiesRepository {
@@ -35,12 +37,15 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
 
     @Override
     public void updateInterval(long updateInterval) {
-        while(true) {
-            long currentVersion = getProperties().getVersion();
+
+        for (int i = 0; i < 5; i++) {
+            //long currentVersion = getProperties().getVersion();
             int updates = 0;
+
             EntityTransaction et = em.getTransaction();
             try {
                 et.begin();
+                long currentVersion = em.createQuery("SELECT p.version FROM Properties p", Long.class).getSingleResult();
                 updates = em.createQuery("UPDATE Properties p SET p.updateInterval = :updateInterval, p.version = :newVersion WHERE p.version = :currVersion")
                         .setParameter("updateInterval", updateInterval)
                         .setParameter("currVersion", currentVersion)
@@ -57,13 +62,12 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
             } else {
                 try {
                     Thread.sleep((long) (Math.random() * 50));
-                }
-                catch (InterruptedException ie) {
+                } catch (InterruptedException ie) {
                     System.out.println(ie.getMessage());//TODO: logger
                 }
             }
-        }
 
+        }
     }
 
     @Override

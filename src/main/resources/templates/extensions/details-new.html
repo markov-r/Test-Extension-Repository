@@ -1,0 +1,52 @@
+<main class="col-4 offset-4 text-center">
+    <div class="container">
+
+    <!-- Gallery Items
+    ================================================== -->
+    <div class="span12 gallery-single" th:object="${extension}">
+
+        <div class="card">
+            <div class="span6">
+                <img src="#" class="align-left thumbnail" alt="image">
+            </div>
+            <div class="span6">
+                <article>
+                    <header>
+                        <h2 th:text="${extension.getName()}">Extension Name</h2>
+                    </header>
+                    <p th:text="${extension.getDescription()}">Desription</p>
+                    <p th:text="${extension.getNumberOfDownloads()}">Desription</p>
+                    <p th:text="${extension.getVersion()}">Version</p>
+
+                    <small class="author" th:text="${extension.getOwner().getUsername()}">Author</small>
+
+                    <p>
+                        <a class="btn btn-basic btn-xs" th:each="tag:${extension.getTags()}" th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
+                    </p>
+
+                    <footer>
+
+                        <div class="pull-right">
+
+                            <th:block sec:authorize="isAuthenticated()">
+                                <a class="btn btn-success btn-xs" th:href="@{/extension/edit/{id}(id = ${extension.id})}">Edit</a>
+                                <a class="btn btn-danger btn-xs" th:href="@{/extension/delete/{id}(id = ${extension.id})}">Delete</a>
+                            </th:block>
+
+                            <a sec:authorize="isAuthenticated()" class="btn btn-default btn-xs" th:href="@{/extensions/all}">back &raquo;</a>
+                            <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+
+
+
+
+        </div>
+
+    </div><!-- End gallery-single-->
+
+</div><!-- End container row -->
+
+</main> <!-- End Container -->
