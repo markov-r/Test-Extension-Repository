@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import java.util.Date;
 
 @Repository
@@ -34,20 +35,28 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
 
     @Override
     public void updateInterval(long updateInterval) {
-
         while(true) {
             long currentVersion = getProperties().getVersion();
-
-            int updates = em.createQuery("UPDATE Properties p SET p.updateInterval = :updateInterval, p.version = :newVersion WHERE p.version = :currVersion")
-                    .setParameter("updateInterval", updateInterval)
-                    .setParameter("currVersion", currentVersion)
-                    .setParameter("newVersion", currentVersion + 1)
-                    .executeUpdate();
+            int updates = 0;
+            EntityTransaction et = em.getTransaction();
+            try {
+                et.begin();
+                updates = em.createQuery("UPDATE Properties p SET p.updateInterval = :updateInterval, p.version = :newVersion WHERE p.version = :currVersion")
+                        .setParameter("updateInterval", updateInterval)
+                        .setParameter("currVersion", currentVersion)
+                        .setParameter("newVersion", currentVersion + 1)
+                        .executeUpdate();
+                et.commit();
+            } catch (RuntimeException e) {
+                if (et.isActive()) {
+                    et.rollback();
+                }
+            }
             if (updates == 1) {
                 break;
             } else {
                 try {
-                    Thread.sleep((long) Math.random() * 50);
+                    Thread.sleep((long) (Math.random() * 50));
                 }
                 catch (InterruptedException ie) {
                     System.out.println(ie.getMessage());//TODO: logger
