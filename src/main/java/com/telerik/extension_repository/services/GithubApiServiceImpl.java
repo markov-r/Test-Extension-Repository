@@ -86,10 +86,11 @@ public class GithubApiServiceImpl implements GithubApiService, InitializingBean 
                     System.out.println("INTERVAL IS -> " + interval);
                     Thread.sleep(interval);
                 } catch (InterruptedException e) {
-                    System.out.println("Thread is interupted!");
+                    System.out.println("Thread is interrupted!");
                     e.getMessage();
                     propertiesService.updateFailureDetails("Git Data update failed due to an interrupted thread.");
                     propertiesService.updateLastFailedSync(new Date());
+                    Thread.currentThread().interrupt();
                 }
             }
         });

@@ -1,7 +1,9 @@
 package com.telerik.extension_repository.configuration;
 
+import com.telerik.extension_repository.entities.Properties;
 import com.telerik.extension_repository.services.interfaces.StorageService;
 import com.telerik.extension_repository.services.interfaces.UserService;
+import org.hibernate.SessionFactory;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -37,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/public/**", "/tag/**","/rest_api/**", "/register", "/login/**", "/bootstrap/**", "/jquery/**", "/css/**").permitAll()
                 .antMatchers("/extensions/**", "/user/**").access("hasRole('ADMIN') OR hasRole('USER')")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**")./*hasRole("ADMIN")*/permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll(/*true*/)
@@ -87,4 +89,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             storageService.init();
         };
     }
+
+//    @Bean
+//    SessionFactory getSessionFactory() {
+//        return new org.hibernate.cfg.Configuration()
+//                .configure()
+//                .addAnnotatedClass(Properties.class)
+//                .buildSessionFactory();
+//    }
+
+
+
 }

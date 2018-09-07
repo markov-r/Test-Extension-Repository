@@ -7,8 +7,6 @@ import java.util.Date;
 @Table(name="system_properties")
 public class Properties {
 
-//    public static final String GIT_KEY = "df14ad0efdd6b483a60c0900aad125ef140e4a24";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,6 +24,9 @@ public class Properties {
     @Column(name = "failure_details", nullable = false)
     private String failureDetails;
 
+    @Column(name = "version")
+    private long version;
+
     public Properties(){}
 
     public Properties(long updateInterval, Date lastSuccSync, Date lastFailedSync, String failureDetails) {
@@ -33,6 +34,14 @@ public class Properties {
         this.lastSuccSync = lastSuccSync;
         this.lastFailedSync = lastFailedSync;
         this.failureDetails = failureDetails;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public long getId() {

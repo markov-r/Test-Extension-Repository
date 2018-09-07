@@ -4,11 +4,11 @@ package com.telerik.extension_repository.controllers;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
-import com.telerik.extension_repository.services.NotificationServiceImpl;
+//import com.telerik.extension_repository.services.NotificationServiceImpl;
 import com.telerik.extension_repository.services.UserServiceImpl;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
 //import com.telerik.extension_repository.services.interfaces.NotificationService;
-import com.telerik.extension_repository.services.interfaces.NotificationService;
+//import com.telerik.extension_repository.services.interfaces.NotificationService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import com.telerik.extension_repository.utils.Messages;
 //import com.telerik.extension_repository.utils.UserSession;
@@ -37,8 +37,8 @@ public class UserController {
     @Autowired
     private AuthorityService roleService;
 
-    @Autowired
-    private NotificationService notificationService;
+//    @Autowired
+//    private NotificationService notificationService;
 
 //    @Autowired
 //    private NotificationService notificationService;
