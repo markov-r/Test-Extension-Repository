@@ -120,17 +120,6 @@ public class UserServiceImpl implements UserService {
 //        return this.userRepository.findOneByUsername(user.getUsername());
 //    }
 
-//    @Override
-//    public List<ExtensionDto> getOwnExtensions(String username) {
-//        List<Extension> extensions = this.userRepository.findOwnExtensions(username);
-//        List<ExtensionDto> extensionDtos = new ArrayList<>();
-//        for (Extension extension : extensions) {
-//            ExtensionDto extensionDto = this.modelMapper.map(extension, ExtensionDto.class);
-//            extensionDtos.add(extensionDto);
-//        }
-//        return extensionDtos;
-//    }
-
     @Override
     public User findByUsername(String username) {
         return this.userRepository.findOneByUsername(username);

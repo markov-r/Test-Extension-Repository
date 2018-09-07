@@ -23,7 +23,6 @@ public interface UserService extends UserDetailsService {
     boolean isUsernameAvailable(String username);
     void disableUser(Long id);
     boolean isEnabled(Long id);
-//    List<ExtensionDto> getOwnExtensions(String name);
     User findByUsername(String username);
     User getCurrentUser();
     boolean exists(Long id);
