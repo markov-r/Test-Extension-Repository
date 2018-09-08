@@ -20,14 +20,14 @@ public class SearchController {
 
     @GetMapping("/public/searchByName")
     public String extensionsWithName(Model model, @RequestParam(value="name", required = false) String name){
-        List<ExtensionDto> extension = this.extensionService.getAllByName(name);
+        List<ExtensionDto> extensions = this.extensionService.getAllMatchingKeywordOrderByName(name);
 
-        if(extension == null){
+        if(extensions == null){
             return "redirect:/extensions/all";
         }
 
         model.addAttribute("view", "/extensions/extensions-table");
-        model.addAttribute("extension", extension);
+        model.addAttribute("extensions", extensions);
 
         return "base-layout";
     }
