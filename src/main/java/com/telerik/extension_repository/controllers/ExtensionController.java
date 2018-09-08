@@ -1,28 +1,17 @@
 package com.telerik.extension_repository.controllers;
 
-import com.telerik.extension_repository.exceptions.StorageFileNotFoundException;
 import com.telerik.extension_repository.models.ExtensionDto;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.StorageService;
-import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/extensions")
@@ -45,8 +34,6 @@ public class ExtensionController {
         return "base-layout";
     }
 
-
-    //WO
     @GetMapping("add")
     public String getAddExtensionPage(Model model) {
         ExtensionDto addExtensionModel = new ExtensionDto();
@@ -58,8 +45,8 @@ public class ExtensionController {
 
     // WO
     @PostMapping("add")
-    public String addExtension(@Valid @ModelAttribute("addExtensionModel") ExtensionDto addExtensionModel, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()){
+    public String addExtension(@Valid @ModelAttribute("addExtensionModel") ExtensionDto addExtensionModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.toString());
         }
         this.extensionService.persist(addExtensionModel);
@@ -98,19 +85,7 @@ public class ExtensionController {
     @GetMapping("edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String edit(Model model, @PathVariable Long id) {
-
-//        if (!this.isCurrentUserAdmin()) {
-//            this.notifyService.addErrorMessage(Messages.YOU_HAVE_NO_PERMISSION);
-//            return "redirect:/login";
-//        }
-//
-//        if (!this.extensionService.(id)) {
-//            this.notifyService.addErrorMessage(Messages.NOT_FOUND);
-//            return "redirect:/";
-//        }
-
         ExtensionDto extensionDto = this.extensionService.getById(id);
-
         model.addAttribute("view", "extensions/edit")
                 .addAttribute("extension", extensionDto);
         model.addAttribute("extensions", this.extensionService.getAllExt());
