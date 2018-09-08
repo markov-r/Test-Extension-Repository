@@ -165,24 +165,23 @@ public class ExtensionServiceImpl implements ExtensionService {
     public void persist(ExtensionDto addExtensionModel) {
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
-        //Extension extension = new Extension();
         extension.setStatus(Status.PENDING);
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
         extension.setSource_repository_link(addExtensionModel.getSource_repository_link());
-
         GitHubData gitHubData = this.getGitHubData(extension);
         extension.setGitHubData(gitHubData);
         User userEntity = this.getCurrentUser();
         extension.setOwner(userEntity);
         HashSet<Tag> tags = getTags(addExtensionModel);
         extension.setTags(tags);
+        extension.setUploadDate(new Date());
 //         //MvcUriComponentsBuilder prepares the URL based on the method which is going to actually serve the file for download
 //        String downloadLink =  MvcUriComponentsBuilder.fromMethodName(ExtensionController.class,
 //                "serveFile", addExtensionModel.getMultipartFile().getOriginalFilename()).build().toString();
 //        extension.setDownloadLink(downloadLink);
         //System.out.println(addExtensionModel.getFile().getName());
-        System.out.print(addExtensionModel.getFile().getOriginalFilename());
+//        System.out.print(addExtensionModel.getFile().getOriginalFilename());
         extension.setFileName(addExtensionModel.getFile().getOriginalFilename());
         this.extensionRepository.saveAndFlush(extension);
     }

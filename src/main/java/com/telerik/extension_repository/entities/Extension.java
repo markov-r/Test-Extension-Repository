@@ -4,6 +4,7 @@ import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -44,6 +45,8 @@ public class Extension {
     @JoinColumn(name = "git_hub_data_id")
     private GitHubData gitHubData;
 
+    @Column(name = "upload_date")
+    private Date uploadDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "tags_extensions",
@@ -146,4 +149,13 @@ public class Extension {
     public void setGitHubData(GitHubData gitHubData) {
         this.gitHubData = gitHubData;
     }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
 }

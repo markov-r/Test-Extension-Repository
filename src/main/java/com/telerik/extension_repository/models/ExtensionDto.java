@@ -37,6 +37,8 @@ public class ExtensionDto {
 
     private GitHubData gitHubData;
 
+    private Date uploadDate;
+
     public String getVersion() {
         return version;
     }
@@ -140,4 +142,13 @@ public class ExtensionDto {
     public void setTagString(String tagString) {
         this.tagString = tagString;
     }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
 }
