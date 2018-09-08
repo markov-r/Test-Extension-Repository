@@ -80,8 +80,13 @@ public class ExtensionServiceTest {
 
 
     @Test
-    public void findAllExtensionsShouldPassed(){
-
+    public void findAllExtensionsByName_ShouldPassed(){
+        String name = "name";
+        when(mockExtensionRepository.getAllByName(name)).thenReturn(
+                new ArrayList<>()
+        );
+        List<ExtensionDto> result = extensionService.getAllByName(name);
+        Assert.assertEquals(new ArrayList<Extension>(), result);
 
 
     }
