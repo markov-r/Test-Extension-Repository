@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.Blob;
 import java.util.List;
 
-//TODO -> documentation
-
 @Repository
 public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
