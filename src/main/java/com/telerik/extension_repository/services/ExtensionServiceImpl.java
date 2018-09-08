@@ -7,6 +7,7 @@ import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
+import com.telerik.extension_repository.repositories.GitHubRepository;
 import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
@@ -31,6 +32,8 @@ public class ExtensionServiceImpl implements ExtensionService {
     private final GithubApiService githubApiService;
     private UserRepository userRepository;
     private TagRepository tagRepository;
+    @Autowired
+    private GitHubRepository gitHubRepository;
 //    private FileSystemStorageService fileStorageService;
 
     @Autowired
@@ -47,6 +50,7 @@ public class ExtensionServiceImpl implements ExtensionService {
         this.tagRepository = tagRepository;
 //        this.fileStorageService = fileStorageService;
     }
+
 
     @Override
     public List<ExtensionDto> getAllPending() {
@@ -256,6 +260,8 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void delete(Long id) {
+      //  this.gitHubRepository.deleteByGitHubId(id);
+      //  this.tagRepository.deleteAllTagsInExtension(id);
         this.extensionRepository.deleteById(id);
     }
 

@@ -2,6 +2,7 @@ package com.telerik.extension_repository.entities;
 
 import com.telerik.extension_repository.entities.enums.Status;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -33,19 +34,19 @@ public class Extension {
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-    )
+    @OneToOne(cascade = {CascadeType.ALL}
+            , orphanRemoval = true)
     @JoinColumn(name = "git_hub_data_id")
     private GitHubData gitHubData;
 
     @Column(name = "upload_date")
     private Date uploadDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "tags_extensions",
             joinColumns =  {@JoinColumn(name = "extension_id")} ,
             inverseJoinColumns =  {@JoinColumn(name = "tag_id")})

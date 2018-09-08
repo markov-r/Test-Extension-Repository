@@ -8,12 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+@Transactional(readOnly = false)
 @Repository
 public interface GitHubRepository extends JpaRepository<GitHubData, Long> {
 
     GitHubData save(GitHubData gitHubData);
 
-    void deleteById(long id);
+    @Transactional
+    @Modifying
+    @Query(value =
+            "DELETE FROM git_hub_data AS g " +
+                    "WHERE g.id = :id", nativeQuery = true)
+    void deleteByGitHubId(@Param("id") Long id);
+
 
     @Query(value =
             "SELECT g FROM GitHubData AS g " +

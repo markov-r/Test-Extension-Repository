@@ -3,6 +3,7 @@ package com.telerik.extension_repository.entities;
 import javax.persistence.*;
 import java.util.Date;
 
+
 @Entity
 @Table(name="git_hub_data")
 public class GitHubData {
@@ -12,7 +13,7 @@ public class GitHubData {
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL,
-            mappedBy = "gitHubData")
+            mappedBy = "gitHubData", orphanRemoval = true)
     private Extension extension;
 
     @Column(name = "num_of_pulls")

@@ -1,0 +1,21 @@
+<main class="col-4 offset-4 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <header class="text-center"><h6 class="display-6">Update GitHub Repository Link</h6></header>
+                <br/>
+                <form th:method="post" th:object="${extension}" th:action="@{/admin/updateURL/{id}(id=${extension.id})}">
+                    <div class="form-group row">
+                        <label class="form-control-label">New Source Repository Link</label>
+                        <input type="text" class="form-control" th:field="*{source_repository_link}" required/>
+                    </div>
+                    <form method="post">
+                        <button type="submit" class="card-button btn btn-success" name="Edit">Edit</button>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    </form>
+                </form>
+                <br/>
+            </div>
+        </div>
+    </div>
+</main>

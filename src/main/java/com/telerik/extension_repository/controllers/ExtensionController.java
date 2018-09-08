@@ -106,9 +106,10 @@ public class ExtensionController {
     @GetMapping("edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String edit(Model model, @PathVariable Long id) {
-        ExtensionDto extensionDto = this.extensionService.getById(id);
-        model.addAttribute("view", "/extensions/extension-add_old")
-                .addAttribute("extension", extensionDto);
+        ExtensionDto extension = extensionService.findExtensionById(id);
+        model.addAttribute("type", "Edit");
+        model.addAttribute("view", "/extensions/extension-delete")
+                .addAttribute("extension", extension);
         return "base-layout";
     }
 
@@ -185,7 +186,7 @@ public class ExtensionController {
 
         ExtensionDto extension = extensionService.findExtensionById(id);
 
-        storageService.delete(extension.getFile().getOriginalFilename());
+//        storageService.delete(extension.getFile().getOriginalFilename());
         extensionService.delete(id);
 
         return "redirect:/extensions/all";

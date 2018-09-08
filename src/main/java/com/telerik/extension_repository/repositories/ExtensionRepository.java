@@ -5,9 +5,11 @@ import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.sql.Blob;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
+@Transactional(readOnly = false)
 @Repository
 public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
@@ -40,8 +42,15 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     nativeQuery = true)
     List<Extension> getAllApprovedByUploadDateDesc();
 
-    Extension findByName(String name);
 
+
+    Extension findByName(@Param("name")String name);
+
+    @Modifying
+    @Transactional
+    @Query(value =
+            "DELETE FROM extensions AS e " +
+                    "WHERE e.name = :name", nativeQuery = true)
     void deleteByName(String name);
 
     @Query(value =
@@ -49,10 +58,14 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.id = :id")
     Extension findExtensionById(@Param("id") Long id);
 
+
+    @Modifying
+    @Transactional
     @Query(value =
-            "DELETE FROM extensions AS e " +
-                    "WHERE e.id = :id", nativeQuery = true)
+            "DELETE FROM Extension AS e " +
+                    "WHERE e.id = :id")
     void deleteById(@Param("id") Long id);
+
 
     Extension save(Extension extension);
 
