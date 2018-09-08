@@ -185,7 +185,7 @@ public class ExtensionController {
 
         ExtensionDto extension = extensionService.findExtensionById(id);
 
-//        storageService.delete(extension.getFile().getOriginalFilename());
+        storageService.delete(extension.getFile().getOriginalFilename());
         extensionService.delete(id);
 
         return "redirect:/extensions/all";
