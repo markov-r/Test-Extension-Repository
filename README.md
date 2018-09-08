@@ -12,6 +12,8 @@ When a new extension is created, it is in pending state and need to be manually 
 The extensions are also assigned different tags, like e.g. "Java", "Intellij-Idea", "Plugin", etc.
 Clicking on one tag leads you to a list of all extensions that share the respective tag.
 
+When a user is logged in he can view/list his own extensions and edit/delete them.
+
 Extension fields number of open issues, number of pull requests and last commit date are fetched from GitHub. 
 The admins can disable or delete users and approve or delete all extensions, not only those created (owned) by them.
 When a user is disabled he is not allowed to login, but his user data is still kept.
