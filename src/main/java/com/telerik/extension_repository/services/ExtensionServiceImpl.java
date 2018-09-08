@@ -7,7 +7,6 @@ import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
-import com.telerik.extension_repository.repositories.GitHubRepository;
 import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
@@ -32,8 +31,6 @@ public class ExtensionServiceImpl implements ExtensionService {
     private final GithubApiService githubApiService;
     private UserRepository userRepository;
     private TagRepository tagRepository;
-    @Autowired
-    private GitHubRepository gitHubRepository;
 //    private FileSystemStorageService fileStorageService;
 
     @Autowired
@@ -50,7 +47,6 @@ public class ExtensionServiceImpl implements ExtensionService {
         this.tagRepository = tagRepository;
 //        this.fileStorageService = fileStorageService;
     }
-
 
     @Override
     public List<ExtensionDto> getAllPending() {
@@ -86,12 +82,12 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public List<ExtensionDto> getAllFeatured() {
-       return this.extensionRepository.findAllFeatured()
+        return this.extensionRepository.findAllFeatured()
                 .stream()
                 .map(e -> this.modelMapper.map(e, ExtensionDto.class))
                 .limit(8)
                 .collect(Collectors.toList());
-       }
+    }
 
     @Override
     public List<ExtensionDto> getAllSortedByDate() {
@@ -206,7 +202,6 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     private GitHubData getGitHubData(Extension extension) {
         String fullUrl = extension.getSource_repository_link();
-
         GitHubData gitHubData = null;
         try {
             gitHubData = githubApiService.updateGithubData(fullUrl);
@@ -260,16 +255,13 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void delete(Long id) {
-      //  this.gitHubRepository.deleteByGitHubId(id);
-      //  this.tagRepository.deleteAllTagsInExtension(id);
-        this.extensionRepository.deleteById(id);
+        this.extensionRepository.deleteExtensionById(id);
     }
 
 
     private HashSet<Tag> findTagsFromString(String tagString) {
         HashSet<Tag> tags = new HashSet<>();
         String[] tagNames = tagString.split(",\\s*");
-
         for (String tagName : tagNames) {
             Tag currentTag = this.tagRepository.findByName(tagName);
 
@@ -277,10 +269,8 @@ public class ExtensionServiceImpl implements ExtensionService {
                 currentTag = new Tag(tagName);
                 this.tagRepository.saveAndFlush(currentTag);
             }
-
             tags.add(currentTag);
         }
-
         return tags;
     }
 }

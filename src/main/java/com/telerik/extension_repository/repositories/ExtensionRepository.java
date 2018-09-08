@@ -5,11 +5,9 @@ import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.sql.Blob;
 import java.util.List;
 
-@Transactional(readOnly = false)
 @Repository
 public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
@@ -42,15 +40,8 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     nativeQuery = true)
     List<Extension> getAllApprovedByUploadDateDesc();
 
+    Extension findByName(String name);
 
-
-    Extension findByName(@Param("name")String name);
-
-    @Modifying
-    @Transactional
-    @Query(value =
-            "DELETE FROM extensions AS e " +
-                    "WHERE e.name = :name", nativeQuery = true)
     void deleteByName(String name);
 
     @Query(value =
@@ -58,14 +49,10 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.id = :id")
     Extension findExtensionById(@Param("id") Long id);
 
-
-    @Modifying
-    @Transactional
     @Query(value =
-            "DELETE FROM Extension AS e " +
-                    "WHERE e.id = :id")
-    void deleteById(@Param("id") Long id);
-
+            "DELETE FROM extensions AS e " +
+                    "WHERE e.id = :id", nativeQuery = true)
+    boolean deleteExtensionById(@Param("id") Long id);
 
     Extension save(Extension extension);
 
@@ -169,5 +156,10 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     void updateSourceLink(@Param("source_repository_link") String source_repository_link, @Param("id") Long id);
 
     List<Extension> getAllByNameOrderByNameAsc(String name);
+
+//    @Modifying
+//    @Query(value = "UPDATE extensions e " +
+//            "SET e.git_hub_data_id = null WHERE id = :id")
+//    void removeGitReference(@Param("id") Long id);
 }
 
