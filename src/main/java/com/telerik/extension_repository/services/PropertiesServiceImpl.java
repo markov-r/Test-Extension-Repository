@@ -19,7 +19,6 @@ public class PropertiesServiceImpl implements PropertiesService {
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public void updateInterval(long updateInterval) {
         this.propertiesRepository.updateInterval(updateInterval * 60000);   //turn minutes to miliseconds

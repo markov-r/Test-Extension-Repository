@@ -3,7 +3,6 @@ package com.telerik.extension_repository.repositories;
 
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.User;
-import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -46,7 +45,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "UPDATE User " +
             "SET isEnabled = false WHERE id =:id")
     void disableUser(@Param("id") Long id);
-
 
     @Query(value = "SELECT u.extensions FROM User AS u")
     Set<Extension> findAllByExtensionsAndId();

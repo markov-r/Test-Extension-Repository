@@ -1,6 +1,5 @@
 package com.telerik.extension_repository.utils;
 
-import com.telerik.extension_repository.entities.Authority;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

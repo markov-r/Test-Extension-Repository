@@ -9,14 +9,13 @@ import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -32,9 +31,13 @@ public class UserController {
 
     @GetMapping("user/own")
     public String getOwnExtensionPage(Model model) {
-        UserDetails userDetails = UserSession.getCurrentUser();
-        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-        List<ExtensionDto> extensionViews = this.extensionService.findExtensionsByOwner(userDetails.getUsername());
+        String ownerName = null;
+        try {
+            ownerName = UserSession.getCurrentUser().getUsername();
+        } catch (UsernameNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        List<ExtensionDto> extensionViews = this.extensionService.findExtensionsByOwner(ownerName);
         model.addAttribute("type", "Own");
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view", "/extensions/extensions-table");
@@ -77,10 +80,9 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public String profilePage(Model model) {
         UserDetails userDetails = UserSession.getCurrentUser();
-        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
+//        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
         model.addAttribute("user", userDetails);
         model.addAttribute("view", "user/profile");
-
         return "base-layout";
     }
 
@@ -121,7 +123,7 @@ public class UserController {
 //    }
 
     @PostMapping("user/edit/{id}")
-    public String  editUser(Model model, @PathVariable Long id){
+    public String  editUser(@PathVariable Long id){
         RegisterUserModel registerUserModel = this.userService.getById(id);
         this.userService.edit(registerUserModel);
         return "redirect:/users";

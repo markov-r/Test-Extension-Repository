@@ -19,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,21 +31,21 @@ public class ExtensionServiceImpl implements ExtensionService {
     private final GithubApiService githubApiService;
     private UserRepository userRepository;
     private TagRepository tagRepository;
-    private FileSystemStorageService fileStorageService;
+//    private FileSystemStorageService fileStorageService;
 
     @Autowired
-    public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository,
+    public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository,          //TODO - remove @Lazy
                                 @Lazy ModelMapper modelMapper,
                                 @Lazy GithubApiService githubApiService,
                                 @Lazy UserRepository userRepository,
-                                @Lazy TagRepository tagRepository,
-                                @Lazy FileSystemStorageService fileStorageService) {
+                                @Lazy TagRepository tagRepository/*,
+                                @Lazy FileSystemStorageService fileStorageService*/) {
         this.extensionRepository = extensionRepository;
         this.modelMapper = modelMapper;
         this.githubApiService = githubApiService;
         this.userRepository = userRepository;
         this.tagRepository = tagRepository;
-        this.fileStorageService = fileStorageService;
+//        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -59,18 +58,6 @@ public class ExtensionServiceImpl implements ExtensionService {
         }
         return extensionModelViews;
     }
-
-//    @Override
-//    public List<ExtensionDto> getAllApproved() {
-//        List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.APPROVED);
-//        List<ExtensionDto> extensionModelViews = new ArrayList<>();
-//        for (Extension extension : extensions) {
-//            ExtensionDto extensionModelView = this.modelMapper.map(extension, ExtensionDto.class);
-//            extensionModelViews.add(extensionModelView);
-//        }
-//        return extensionModelViews;
-//    }
-
 
     @Override
     public List<ExtensionDto> findExtensionsByOwner(String username) {
@@ -126,16 +113,12 @@ public class ExtensionServiceImpl implements ExtensionService {
     public ExtensionDto getByIdToDetailsPage(Long id) {
         Extension extension = this.extensionRepository.getOne(id);
         ModelMapper modelMapper = new ModelMapper();
-        ExtensionDto extensionModel = null;
-        if (extension != null) {
-            extensionModel = modelMapper.map(extension, ExtensionDto.class);
-        }
-        return extensionModel;
+        return modelMapper.map(extension, ExtensionDto.class);
     }
 
     @Override
     public List<ExtensionDto> getAllByName(String name) {
-        List<Extension> extensions = new ArrayList<>();
+        List<Extension> extensions;
         if (name != null) {
             extensions = this.extensionRepository.getAllByNameOrderByNameAsc(name);
         } else {
@@ -167,35 +150,22 @@ public class ExtensionServiceImpl implements ExtensionService {
         return extensionModelViews;
     }
 
-
-//    @Override
-//    public List<Extension> getAllExtensions() {
-//        return this.extensionRepository.findAll();
-//    }
-
     @Override
     @PreAuthorize("isAuthenticated()")
     public void persist(ExtensionDto addExtensionModel) {
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
-        //Extension extension = new Extension();
         extension.setStatus(Status.PENDING);
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
         extension.setSource_repository_link(addExtensionModel.getSource_repository_link());
-
         GitHubData gitHubData = this.getGitHubData(extension);
         extension.setGitHubData(gitHubData);
         User userEntity = this.getCurrentUser();
         extension.setOwner(userEntity);
         HashSet<Tag> tags = getTags(addExtensionModel);
         extension.setTags(tags);
-//         //MvcUriComponentsBuilder prepares the URL based on the method which is going to actually serve the file for download
-//        String downloadLink =  MvcUriComponentsBuilder.fromMethodName(ExtensionController.class,
-//                "serveFile", addExtensionModel.getMultipartFile().getOriginalFilename()).build().toString();
-//        extension.setDownloadLink(downloadLink);
-        //System.out.println(addExtensionModel.getFile().getName());
-        System.out.print(addExtensionModel.getFile().getOriginalFilename());
+        extension.setUploadDate(new Date());
         extension.setFileName(addExtensionModel.getFile().getOriginalFilename());
         this.extensionRepository.saveAndFlush(extension);
     }

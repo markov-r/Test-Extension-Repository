@@ -8,10 +8,37 @@ import org.springframework.stereotype.Repository;
 import java.sql.Blob;
 import java.util.List;
 
-//TODO -> documentation
-
 @Repository
 public interface ExtensionRepository extends JpaRepository<Extension, Long> {
+
+    @Query(value =
+            "SELECT e FROM Extension e " +
+                    "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
+                    "ORDER BY e.name")
+    List<Extension> getAllByName();
+
+    @Query(value =
+            "SELECT e FROM Extension e " +
+                    "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
+                    "ORDER BY e.numberOfDownloads DESC")
+    List<Extension> getAllByNumberOfDownloadsDesc();
+
+
+    @Query(value =
+            "SELECT * FROM extensions AS e " +
+                    "JOIN git_hub_data AS g " +
+                    "ON e.id = g.id " +
+                    "WHERE e.status = 'APPROVED' " +     //the proper place for WHERE clause
+                    "ORDER BY g.latest_commit DESC",
+                    nativeQuery = true)
+    List<Extension> getAllApprovedByCommitDateDesc();
+
+    @Query(value =
+            "SELECT * FROM extensions AS e " +
+                    "WHERE e.status = 'APPROVED' " +
+                    "ORDER BY e.upload_date DESC",
+                    nativeQuery = true)
+    List<Extension> getAllApprovedByUploadDateDesc();
 
     Extension findByName(String name);
 
@@ -45,7 +72,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "ON (u.id  = e.user_id) " +
             "WHERE u.username = :name", nativeQuery = true)
     List<Extension> findExtensionsByOwner(@Param("name") String name);
-    // NOTE when returning collection of Entities, it should be in the corresponding Entity Repository
+    // NOTE when returning collection of Entities, it should SUPPOSEDLY be in the corresponding Entity Repository
 
 
     // FEATURED
@@ -58,10 +85,8 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     // NEW
     @Query(value =
             "SELECT * FROM extensions AS e " +
-                    "JOIN git_hub_data AS g " +
-                    "ON e.id = g.id " +
-                    "WHERE e.status = 'APPROVED' " +     //the proper place for WHERE clause
-                    "ORDER BY g.latest_commit DESC " +
+                    "WHERE e.status = 'APPROVED' " +
+                    "ORDER BY e.upload_date DESC " +
                     "LIMIT 8",
                     nativeQuery = true)
     List<Extension> getAllSortedByDate();

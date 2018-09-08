@@ -47,7 +47,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Set<AuthorityModel> getAllByName(String[] names) {
-        Set<Authority> roles = (Set<Authority>) this.roleRepository.findAll();
+        Set<Authority> roles = new HashSet<>(this.roleRepository.findAll());
         Set<AuthorityModel> roleModels = new HashSet<>();
         for (Authority role : roles) {
             AuthorityModel roleModel = this.modelMapper.map(role, AuthorityModel.class);

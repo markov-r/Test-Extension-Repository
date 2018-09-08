@@ -38,33 +38,33 @@ public class AdminController {
 
 
     @GetMapping("extensions")
-    public String getAdminPage(Model model){
+    public String getAdminPage(Model model) {
         List<ExtensionDto> extensionViews = this.extensionService.getAllExt();
         model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view","/extensions/extensions-table");
+        model.addAttribute("view", "/extensions/extensions-table");
         return "base-layout";
     }
 
 
     @GetMapping("pending")
-    public String getPendingExtensions(Model model){
+    public String getPendingExtensions(Model model) {
         List<ExtensionDto> extensionViews = this.extensionService.getAllPending();
         model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view","/admin/admin-pending-extensions");
+        model.addAttribute("view", "/admin/admin-pending-extensions");
         return "base-layout";
     }
 
     @GetMapping("pending/edit/{id}")
-    public String getEditPage(Model model, @PathVariable Long id){
+    public String getEditPage(Model model, @PathVariable Long id) {
         ExtensionDto extensionStatusView = this.extensionService.getById(id);
-        model.addAttribute("type","Edit");
-        model.addAttribute("view","/admin/admin-extensions-modifiable");
+        model.addAttribute("type", "Edit");
+        model.addAttribute("view", "/admin/admin-extensions-modifiable");
         model.addAttribute("extension", extensionStatusView);
         return "base-layout";
     }
 
     @PostMapping("pending/edit/{id}")
-    public String editExtension(@Valid @ModelAttribute("extensionStatusView") ExtensionDto extensionStatusView, @PathVariable Long id){
+    public String editExtension(@Valid @ModelAttribute("extensionStatusView") ExtensionDto extensionStatusView, @PathVariable Long id) {
         extensionStatusView.setId(id);
         this.extensionService.update(extensionStatusView);
         return "redirect:/admin/pending";
@@ -80,28 +80,28 @@ public class AdminController {
 //    }
 
     @GetMapping("pending/approve/{id}")
-    public String getApproveExtensionPage(Model model,@PathVariable Long id){
-        ExtensionDto extensionStatusView = this.extensionService.getById(id);
+    public String getApproveExtensionPage(Model model, @PathVariable Long id) {
+//        ExtensionDto extensionStatusView = this.extensionService.getById(id);
         this.extensionService.approve(id);
-        model.addAttribute("view","/admin/admin-pending-extensions");
+        model.addAttribute("view", "/admin/admin-pending-extensions");
         return "base-layout";
     }
 
 
     @PostMapping("pending/approve/{id}")
-    public String approveExtension(@PathVariable Long id){
+    public String approveExtension(@PathVariable Long id) {
         this.extensionService.approve(id);
         return "redirect:/admin/pending";
     }
 
     @PostMapping("makeFeatured/{id}")
-    public String makeFeatured(@PathVariable Long id){
+    public String makeFeatured(@PathVariable Long id) {
         this.extensionService.setFeatured(id);
         return "redirect:/admin/extensions";
     }
 
     @PostMapping("removeFeatured/{id}")
-    public String removeFeatured(@PathVariable Long id){
+    public String removeFeatured(@PathVariable Long id) {
         this.extensionService.removeFeatured(id);
         return "redirect:/admin/extensions";
     }
@@ -117,29 +117,29 @@ public class AdminController {
 //    }
 
     @PostMapping("pending/delete/{id}")
-    public String deleteExtension(@PathVariable Long id, Model model) {
-            this.adminService.deleteExtension(id);
+    public String deleteExtension(@PathVariable Long id) {
+        this.adminService.deleteExtension(id);
         return "redirect:/admin/pending";
     }
 
     @GetMapping("/users")
-    public String getAllUsersPage(Model model){
+    public String getAllUsersPage(Model model) {
         List<RegisterUserModel> users = this.userService.getAll();
         model.addAttribute("users", users);
-        model.addAttribute("view","/admin/all-users");
+        model.addAttribute("view", "/admin/all-users");
         return "base-layout";
     }
 
     @GetMapping("/user")
-    public String getUserByUsername(Model model, @RequestParam(value = "username", required = true) String username){
+    public String getUserByUsername(Model model, @RequestParam(value = "username"/*, required = true*/) String username) {
         RegisterUserModel userModel = this.userService.getUserByUsername(username);
         model.addAttribute("user", userModel);
-        model.addAttribute("view","/admin/all-users");
+        model.addAttribute("view", "/admin/all-users");
         return "base-layout";
     }
 
     @PostMapping("/users/delete/{userId}")
-    public String deleteUser(@PathVariable Long userId, Model model) {
+    public String deleteUser(@PathVariable Long userId) {
         RegisterUserModel user = this.userService.getById(userId);
         if (user != null) {
             this.adminService.deleteUserById(userId);
@@ -149,7 +149,7 @@ public class AdminController {
     }
 
     @PostMapping("/users/disableUser/{userId}")
-    public String changeUserAccountAccess(@PathVariable Long userId, Model model) {
+    public String changeUserAccountAccess(@PathVariable Long userId) {
         RegisterUserModel user = this.userService.getById(userId);
         if (user != null) {
             this.adminService.disableUser(userId);
@@ -165,7 +165,7 @@ public class AdminController {
         return "exceptions/user-not-found";
     }
 
-//    @PostMapping("pending")
+    //    @PostMapping("pending")
 //    public String approveExtensions(@Valid @ModelAttribute("addExtensionModel") AddExtensionModel addExtensionModel, BindingResult bindingResult){
 //        if(bindingResult.hasErrors()){
 //            return "admin";
@@ -177,18 +177,18 @@ public class AdminController {
 //    }
 //
     @GetMapping("all")
-    public String getAllExtensionPage(Model model){
+    public String getAllExtensionPage(Model model) {
         List<ExtensionDto> extensionViews = this.extensionService.getAllExt();
         model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view","/extensions/extensions-table");
+        model.addAttribute("view", "/extensions/extensions-table");
         return "base-layout";
     }
 
     @GetMapping("/sync-panel")
-    public String getSyncPanel(Model model){
+    public String getSyncPanel(Model model) {
         PropertiesDto propertiesDto = this.propertiesService.getProperties();
         model.addAttribute("properties", propertiesDto);
-        model.addAttribute("view","/admin/sync-panel");
+        model.addAttribute("view", "/admin/sync-panel");
         return "base-layout";
     }
 
@@ -196,20 +196,24 @@ public class AdminController {
     public String getUpdateIntervalPage(Model model) {
         PropertiesDto propertiesDto = this.propertiesService.getProperties();
         model.addAttribute("properties", propertiesDto);
-        model.addAttribute("view","/admin/git-sync-form");
+        model.addAttribute("view", "/admin/git-sync-form");
         return "base-layout";
     }
 
     @PostMapping("/git-sync-interval")
-    public String updateSyncInterval(Model model, PropertiesDto propertiesDto) {
+    public String updateSyncInterval(PropertiesDto propertiesDto) {
         this.propertiesService.updateInterval(propertiesDto.getUpdateInterval());
         return "redirect:/admin/sync-panel";
     }
 
     @PostMapping("/synchronizeGitData/{id}")
-    public String synchronizeGitData(@PathVariable("id") Long id) throws IOException {
+    public String synchronizeGitData(@PathVariable("id") Long id){
         ExtensionDto extensionDto = this.extensionService.getById(id);
-        this.githubApiService.updateGithubData(extensionDto.getSource_repository_link());
+        try {
+            this.githubApiService.updateGithubData(extensionDto.getSource_repository_link());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         return "redirect:/admin/extensions";
     }
 

@@ -1,9 +1,6 @@
 package com.telerik.extension_repository.entities;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.StringUtils;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +14,7 @@ public class Authority implements GrantedAuthority {
 
     private Set<User> users;
 
-    public Authority() {
+    Authority() {
         this.users = new HashSet<>();
     }
 

@@ -2,7 +2,6 @@ package com.telerik.extension_repository.controllers;
 
 import com.telerik.extension_repository.exceptions.StorageFileNotFoundException;
 import com.telerik.extension_repository.models.ExtensionDto;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +68,6 @@ public class HomeController {
     @GetMapping("public/download/{id}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
-
         String filename = this.extensionService.findFilename(id);
         Resource file = storageService.loadAsResource(filename);
         extensionService.incrementDownloadsCount(id);
@@ -78,7 +76,7 @@ public class HomeController {
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+    public ResponseEntity<?> handleStorageFileNotFound() {
         return ResponseEntity.notFound().build();
     }
 

@@ -3,14 +3,12 @@ package com.telerik.extension_repository.entities;
 import javax.persistence.*;
 import java.util.Date;
 
-
 @Entity
 @Table(name="git_hub_data")
 public class GitHubData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL,

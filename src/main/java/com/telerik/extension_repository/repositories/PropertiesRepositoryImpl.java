@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import java.util.Date;
 import java.util.List;
-import static javax.persistence.CacheRetrieveMode.BYPASS;
+//import static javax.persistence.CacheRetrieveMode.BYPASS;
 
 @Repository
 public class PropertiesRepositoryImpl implements PropertiesRepository {
@@ -42,7 +42,7 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
     @Override
     public void updateInterval(long updateInterval) {
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 50; i++) {
             //long currentVersion = getProperties().getVersion();
             int updates = 0;
 
@@ -65,12 +65,11 @@ public class PropertiesRepositoryImpl implements PropertiesRepository {
                 break;
             } else {
                 try {
-                    Thread.sleep((long) (Math.random() * 50));
+                    Thread.sleep((long) (Math.random() * 50));   // Wait a small random period not to block with other user(s)
                 } catch (InterruptedException ie) {
-                    System.out.println(ie.getMessage());//TODO: logger instead of system.out
+                    System.out.println(ie.getMessage());        //TODO: logger instead of system.out
                 }
             }
-
         }
     }
 
