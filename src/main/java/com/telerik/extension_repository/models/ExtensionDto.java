@@ -1,6 +1,7 @@
 package com.telerik.extension_repository.models;
 
 import com.telerik.extension_repository.entities.GitHubData;
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
@@ -23,6 +24,8 @@ public class ExtensionDto {
 
     private Set<TagView> tags;
 
+    private String filename;
+
     private MultipartFile file;
 
     private LoggedUser owner;
@@ -38,6 +41,49 @@ public class ExtensionDto {
     private GitHubData gitHubData;
 
     private Date uploadDate;
+
+    public ExtensionDto(String name,
+                        String description,
+                        String version,
+                        int numberOfDownloads,
+                        String source_repository_link,
+                        String filename,
+                        boolean isFeatured,
+                        Status status,
+                        LoggedUser author) {
+
+        this.name = name;
+        this.description = description;
+        this.version = version;
+        this.numberOfDownloads = numberOfDownloads;
+        this.source_repository_link = source_repository_link;
+        this.filename = filename;
+        this.isFeatured = isFeatured;
+        this.status = status;
+        this.owner = author;
+    }
+
+    public ExtensionDto(String name,
+                        String description,
+                        Set<TagView> tags,
+                        LoggedUser owner,
+                        Status status,
+                        String version,
+                        String source_repository_link,
+                        boolean isFeatured, Date uploadDate) {
+        this.name = name;
+        this.description = description;
+        this.tags = tags;
+        this.owner = owner;
+        this.status = status;
+        this.version = version;
+        this.source_repository_link = source_repository_link;
+        this.isFeatured = isFeatured;
+        this.uploadDate = uploadDate;
+    }
+
+    public ExtensionDto() {
+    }
 
     public String getVersion() {
         return version;

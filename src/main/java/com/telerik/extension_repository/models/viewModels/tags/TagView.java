@@ -6,6 +6,10 @@ public class TagView {
 
     private String name;
 
+    public TagView(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
