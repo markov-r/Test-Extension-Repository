@@ -13,6 +13,7 @@ The extensions are also assigned different tags, like e.g. "Java", "Intellij-Ide
 Clicking on one tag leads you to a list of all extensions that share the respective tag.
 
 When a user is logged in he can view/list his own extensions and edit/delete them.
+In addition he can also view his account details.
 
 Extension fields number of open issues, number of pull requests and last commit date are fetched from GitHub. 
 The admins can disable or delete users and approve or delete all extensions, not only those created (owned) by them.
