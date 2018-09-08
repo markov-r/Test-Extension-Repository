@@ -284,6 +284,8 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void delete(Long id) {
+      //  this.gitHubRepository.deleteByGitHubId(id);
+      //  this.tagRepository.deleteAllTagsInExtension(id);
         this.extensionRepository.deleteById(id);
     }
 

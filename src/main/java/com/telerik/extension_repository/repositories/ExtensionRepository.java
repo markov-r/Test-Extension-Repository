@@ -47,17 +47,15 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     List<Extension> getAllApprovedByUploadDateDesc(@Param("name") String name);
 
 
-     @Query(value =
-            "SELECT e FROM extensions AS e " +
-            "WHERE e.name = :name", nativeQuery = true)
-    Extension findByName(@Param("name") String name);
+
+    Extension findByName(@Param("name")String name);
 
     @Modifying
     @Transactional
     @Query(value =
             "DELETE FROM extensions AS e " +
                     "WHERE e.name = :name", nativeQuery = true)
-    void deleteByName(@Param("name") String name);
+    void deleteByName(String name);
 
     @Query(value =
             "SELECT e FROM Extension AS e " +
@@ -177,6 +175,5 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     void updateSourceLink(@Param("source_repository_link") String source_repository_link, @Param("id") Long id);
 
     List<Extension> getAllByNameOrderByNameAsc(String name);
-
 }
 
