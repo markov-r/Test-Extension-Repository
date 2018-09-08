@@ -1,18 +1,4 @@
 <div th:include="~{fragments/search}"></div>
-<!--<div class="container align-left " style="margin-outside: 10px">-->
-    <!--<div class="col-sm-6 col-md-4">-->
-        <!--<form class="focus-input100" th:action="@{/public/search/{keyword}(keyword = ${extension.name})}">-->
-            <!--<div class="form-group">-->
-                <!--<div class="input-group" th:object="${extension}">-->
-                    <!--<input type="text" class="form-control" name="keyword" placeholder="Keyword..."/>-->
-                    <!--<span class="input-group-btn">-->
-                    <!--<input type="submit" class="btn btn-primary " value="Find"/>-->
-                <!--</span>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</form>-->
-    <!--</div>-->
-<!--</div>-->
 <div class="container">
     <form>
         <a sec:authorize="hasRole('ADMIN')" href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>

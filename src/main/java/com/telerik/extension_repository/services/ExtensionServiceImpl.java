@@ -12,6 +12,7 @@ import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
+import com.telerik.extension_repository.utils.Constants;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,6 +73,7 @@ public class ExtensionServiceImpl implements ExtensionService {
                 .collect(Collectors.toList());
     }
 
+    // no wo
     @Override
     public List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword) {
         return this.extensionRepository.getAllMatchingKeywordOrderByName(keyword)
@@ -86,12 +89,12 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public List<ExtensionDto> getAllFeatured() {
-       return this.extensionRepository.findAllFeatured()
+        return this.extensionRepository.findAllFeatured()
                 .stream()
                 .map(e -> this.modelMapper.map(e, ExtensionDto.class))
                 .limit(8)
                 .collect(Collectors.toList());
-       }
+    }
 
     @Override
     public List<ExtensionDto> getAllSortedByDate() {
@@ -104,13 +107,10 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public List<ExtensionDto> getAllExt() {
-        List<Extension> extensions = this.extensionRepository.findAll();
-        List<ExtensionDto> extensionDtos = new ArrayList<>();
-        for (Extension extension : extensions) {
-            ExtensionDto model = this.modelMapper.map(extension, ExtensionDto.class);
-            extensionDtos.add(model);
-        }
-        return extensionDtos;
+        return this.extensionRepository.findAll()
+                .stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -222,14 +222,38 @@ public class ExtensionServiceImpl implements ExtensionService {
         this.extensionRepository.approveExtension(id);
     }
 
-//    private boolean isUserAuthorOrAdmin(Extension article) {
-//        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
-//                .getAuthentication().getPrincipal();
-//
-//        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
-//
-//        return userEntity.isAdmin() || userEntity.isAuthor(article);
-//    }
+
+    @Override
+    public List<ExtensionDto> filter(String name, String sortBy) {
+        if (sortBy != null) {
+            switch (sortBy) {
+                case Constants.SORT_BY_NAME:
+                    return extensionRepository.getAllByName(name)
+                            .stream()
+                            .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                            .collect(Collectors.toList());
+
+                case Constants.SORT_BY_UPLOAD_DATE:
+                    return extensionRepository.getAllApprovedByUploadDateDesc(name)
+                            .stream()
+                            .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                            .collect(Collectors.toList());
+
+                case Constants.SORT_BY_DOWNLOADS:
+                    return extensionRepository.getAllByNumberOfDownloadsDesc(name).stream()
+                            .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                            .collect(Collectors.toList());
+
+                case Constants.SORT_BY_LAST_COMMIT:
+                    return extensionRepository.getAllApprovedByCommitDateDesc(name).stream()
+                            .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                            .collect(Collectors.toList());
+            }
+        }
+        return extensionRepository.getAllByName(name).stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .collect(Collectors.toList());
+    }
 
     // no wo
     @Override
@@ -260,8 +284,6 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void delete(Long id) {
-      //  this.gitHubRepository.deleteByGitHubId(id);
-      //  this.tagRepository.deleteAllTagsInExtension(id);
         this.extensionRepository.deleteById(id);
     }
 
@@ -282,5 +304,14 @@ public class ExtensionServiceImpl implements ExtensionService {
         }
 
         return tags;
+    }
+
+    private boolean isUserAuthorOrAdmin(Extension article) {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+
+        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
+
+        return userEntity.isAdmin() || userEntity.isAuthor(article);
     }
 }

@@ -16,42 +16,48 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Query(value =
             "SELECT e FROM Extension e " +
                     "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
+                    "AND e.name = :name " +
                     "ORDER BY e.name")
-    List<Extension> getAllByName();
+    List<Extension> getAllByName(@Param("name") String name);
 
     @Query(value =
             "SELECT e FROM Extension e " +
                     "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
+                    "AND e.name = :name " +
                     "ORDER BY e.numberOfDownloads DESC")
-    List<Extension> getAllByNumberOfDownloadsDesc();
+    List<Extension> getAllByNumberOfDownloadsDesc(@Param("name") String name);
 
 
     @Query(value =
             "SELECT * FROM extensions AS e " +
                     "JOIN git_hub_data AS g " +
                     "ON e.id = g.id " +
-                    "WHERE e.status = 'APPROVED' " +     //the proper place for WHERE clause
+                    "WHERE e.status = 'APPROVED' " +//the proper place for WHERE clause
+                    "AND e.name = :name " +
                     "ORDER BY g.latest_commit DESC",
                     nativeQuery = true)
-    List<Extension> getAllApprovedByCommitDateDesc();
+    List<Extension> getAllApprovedByCommitDateDesc(@Param("name") String name);
 
     @Query(value =
             "SELECT * FROM extensions AS e " +
                     "WHERE e.status = 'APPROVED' " +
+                    "AND e.name = :name " +
                     "ORDER BY e.upload_date DESC",
                     nativeQuery = true)
-    List<Extension> getAllApprovedByUploadDateDesc();
+    List<Extension> getAllApprovedByUploadDateDesc(@Param("name") String name);
 
 
-
-    Extension findByName(@Param("name")String name);
+     @Query(value =
+            "SELECT e FROM extensions AS e " +
+            "WHERE e.name = :name", nativeQuery = true)
+    Extension findByName(@Param("name") String name);
 
     @Modifying
     @Transactional
     @Query(value =
             "DELETE FROM extensions AS e " +
                     "WHERE e.name = :name", nativeQuery = true)
-    void deleteByName(String name);
+    void deleteByName(@Param("name") String name);
 
     @Query(value =
             "SELECT e FROM Extension AS e " +
@@ -123,11 +129,13 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
 
     @Query(value =
-            "SELECT e FROM Extension AS e " +
-                    "WHERE e.status = 'APPROVED' " +
-                    "AND e.name LIKE :name " +
+            "SELECT e FROM Extension e " +
+                    "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
+                    "AND e.name = :name " +
                     "ORDER BY e.name")
     List<Extension> getAllMatchingKeywordOrderByName(@Param("name") String name);
+
+
 
 
     Extension findFirstByName(String name);
@@ -169,5 +177,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     void updateSourceLink(@Param("source_repository_link") String source_repository_link, @Param("id") Long id);
 
     List<Extension> getAllByNameOrderByNameAsc(String name);
+
 }
 

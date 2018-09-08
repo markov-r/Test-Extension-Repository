@@ -1,100 +1,40 @@
-<!--<div class="container">-->
-<!--<div class="col-sm-6 col-md-4">-->
-<!--&lt;!&ndash;<div id="search-3" class="widget widgetFooter widget_search"><h4 class="widgettitle">Search :</h4>&ndash;&gt;-->
-
-<!--<div class="form-group">-->
-<!--&lt;!&ndash;<div class="input-group">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;<span class="input-group-addon">Keyword :</span>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;<input class="form-control" placeholder="Keyword for search ..." type="text">&ndash;&gt;-->
-<!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
-<!--&lt;!&ndash;<button class="btn btn-primary" type="button">Search</button>&ndash;&gt;-->
-
-<!--&lt;!&ndash;</span>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-
-<!--&lt;!&ndash;<li class="nav-item">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="input-group">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;<span class="input-group-addon">Keyword :</span>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;<input class="form-control" placeholder="Keyword for search ..." type="text">&ndash;&gt;-->
-<!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
-<!--&lt;!&ndash;<button class="btn btn-primary" type="button">Search</button>&ndash;&gt;-->
-
-<!--&lt;!&ndash;</span>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<ul class="dropdown-menu">&ndash;&gt;-->
-<!--&lt;!&ndash;<li><a th:href="@{/search/name}">Extension's Name</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;<li><a th:href="@{/search/}">Tag</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;</ul>&ndash;&gt;-->
-<!--&lt;!&ndash;</li>&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="container">-->
-<!--<div class="col-sm-6 col-md-4">-->
-<!--<form class="form-inline" th:action="@{/extension/browse}">-->
-<!--<div class="form-group">-->
-<!--<div class="input-group">-->
-<!--<span class="input-group-addon">Sort By :</span>-->
-<!--<select class="form-control" id="sort-criteria" name="sortBy">-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Name'}">Name</option>-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Upload Date'}">Upload Date</option>-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Downloads'}">Downloads</option>-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Last Commit'}">Last Commit</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<div class="input-group">-->
-<!--<span class="input-group-addon">Name :</span>-->
-<!--<input th:value="${#request.getParameter('name')}" class="form-control" placeholder="Keyword ..." type="search" name="name">-->
-<!--<span class="input-group-btn">-->
-<!--<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span></button>-->
-<!--</span>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
-<!--</div>-->
-<!--<link rel="stylesheet" href="../static/css/search.css" th:href="@{/css/search.css}"/>-->
-
-<!--<form class="form-inline sort-content" style="margin-outside: 12px" th:action="@{/extension/browse}">-->
-<!--<div class="form-group">-->
-<!--<div class="input-group">-->
-<!--<span class="input-group-addon">Sort By :</span>-->
-<!--<select class="form-control" id="sort-criteria" name="sortBy">-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Name'}">Name</option>-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Upload Date'}">Upload Date</option>-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Downloads'}">Downloads</option>-->
-<!--<option th:selected="${#request.getParameter('sortBy') == 'Last Commit'}">Last Commit</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<div class="input-group">-->
-<!--<span class="input-group-addon">Name :</span>-->
-<!--<input th:value="${#request.getParameter('name')}" class="form-control" placeholder="Keyword ..." type="search" name="name">-->
-<!--<span class="input-group-btn">-->
-<!--<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span></button>-->
-<!--</span>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<div class="container align-left " style="margin-outside: 10px">
-    <div class="col-sm-6 col-md-4">
-        <form class="focus-input100">
-            <div class="form-group">
-                <div class="input-group" th:object="${extension}">
-                    <input type="text" class="form-control" name="make" placeholder="Keyword..."/>
-                    <span class="input-group-btn">
+<form class="form-inline" th:action="@{/public/search}">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">Sort By :</span>
+            <select class="form-control" id="sort-criteria" name="sortBy">
+                <option th:selected="${#request.getParameter('sortBy') == 'Name'}">Name</option>
+                <option th:selected="${#request.getParameter('sortBy') == 'Upload Date'}">Upload Date</option>
+                <option th:selected="${#request.getParameter('sortBy') == 'Downloads'}">Downloads</option>
+                <option th:selected="${#request.getParameter('sortBy') == 'Last Commit'}">Last Commit</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">Name :</span>
+            <input th:value="${#request.getParameter('name')}" class="form-control" placeholder="Keyword ..."
+                   type="search" name="name">
+            <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit"><span
+                            class="glyphicon glyphicon-search"></span></button>
+                </span>
+        </div>
+    </div>
+</form>
+<form style="margin-outside: 10px" class="form-inline" th:action="@{/public/searchByName}">
+    <div class="container align-left ">
+        <div class="col-sm-6 col-md-4">
+            <form class="focus-input100">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input th:value="${#request.getParameter('name')}" type="search" class="form-control" name="name" placeholder="Keyword..."/>
+                        <span class="input-group-btn">
                     <input type="submit" class="btn btn-primary " value="Find"/>
                 </span>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+</form>

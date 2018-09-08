@@ -30,12 +30,10 @@ public interface ExtensionService {
     List<ExtensionDto> getAllSortedByPopularity();
     ExtensionDto findExtensionById(Long id);
     void updateLink(String newLink, Long id);
+    List<ExtensionDto> filter(String name, String sortBy);
 
     List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword);
 
-
-
-//    Blob downloadFile(Long id) throws IOException, SQLException;
 //    Extension downloadFileAsExtension(Long id);
 
 }

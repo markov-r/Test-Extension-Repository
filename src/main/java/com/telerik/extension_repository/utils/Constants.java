@@ -1,7 +1,10 @@
 package com.telerik.extension_repository.utils;
 
 public class Constants {
-
+    public static final String SORT_BY_NAME = "Name";
+    public static final String SORT_BY_UPLOAD_DATE = "Upload Date";
+    public static final String SORT_BY_DOWNLOADS = "Downloads";
+    public static final String SORT_BY_LAST_COMMIT = "Last Commit";
     //Roles
     public static final String DEFAULT_ROLE = "ROLE_USER";
     public static final String ADMIN_ROLE = "ROLE_ADMIN";

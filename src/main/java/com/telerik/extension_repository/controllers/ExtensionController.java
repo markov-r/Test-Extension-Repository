@@ -113,31 +113,7 @@ public class ExtensionController {
         return "base-layout";
     }
 
-//    @PostMapping("/article/edit/{id}")
-//    @PreAuthorize("isAuthenticated()")
-//    public String editAction(ArticleBindingModel articleBindingModel, @PathVariable Integer id) {
-//
-//        if (!this.isCurrentUserAdmin()) {
-//            this.notifyService.addErrorMessage(Messages.YOU_HAVE_NO_PERMISSION);
-//            return "redirect:/login";
-//        }
-//
-//        if (!this.articleRepository.exists(id)) {
-//            this.notifyService.addErrorMessage(Messages.NOT_FOUND);
-//            return "redirect:/";
-//        }
-//
-//        Article article = this.articleRepository.findOne(id);
-//
-//        article.setTitle(articleBindingModel.getTitle());
-//        article.setContent(articleBindingModel.getContent());
-//        Destination destination = this.destinationRepository.findOne(articleBindingModel.getDestinationId());
-//        article.setDestination(destination);
-//        this.articleRepository.saveAndFlush(article);
-//        this.notifyService.addInfoMessage(Messages.SUCCESSFULLY_EDITED_ARTICLE);
-//        return "redirect:/article/" + article.getId();
-//
-//    }
+
 
 //    @GetMapping("edit/{id}")
 //    public String getEditExtensionPage(Model model, @PathVariable Long id) {
@@ -191,5 +167,32 @@ public class ExtensionController {
 
         return "redirect:/extensions/all";
     }
+
+
+    //    @PostMapping("/article/edit/{id}")
+//    @PreAuthorize("isAuthenticated()")
+//    public String editAction(ArticleBindingModel articleBindingModel, @PathVariable Integer id) {
+//
+//        if (!this.isCurrentUserAdmin()) {
+//            this.notifyService.addErrorMessage(Messages.YOU_HAVE_NO_PERMISSION);
+//            return "redirect:/login";
+//        }
+//
+//        if (!this.articleRepository.exists(id)) {
+//            this.notifyService.addErrorMessage(Messages.NOT_FOUND);
+//            return "redirect:/";
+//        }
+//
+//        Article article = this.articleRepository.findOne(id);
+//
+//        article.setTitle(articleBindingModel.getTitle());
+//        article.setContent(articleBindingModel.getContent());
+//        Destination destination = this.destinationRepository.findOne(articleBindingModel.getDestinationId());
+//        article.setDestination(destination);
+//        this.articleRepository.saveAndFlush(article);
+//        this.notifyService.addInfoMessage(Messages.SUCCESSFULLY_EDITED_ARTICLE);
+//        return "redirect:/article/" + article.getId();
+//
+//    }
 
 }
