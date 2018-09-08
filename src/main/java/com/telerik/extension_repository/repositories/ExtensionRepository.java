@@ -132,7 +132,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "AND e.name = :name " +
                     "ORDER BY e.name")
     List<Extension> getAllMatchingKeywordOrderByName(@Param("name") String name);
-
+// TODO: SHOULD BE "LIKE CONCAT('%', ?1, '%') but is somehow cached and doesn't work
 
 
 
