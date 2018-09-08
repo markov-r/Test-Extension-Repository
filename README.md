@@ -11,6 +11,8 @@ When logged in the user can add a new extension, list and browse all extensions;
 When a new extension is created, it is in pending state and need to be manually approved by a site admin.
 The extensions are also assigned different tags, like e.g. "Java", "Intellij-Idea", "Plugin", etc.
 Clicking on one tag leads you to a list of all extensions that share the respective tag.
+On each extension page there's a link to download the file. The number of times the extension have been downloaded is counted and used
+in "Popular" carousel.
 
 When a user is logged in he can view/list his own extensions and edit/delete them.
 In addition he can also view his account details.
