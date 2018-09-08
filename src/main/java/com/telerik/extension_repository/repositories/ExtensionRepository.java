@@ -17,7 +17,15 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     void deleteByName(String name);
 
-    void deleteById(Long id);
+    @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.id = :id")
+    Extension findExtensionById(@Param("id") Long id);
+
+    @Query(value =
+            "DELETE FROM extensions AS e " +
+                    "WHERE e.id = :id", nativeQuery = true)
+    void deleteById(@Param("id") Long id);
 
     Extension save(Extension extension);
 
@@ -75,7 +83,14 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     List<Extension> getAllByTags(String tag);
 
-    List<Extension> getAllByNameOrderByNameAsc(String name);
+
+    @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.status = 'APPROVED' " +
+                    "AND e.name LIKE :name " +
+                    "ORDER BY e.name")
+    List<Extension> getAllMatchingKeywordOrderByName(@Param("name") String name);
+
 
     Extension findFirstByName(String name);
 
@@ -114,5 +129,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Query(value = "UPDATE Extension e " +
             "SET e.source_repository_link = :source_repository_link  WHERE id = :id")
     void updateSourceLink(@Param("source_repository_link") String source_repository_link, @Param("id") Long id);
+
+    List<Extension> getAllByNameOrderByNameAsc(String name);
 }
 

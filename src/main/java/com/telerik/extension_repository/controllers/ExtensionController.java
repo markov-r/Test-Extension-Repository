@@ -1,16 +1,21 @@
 package com.telerik.extension_repository.controllers;
 
+import com.telerik.extension_repository.entities.Extension;
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.exceptions.StorageFileNotFoundException;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.StorageService;
+import com.telerik.extension_repository.services.interfaces.UserService;
+import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +38,9 @@ public class ExtensionController {
 
     @Autowired
     private StorageService storageService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private TagRepository tagRepository;
@@ -98,23 +106,10 @@ public class ExtensionController {
     @GetMapping("edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public String edit(Model model, @PathVariable Long id) {
-
-//        if (!this.isCurrentUserAdmin()) {
-//            this.notifyService.addErrorMessage(Messages.YOU_HAVE_NO_PERMISSION);
-//            return "redirect:/login";
-//        }
-//
-//        if (!this.extensionService.(id)) {
-//            this.notifyService.addErrorMessage(Messages.NOT_FOUND);
-//            return "redirect:/";
-//        }
-
         ExtensionDto extensionDto = this.extensionService.getById(id);
-
-        model.addAttribute("view", "extensions/edit")
+        model.addAttribute("view", "/extensions/extension-add_old")
                 .addAttribute("extension", extensionDto);
-        model.addAttribute("extensions", this.extensionService.getAllExt());
-        return "extensions/extension-add_old";
+        return "base-layout";
     }
 
 //    @PostMapping("/article/edit/{id}")
@@ -160,8 +155,39 @@ public class ExtensionController {
     }
 
     @GetMapping("delete/{id}")
+    @PreAuthorize("isAuthenticated()")
     public String deletePart(@PathVariable Long id) {
         this.extensionService.delete(id);
+        return "redirect:/extensions/all";
+    }
+
+    @GetMapping("/extension/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String deleteExtension(Model model, @PathVariable Long id){
+//        if (!extensionService.exists(id)) {
+//            return "redirect:/error/not-found";
+//        }
+
+        ExtensionDto extension = extensionService.findExtensionById(id);
+        model.addAttribute("type", "Delete");
+        model.addAttribute("extension", extension);
+//        model.addAttribute("view", "extensions/delete");
+        model.addAttribute("view", "extensions/extension-delete");
+        return "base-layout";
+    }
+
+    @PostMapping("/extension/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String deleteExtension(@PathVariable Long id){
+//        if (!extensionService.exists(id)) {
+//            return "redirect:/error/not-found";
+//        }
+
+        ExtensionDto extension = extensionService.findExtensionById(id);
+
+//        storageService.delete(extension.getFile().getOriginalFilename());
+        extensionService.delete(id);
+
         return "redirect:/extensions/all";
     }
 

@@ -1,5 +1,19 @@
 <div th:include="~{fragments/search}"></div>
-<div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--<div class="container align-left " style="margin-outside: 10px">-->
+    <!--<div class="col-sm-6 col-md-4">-->
+        <!--<form class="focus-input100" th:action="@{/public/search/{keyword}(keyword = ${extension.name})}">-->
+            <!--<div class="form-group">-->
+                <!--<div class="input-group" th:object="${extension}">-->
+                    <!--<input type="text" class="form-control" name="keyword" placeholder="Keyword..."/>-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<input type="submit" class="btn btn-primary " value="Find"/>-->
+                <!--</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="container">
     <form>
         <a sec:authorize="hasRole('ADMIN')" href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>
         <a sec:authorize="hasRole('ADMIN')" href="/extensions/new" class="btn btn-warning m-1"> New</a>
@@ -11,6 +25,7 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
+            <th sec:authorize="hasRole('ADMIN')" >Name</th>
             <th>Name</th>
             <th>Description</th>
             <th>Version</th>
@@ -20,6 +35,7 @@
         </thead>
         <tbody>
         <tr th:each="extension : ${extensions}" th:object="${extension}">
+            <th sec:authorize="hasRole('ADMIN')" scope="row" th:text="${extension.id}"></th>
             <th scope="row" th:text="${extension.name}"></th>
             <th scope="row" th:text="${extension.description}"></th>
             <th scope="row" th:text="${extension.version}"></th>
@@ -32,10 +48,16 @@
                 <a th:href="@{/public/download/{id}(id=${extension.id})}">Download</a>
             </td>
             <td>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
             </td>
+            <!--<td>-->
+                <!--<a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>-->
+            <!--</td>-->
             <td>
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/delete/{id}(id = ${extension.id})}">Delete</a>
+            </td>
+            <td>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/extension/delete/{id}(id = ${extension.id})}">Delete</a>
             </td>
             <td style="padding: 2px; vertical-align: middle; empty-cells: show" th:if="*{isFeatured() == false}">
                 <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/admin/makeFeatured/{id}(id = ${extension.id})}">

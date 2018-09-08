@@ -52,6 +52,7 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute RegisterUserModel registerUserModel, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
+            model.addAttribute("type", "Register");
             model.addAttribute("view","user/register-user");
             return "base-layout";
         }
@@ -125,19 +126,4 @@ public class UserController {
         this.userService.edit(registerUserModel);
         return "redirect:/users";
     }
-
-    @GetMapping("/updateURL/{id}")
-    public String getTriggerRepoSource(Model model, @PathVariable("id") Long id){
-        ExtensionDto extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
-        model.addAttribute("extension", extensionDetailsView);
-        model.addAttribute("view","/admin/update-repo-source");
-        return "base-layout";
-    }
-
-    @PostMapping("/updateURL/{id}")
-    public String updateRepoSource(@PathVariable("id") Long id, ExtensionDto extensionDto){
-        this.extensionService.updateLink(extensionDto.getSource_repository_link(), id);
-        return "redirect:/admin/extensions";
-    }
-
 }

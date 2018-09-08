@@ -81,6 +81,14 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
+    public List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword) {
+        return this.extensionRepository.getAllMatchingKeywordOrderByName(keyword)
+                .stream()
+                .map(e -> this.modelMapper.map(e, ExtensionDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void updateLink(String newLink, Long id) {
         this.extensionRepository.updateSourceLink(newLink, id);
     }
@@ -141,6 +149,11 @@ public class ExtensionServiceImpl implements ExtensionService {
             extensionModelViews.add(extensionModelView);
         }
         return extensionModelViews;
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return this.extensionRepository.existsById(id);
     }
 
     @Override
@@ -244,10 +257,16 @@ public class ExtensionServiceImpl implements ExtensionService {
 //        return userEntity.isAdmin() || userEntity.isAuthor(article);
 //    }
 
+    // no wo
     @Override
     public ExtensionDto getById(Long id) {
         Optional<Extension> extension = this.extensionRepository.findById(id);
         return modelMapper.map(extension, ExtensionDto.class);
+    }
+
+    @Override
+    public ExtensionDto findExtensionById(Long id) {
+        return modelMapper.map(this.extensionRepository.findExtensionById(id), ExtensionDto.class);
     }
 
     @Override

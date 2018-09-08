@@ -26,10 +26,12 @@ public interface ExtensionService {
     void setFeatured(Long id);
     void removeFeatured(Long id);
     void incrementDownloadsCount(Long id);
-
+    boolean exists(Long id);
     List<ExtensionDto> getAllSortedByPopularity();
-
+    ExtensionDto findExtensionById(Long id);
     void updateLink(String newLink, Long id);
+
+    List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword);
 
 
 

@@ -14,7 +14,7 @@ public class Tag {
 
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "tags_extensions",
             joinColumns =  {@JoinColumn(name = "tag_id")} ,
             inverseJoinColumns =  {@JoinColumn(name = "extension_id")})

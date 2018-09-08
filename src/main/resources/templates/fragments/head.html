@@ -1,31 +1,38 @@
-<head th:fragment="head">
-    <meta charset="UTF-8"/>
-    <title>Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
-    <!--===============================================================================================-->
-    <!--<link rel="icon" type="image/png" href="../static/login/images/icons/favicon.ico" th:href="@{/login/images/icons/favicon.ico}"/>-->
-    <link rel="icon" type="image/png" href="../static/login/images/icons/eli_new.png" th:href="@{/login/images/icons/eli_new.png}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/vendor/bootstrap/css/bootstrap.min.css" th:href="@{/login/vendor/bootstrap/css/bootstrap.min.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css" th:href="@{/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" th:href="@{/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/vendor/animate/animate.css" th:href="@{/login/vendor/animate/animate.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/vendor/css-hamburgers/hamburgers.min.css" th:href="@{/login/vendor/css-hamburgers/hamburgers.min.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/vendor/animsition/css/animsition.min.css" th:href="@{/login/vendor/animsition/css/animsition.min.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/vendor/select2/select2.min.css" th:href="@{/login/vendor/select2/select2.min.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/vendor/daterangepicker/daterangepicker.css" th:href="@{/login/vendor/daterangepicker/daterangepicker.css}"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/login/css/util.css" th:href="@{/login/css/util.css}"/>
-    <link rel="stylesheet" type="text/css" href="../static/login/css/main.css" th:href="@{/login/css/main.css}"/>
-    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+<meta charset="UTF-8"/>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+<link href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"
+      type="text/css"/>
+<link rel="icon" type="image/png" href="../static/login/images/icons/eli_new.png"
+      th:href="@{/login/images/icons/eli_new.png}"/>
+<link rel="stylesheet" href="../static/css/search.css" th:href="@{/css/search.css}"/>
+<link rel="stylesheet" href="../static/css/carousel.css" th:href="@{/css/carousel.css}"/>
+<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+<link href="../static/css/details.css" th:href="@{/css/details.css}" rel="stylesheet" type="text/css"/>
 
-    <!--===============================================================================================-->
-</head>
+
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--&lt;!&ndash;<link rel="icon" type="image/png" href="../static/login/images/icons/favicon.ico" th:href="@{/login/images/icons/favicon.ico}"/>&ndash;&gt;-->
+<!--<link rel="icon" type="image/png" href="../static/login/images/icons/eli_new.png" th:href="@{/login/images/icons/eli_new.png}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/vendor/bootstrap/css/bootstrap.min.css" th:href="@{/login/vendor/bootstrap/css/bootstrap.min.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css" th:href="@{/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" th:href="@{/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/vendor/animate/animate.css" th:href="@{/login/vendor/animate/animate.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/vendor/css-hamburgers/hamburgers.min.css" th:href="@{/login/vendor/css-hamburgers/hamburgers.min.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/vendor/animsition/css/animsition.min.css" th:href="@{/login/vendor/animsition/css/animsition.min.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/vendor/select2/select2.min.css" th:href="@{/login/vendor/select2/select2.min.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/vendor/daterangepicker/daterangepicker.css" th:href="@{/login/vendor/daterangepicker/daterangepicker.css}"/>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/css/util.css" th:href="@{/login/css/util.css}"/>-->
+<!--<link rel="stylesheet" type="text/css" href="../static/login/css/main.css" th:href="@{/login/css/main.css}"/>-->
+
+<!--===============================================================================================-->

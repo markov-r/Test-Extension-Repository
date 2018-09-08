@@ -4,6 +4,7 @@ import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,22 +35,41 @@ public class Extension {
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @OneToOne(fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JoinColumn(name = "git_hub_data_id")
     private GitHubData gitHubData;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "tags_extensions",
             joinColumns =  {@JoinColumn(name = "extension_id")} ,
             inverseJoinColumns =  {@JoinColumn(name = "tag_id")})
     private Set<Tag> tags;
+
+
+    public Extension(){
+        this.numberOfDownloads = 0;
+        this.tags = new HashSet<>();
+        this.isFeatured = false;
+    }
+
+    public Extension(String name, String description, String version, int numberOfDownloads, String source_repository_link, String fileName, boolean isFeatured, Status status, User owner) {
+        this.name = name;
+        this.description = description;
+        this.version = version;
+        this.numberOfDownloads = numberOfDownloads;
+        this.source_repository_link = source_repository_link;
+        this.fileName = fileName;
+        this.isFeatured = isFeatured;
+        this.status = status;
+        this.owner = owner;
+        this.tags = new HashSet<>();
+    }
 
     public Long getId() {
         return id;

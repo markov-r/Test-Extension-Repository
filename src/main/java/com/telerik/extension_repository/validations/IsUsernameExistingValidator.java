@@ -27,9 +27,9 @@ public class IsUsernameExistingValidator implements ConstraintValidator<IsUserna
                     .stream()
                     .filter(user -> user.getUsername().equals(registrationModel.getUsername()))
                     .count() > 0) {
-            }
 
-            return false;
+                return false;
+            }
         }
 
         return true;

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -80,6 +81,20 @@ public class HomeController {
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
         return ResponseEntity.notFound().build();
     }
+
+
+    @PostMapping("search/{keyword}")
+    public String search(@PathVariable("keyword") String keyword, Model model) {
+        List<ExtensionDto> extensionViews = this.extensionService.getAllMatchingKeywordOrderByName(keyword);
+        if(extensionViews == null){
+            return "redirect:/extensions/all";
+        }
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view", "/extensions/extensions-table");
+        return "base-layout";
+    }
+
+
 
 //    @GetMapping("/unauthorized")
 //    public String getNoAccessPage(Model model) {

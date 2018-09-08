@@ -1,93 +1,68 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+
+</script><link rel="stylesheet" href="../static/css/details.css" th:href="@{/css/details.css}"/>
 <main class="col-4 offset-4 text-center">
     <div class="container">
-<div class="moviecard" th:object="${extension}" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div id="movie-content" th:object="${extension}">
-        <div  class="movie-title">
-            <a th:text="${extension.getName()}">Extension name</a>
-        </div>
-        <div class="movie-ratings">
-            <span class="glyphicon glyphicon-download-alt"></span>
-            <span th:text="${extension.getNumberOfDownloads()}">Number of Downloads</span>
-        </div>
-        <span class="movie-year" th:text="${extension.getVersion()}">Version</span>
-        <div class="movie-details" th:text="${extension.getVersion()}"></div>
-        <div class="movie-castcrew"><span class="title">Author: </span>
-            <span class="name" th:text="${extension.getOwner().getUsername()}">John Doe</span>
-        </div>
-        <!--<div class="movie-castcrew"><span class="title">Date</span>-->
-            <!--<span class="name" th:text="${#dates.format(extension.getDate(), 'dd-MMM-yyyy')}">19-Aug-2018</span>-->
-        <!--</div>-->
-        Description:
-        <div class="movie-synopsis" th:text="${extension.getDescription()}">Description
-        </div>
-        <div class="movie-issues">
-            <div class="movie-details">
+        <div class="moviecard">
+            <div id="movie-content" th:object="${extension}">
+                <div class="movie-title team">
+                    <a th:text="${extension.getName()}">Extension name</a>
+                </div>
+                <div class="movie-ratings team">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                    <span th:text="${extension.getNumberOfDownloads()}">Number of Downloads</span>
+                </div>
+                <span class="movie-genre"><span class="badge"
+                                                th:text="${#dates.format(extension.getGitHubData().getLastCommit(), 'dd-MMM-yyyy')}">0</span>
+                </span>
+                <div class="movie-details team">Version
+                    <span class="movie-genre"></span>
+                    <span class="badge" th:text="${extension.getVersion()}"></span></div>
+                <div class="movie-castcrew team"><span class="title">Author: </span>
+                    <span class="name" th:text="${extension.getOwner().getUsername()}">John Doe</span>
+                </div>
+                Description:
+                <div class="movie-synopsis team" th:text="${extension.getDescription()}">Description
+                </div>
+                <div class="movie-issues team">
+                    <div class="movie-details">
                 <span class="movie-rating">Open Issues:
                 <span class="badge" th:text="${extension.getGitHubData().getIssuesCount()}">0</span>
                 </span>
-                <span class="movie-duration">Pull Requests:
+                        <span class="movie-duration">Pull Requests:
                 <span class="badge" th:text="${extension.getGitHubData().getPullsCount()}">0</span>
                 </span>
-                <span class="movie-genre">Last Commit Date:
-                <span class="badge" th:text="${#dates.format(extension.getGitHubData().getLastCommit(), 'dd-MMM-yyyy')}">0</span>
-                </span>
+
+                    </div>
+                </div>
+                <div class="movie-details team">
+                    <a class="badge badge-info" th:each="tag : ${extension.getTags()}"
+                       th:text="${tag.getName()}" th:href="@{/tag/{name}(name = ${tag.getName()})}">Info</a>
+                </div>
+                <div>
+                    <a th:href="${extension.getSource_repository_link()}" class="btn btn-info team">Repository</a>
+                    <a th:href="@{/public/download/{id}(id = ${extension.getId()})}"
+                       class="btn btn-primary team">Download</a>
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:text="${extension.isFeatured() ? 'Remove Feature' : 'Make Feature'}"
+                       th:class="${extension.isFeatured() ? 'btn btn-primary' : 'btn btn-info'}"
+                       th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}" class="team">Feature</a>
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/extension/update/{id}(id = ${extension.getId()})}" class="btn btn-warning team">Edit</a>
+
+                    <form sec:authorize="hasRole('ADMIN')" method="post"
+                          th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}">
+                        <button type="submit" class="card-button btn btn-success team" name="Synchronize">Synchronize
+                        </button>
+                    </form>
+                    <!--<a sec:authorize="hasRole('ADMIN')"-->
+                    <!--th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>-->
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/extension/delete/{id}(id = ${extension.getId()})}" class="btn btn-danger team">Delete</a>
+                </div>
             </div>
         </div>
-        <div class="movie-details">
-            <!--<p>-->
-                <!--<a class="btn btn-basic btn-xs" th:each="tag:${extension.getTags()}" th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>-->
-            <!--</p>-->
-            <a class="badge badge-info" th:each="tag : ${extension.getTags()}"
-               th:text="${tag.getName()}" th:href="@{/tag/{name}(name = ${tag.getName()})}">Info</a>
-
-        </div>
-        <div>
-            <a th:href="${extension.getSource_repository_link()}" class="btn btn-info">Repository</a>
-            <a th:href="@{/public/download/{id}(id = ${extension.getId()})}" class="btn btn-primary">Download</a>
-            <a sec:authorize="hasRole('ADMIN')"
-               th:text="${extension.isFeatured() ? 'Remove Feature' : 'Make Feature'}"
-               th:class="${extension.isFeatured() ? 'btn btn-primary' : 'btn btn-info'}"
-               th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}">Feature</a>
-            <a sec:authorize="hasRole('ADMIN')"
-               th:href="@{/extension/update/{id}(id = ${extension.getId()})}" class="btn btn-warning">Edit</a>
-
-            <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}">
-                <button type="submit" class="card-button btn btn-success" name="Synchronize">Synchronize</button>
-            </form>
-            <!--<a sec:authorize="hasRole('ADMIN')"-->
-               <!--th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>-->
-            <a sec:authorize="hasRole('ADMIN')"
-               th:href="@{/extension/delete/{id}(id = ${extension.getId()})}" class="btn btn-danger">Delete</a>
-        </div>
     </div>
-    </div>
-
-</div>
 </main>
-
------------------------------------------------------------
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title th:text="|${type}|">Page Title</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<div class="container" th:object="${extension}">
-    <h2 th:text="${extension.getName()}">Extension Name</h2>
-    <ul class="list-group" th:object="${extension}">
-        <li class="list-group-item">Description <span th:text="${extension.getDescription()}">5</span></li>
-        <li class="list-group-item">Number of Downloads<span class=""glyphicon glyphicon-download-alt"e" th:text="${extension.getNumberOfDownloads()}">12</span></li>
-        <li class="list-group-item">Deleted <span class="badge">5</span></li>
-        <li class="list-group-item">Warnings <span class="badge">3</span></li>
-    </ul>
-</div>
-
-</body>
-</html>

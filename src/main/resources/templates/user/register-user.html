@@ -23,7 +23,7 @@
         <div class="form-group" th:classappend="*{password} != *{confirmPassword} ? 'has-danger'" >
             <label for="sideEff">Confirm Password</label>
             <input type="password" class="form-control" id="sideEff" aria-describedby="sideEffHelp" th:field="*{confirmPassword}"/>
-            <div class="form-control-feedback" th:if="*{password} != *{confirmPassword}">Passwords Not Matching</div>
+            <div  id="sideEffHelp" class="form-control-feedback" th:if="*{password} != *{confirmPassword}">Passwords Not Matching</div>
         </div>
 
 
