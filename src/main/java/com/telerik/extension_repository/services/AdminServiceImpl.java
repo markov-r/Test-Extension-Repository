@@ -17,14 +17,11 @@ public class AdminServiceImpl implements AdminService {
 
     private UserService userService;
 
-    private ModelMapper modelMapper;
-
     private ExtensionService extensionService;
 
     @Autowired
-    public AdminServiceImpl(@Lazy UserService userService, @Lazy ModelMapper modelMapper, @Lazy ExtensionService extensionService) {
+    public AdminServiceImpl(@Lazy UserService userService, @Lazy ExtensionService extensionService) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
         this.extensionService = extensionService;
     }
 

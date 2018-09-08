@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 @Transactional
 public class LogServiceImpl implements LogService {
+
     @Autowired
     private LogRepository logRepository;
 
@@ -28,7 +29,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public List<LogView> getAllByUsername(String username) {
-        List<Log> logs = new ArrayList<>();
+        List<Log> logs;
         if (username != null){
             logs = this.logRepository.findByUserUsernameOrderByDateAsc(username);
         } else {

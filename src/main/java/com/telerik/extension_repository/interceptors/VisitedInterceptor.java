@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class VisitedInterceptor extends HandlerInterceptorAdapter {
-    private  int times = 0;
+    private int times = 0;
+
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
-           this.times++;
-           request.setAttribute("times", times );
-           modelAndView.addObject("visited", times );
-
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+        this.times++;
+        request.setAttribute("times", times);
+        modelAndView.addObject("visited", times);
     }
 }

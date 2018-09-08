@@ -60,10 +60,6 @@ public class UserServiceImpl implements UserService {
         } else {
             user.setAuthorities(this.getAuthorities("ROLE_USER"));
         }
-
-//        AuthorityModel userRole = this.roleService.findByName("ROLE_USER");
-//        Authority role = this.modelMapper.map(userRole, Authority.class);
-//        user.addRole(role);
         this.userRepository.save(user);
     }
 
@@ -82,13 +78,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public RegisterUserModel getById(Long id) {
         User user = this.userRepository.findById(id);
-
         if (user == null) {
             throw new UserNotFoundException();
         }
-
-        RegisterUserModel userModelView = this.modelMapper.map(user, RegisterUserModel.class);
-        return userModelView;
+        return this.modelMapper.map(user, RegisterUserModel.class);
     }
 
     @Override
@@ -196,15 +189,15 @@ public class UserServiceImpl implements UserService {
         this.userRepository.disableUser(id);
     }
 
-    private String getUserAuthority(String userId) {
-        return this
-                .userRepository
-                .findById(userId)
-                .get()
-                .getAuthorities()
-                .stream()
-                .findFirst()
-                .get()
-                .getAuthority();
-    }
+//    private String getUserAuthority(String userId) {
+//        return this
+//                .userRepository
+//                .findById(userId)
+//                .get()
+//                .getAuthorities()
+//                .stream()
+//                .findFirst()
+//                .get()
+//                .getAuthority();
+//    }
 }

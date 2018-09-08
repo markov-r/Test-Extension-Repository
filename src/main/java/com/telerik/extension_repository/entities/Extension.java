@@ -1,11 +1,8 @@
 package com.telerik.extension_repository.entities;
 
 import com.telerik.extension_repository.entities.enums.Status;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "extensions")
