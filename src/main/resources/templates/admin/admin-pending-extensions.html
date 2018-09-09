@@ -12,7 +12,9 @@
     <tr th:each="extension : ${extensions}">
         <th scope="row" th:text="${extension.name}"></th>
         <td th:text="${extension.description}"></td>
-
+        <td>
+            <a th:href="@{/public/{id}(id = ${extension.id})}">Details</a>
+        </td>
         <td style="padding: 2px; vertical-align: middle; empty-cells: show">
             <form method="post" th:action="@{/admin/pending/approve/{id}(id=${extension.id})}">
                 <button type="submit" class="card-button btn btn-success" name="Approve">Approve</button>

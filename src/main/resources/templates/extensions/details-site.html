@@ -44,21 +44,28 @@
                 <div>
                     <a th:href="${extension.getSource_repository_link()}" class="btn btn-info team">Repository</a>
                     <a th:href="@{/update/updateURL/{id}(id = ${extension.getId()})}"
-                       class="btn btn-primary team">Update Repository Link</a>
+                       sec:authorize="hasRole('ADMIN')" class="btn btn-primary team">Update Repository Link</a>
                     <a th:href="@{/public/download/{id}(id = ${extension.getId()})}"
                        class="btn btn-primary team">Download</a>
+
+                    <form sec:authorize="hasRole('ADMIN')" method="post"
+                       th:if="*{isFeatured() == false}" class="card-button btn btn-success team"
+                          th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}" name="Make Featured">Make Featured</form>
+
+                    <form sec:authorize="hasRole('ADMIN')" method="post"
+                       th:if="*{isFeatured() == true}" class="card-button btn btn-success team"
+                       th:href="@{/admin/removeFeatured/{id}(id=${extension.getId()})}" name="Remove Featured">Remove Featured</form>
+
+
                     <a sec:authorize="hasRole('ADMIN')"
-                       th:text="${extension.isFeatured() ? 'Remove Feature' : 'Make Feature'}"
-                       th:class="${extension.isFeatured() ? 'btn btn-primary' : 'btn btn-info'}"
-                       th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}" class="team">Feature</a>
-                    <a sec:authorize="hasRole('ADMIN')"
-                       th:href="@{/extension/update/{id}(id = ${extension.getId()})}" class="btn btn-warning team">Edit</a>
+                       th:href="@{/extensions/edit/{id}(id = ${extension.id})}" class="btn btn-warning team">Edit</a>
 
                     <form sec:authorize="hasRole('ADMIN')" method="post"
                           th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}">
                         <button type="submit" class="card-button btn btn-success team" name="Synchronize">Synchronize
                         </button>
                     </form>
+
                     <!--<a sec:authorize="hasRole('ADMIN')"-->
                     <!--th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>-->
                     <a sec:authorize="hasRole('ADMIN')"
@@ -68,3 +75,4 @@
         </div>
     </div>
 </main>
+

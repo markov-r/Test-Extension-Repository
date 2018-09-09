@@ -4,7 +4,7 @@
         <a sec:authorize="hasRole('ADMIN')" href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>
         <a sec:authorize="hasRole('ADMIN')" href="/extensions/new" class="btn btn-warning m-1"> New</a>
         <a sec:authorize="hasRole('ADMIN')" href="/extensions/popular" class="btn btn-warning m-1"> Popular</a>
-        <!--<a href="/user/all" class="btn btn-warning m-1"> Own</a>-->
+        <a sec:authorize="hasRole('ADMIN')" href="/extensions/all" class="btn btn-warning m-1"> All</a>
     </form>
     <p class="text-center"><h6 class="display-4" th:text="|${type} extensions|"> </h6></p>
 
@@ -39,9 +39,9 @@
             <td>
                 <a sec:authorize="isAuthenticated()" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
             </td>
-            <!--<td>-->
-                <!--<a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>-->
-            <!--</td>-->
+            <td>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
+            </td>
             <td>
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/delete/{id}(id = ${extension.id})}">Delete</a>
             </td>
