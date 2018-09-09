@@ -1,0 +1,16 @@
+<form style="margin-outside: 10px" class="form-inline" th:action="@{/public/searchByName}">
+    <div class="container align-left ">
+        <div class="col-sm-6 col-md-4">
+            <form class="focus-input100">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input th:value="${#request.getParameter('name')}" type="search" class="form-control" name="name" placeholder="Keyword..."/>
+                        <span class="input-group-btn">
+                    <input type="submit" class="btn btn-primary " value="Find"/>
+                </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</form>

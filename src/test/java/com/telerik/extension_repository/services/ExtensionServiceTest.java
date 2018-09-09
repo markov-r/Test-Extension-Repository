@@ -102,6 +102,17 @@ public class ExtensionServiceTest {
     }
 
     @Test
+    public void findAllByNumberOfDownloads_ShouldPassed(){
+        String name = "name";
+        when(mockExtensionRepository.getAllByNumberOfDownloadsDesc(name)).thenReturn(
+                new ArrayList<>()
+        );
+        List<ExtensionDto> result = extensionService.getAllPending();
+        Assert.assertEquals(new ArrayList<Extension>(), result);
+
+    }
+
+    @Test
     public void deleteExtension_ById_ShouldPassed(){
         Long id = 3456778L;
 //        when(mockExtensionRepository.deleteById(id)
