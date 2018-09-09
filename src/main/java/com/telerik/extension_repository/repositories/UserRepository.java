@@ -20,10 +20,10 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-    @Query(value = "SELECT u FROM User AS u WHERE username = :username")
+    @Query(value = "SELECT u FROM User AS u WHERE u.username = :username")
     User findOneByUsername(@Param("username") String username);
 
-    @Query(value = "SELECT u FROM User AS u WHERE username = :username AND password = :password")
+    @Query(value = "SELECT u FROM User AS u WHERE u.username = :username AND u.password = :password")
     User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     @Query(value = "SELECT u FROM User AS u WHERE username = :username")
@@ -31,6 +31,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findById(Long id);
 
+    @Transactional
     @Modifying
     @Query(value = "UPDATE User " +
             "SET username = :username, email = :email, password =:password WHERE id = :id")
