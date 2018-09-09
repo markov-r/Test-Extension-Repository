@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMeCookieName("RememberMe")
                 .rememberMeParameter("rememberMe")
                 .key("randomKey")
-                .tokenValiditySeconds(1000)
+                .tokenValiditySeconds(10000)
                 .and()
                 .logout().logoutSuccessUrl("/login?logout").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()

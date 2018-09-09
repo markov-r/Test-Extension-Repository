@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="/tags/all" method="post">
-    <input type="text" name="title" />
-    <select name="tag">
-        <option>java</option>
-        <option>spring boot</option>
-        <option>sql</option>
-    </select>
+<!--<form action="/tag/all">-->
+<form action="/tag/all">
+    <div class="movie-details team">
+        <a class="badge badge-info" th:each="tag : ${tags}"
+           th:text="${tag.getName()}" th:href="@{/tag/{name}(name = ${tag.getName()})}">Info</a>
+    </div>
 </form>
-</body>
-</html>
+
+
+

@@ -113,7 +113,7 @@ public class ExtensionServiceTest {
     }
 
     @Test
-    public void findAllFeaturedextensions_ShouldPassed(){
+    public void findAllFeaturedExtensions_ShouldPassed(){
         String name = "name";
         when(mockExtensionRepository.getAllByNumberOfDownloadsDesc(name)).thenReturn(
                 new ArrayList<>()
@@ -122,5 +122,7 @@ public class ExtensionServiceTest {
         Assert.assertEquals(new ArrayList<Extension>(), result);
 
     }
+
+
 
 }

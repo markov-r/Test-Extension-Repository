@@ -4,7 +4,7 @@
         <h1>Search by Tag - <th:block th:text="${tag.name}"></th:block></h1>
         <div class="row">
             <th:block th:each="extension : ${tag.extensions}">
-                <div class="col-md-6">
+                <div class="card col-md-6">
                     <article>
                         <header>
                             <h2 th:text="${extension.name}"></h2>
