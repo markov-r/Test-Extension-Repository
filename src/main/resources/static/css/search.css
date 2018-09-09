@@ -1,3 +1,7 @@
-/*.sort-content {*/
-  /*margin: 12px;*/
-/*}*/
+form {
+    padding-bottom: 50px;
+}
+
+#sortBy {
+    padding-left: 100px;
+}
