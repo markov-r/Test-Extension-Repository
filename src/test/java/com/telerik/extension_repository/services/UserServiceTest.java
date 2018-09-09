@@ -131,4 +131,19 @@ public class UserServiceTest {
         Assert.assertNotEquals(registerUserModels.size(), 5);
     }
 
+    @Test
+    public void isExistUsername_shouldReturnTrue_whenUsernameExists() {
+        // Arrange
+        User user = new User();
+        user.setUsername("Oksana");
+
+        when(mockUserRepository.findOneByUsername(user.getUsername())).thenReturn(user);
+
+        // Act
+        boolean result = userService.isExistUsername(user.getUsername());
+
+        // Assert
+        Assert.assertTrue(result);
+    }
+
 }

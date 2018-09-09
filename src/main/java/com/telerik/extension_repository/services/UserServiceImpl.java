@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -149,9 +150,25 @@ public class UserServiceImpl implements UserService {
         return userByName;
     }
 
+
     @Override
-    public boolean isUsernameAvailable(String username) {
-        return false;
+    public List<RegisterUserModel> getAllNonAdminUsers() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(user -> this.modelMapper.map(user, RegisterUserModel.class))
+                .filter(user -> !user.isAdmin())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isExistUsername(String username) {
+        User user = userRepository.findOneByUsername(username);
+
+        if (user == null) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override

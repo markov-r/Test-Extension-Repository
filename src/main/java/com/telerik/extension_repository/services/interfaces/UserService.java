@@ -19,11 +19,13 @@ public interface UserService extends UserDetailsService {
     LoginUser getByUsername(String username);
     RegisterUserModel getUserByUsername(String username);
     void deleteUserById(Long id);
-    boolean isUsernameAvailable(String username);
+    //boolean isUsernameAvailable(String username);
     void disableUser(Long id);
     boolean isEnabled(Long id);
     User findByUsername(String username);
     User getCurrentUser();
     boolean exists(Long id);
+    List<RegisterUserModel> getAllNonAdminUsers();
+    boolean isExistUsername(String username);
 
 }
