@@ -6,6 +6,9 @@ public class TagView {
 
     private String name;
 
+    public TagView() {
+    }
+
     public TagView(String name) {
         this.name = name;
     }
