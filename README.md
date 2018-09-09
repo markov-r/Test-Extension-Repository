@@ -35,14 +35,14 @@ Admin panel also shows GitHub Synchronization Details:
 
 The used technologies -> Java, Spring Boot, Hibernate, MariaDB, Thymeleaf, Bootstrap
 
-**Installation instructions:
+***Installation instructions:
 
-Clone the repository from GitHub and build it as a Gradle project using auto import.
+- Clone the repository from GitHub and build it as a Gradle project using auto import.
 
-If you want to use an example database, use ext_repo.sql
+- If you want to use an example database, use ext_repo.sql
 
-Replace your user/password for the database in application properties file.
+- Replace your user/password for the database in application properties file.
 
-The application is set to run on port 8081, change it if you need another port.
+- The application is set to run on port 8081, change it if you need another port.
 
-Open localhost:8081 and enjoy!
+- Open localhost:8081 and enjoy!
