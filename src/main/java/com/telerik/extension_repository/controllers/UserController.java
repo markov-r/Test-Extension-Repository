@@ -1,21 +1,31 @@
 package com.telerik.extension_repository.controllers;
 
+import com.sun.javafx.geom.Path2D;
+import com.telerik.extension_repository.entities.Extension;
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.models.ExtensionDto;
+import com.telerik.extension_repository.models.PropertiesDto;
 import com.telerik.extension_repository.models.bindingModels.user.*;
+import com.telerik.extension_repository.repositories.UserRepository;
 import com.telerik.extension_repository.services.interfaces.AuthorityService;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import com.telerik.extension_repository.utils.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -28,6 +38,9 @@ public class UserController {
 
     @Autowired
     private AuthorityService roleService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("user/own")
     public String getOwnExtensionPage(Model model) {
@@ -106,6 +119,42 @@ public class UserController {
         return "base-layout";
     }
 
+    @GetMapping("update/updateURL/{id}")
+    public String getUpdateURLPage(Model model, @PathVariable Long id) {
+        ExtensionDto extensionDto = this.extensionService.findExtensionById(id);
+        String sourceRepositoryURL = extensionDto.getSource_repository_link();
+        model.addAttribute("extension", extensionDto);
+        model.addAttribute("view", "/user/update-repo-source");
+        return "base-layout";
+    }
+
+    @PostMapping("/update/updateURL/{id}")
+    public String updateURL(ExtensionDto extensionDto, @PathVariable Long id) {
+        this.extensionService.updateLink(extensionDto.getSource_repository_link(), id);
+         return "redirect:/user/own";
+    }
+
+    private User getCurrentUser() {
+
+        if (!(SecurityContextHolder.getContext().getAuthentication()
+                instanceof AnonymousAuthenticationToken)) {
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            return this.userRepository.findOneByUsername(principal.getUsername());
+
+        }
+        return null;
+    }
+
+    @Transient
+    private boolean equalsById(Extension extension, ExtensionDto dto) {
+        return Objects.equals(
+                this.userRepository.findAllByExtensionsAndId().contains(extension.getId()),
+                extension.getOwner().getId());
+    }
+
 //    @GetMapping("/user/edit/{id}")
 //    @PreAuthorize("isAuthenticated()")
 //    public String edit(Model model, @PathVariable Long id,  @RequestParam(defaultValue = "false") boolean checkbox ) {
@@ -126,6 +175,6 @@ public class UserController {
     public String  editUser(@PathVariable Long id){
         RegisterUserModel registerUserModel = this.userService.getById(id);
         this.userService.edit(registerUserModel);
-        return "redirect:/users";
+        return "redirect:/user/profile";
     }
 }

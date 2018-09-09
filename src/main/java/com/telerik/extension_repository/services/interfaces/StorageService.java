@@ -29,4 +29,5 @@ public interface StorageService {
 
     void delete(String filename);
 
+    void updateFile(MultipartFile file);
 }

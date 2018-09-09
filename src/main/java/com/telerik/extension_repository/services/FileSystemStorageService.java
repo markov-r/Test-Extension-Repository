@@ -110,6 +110,11 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public void updateFile(MultipartFile file) {
+
+    }
+
+    @Override
     public void init() {
         try {
             Files.createDirectories(rootLocation);

@@ -169,6 +169,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SET e.isFeatured = false WHERE id = :id")
     void removeFeatured(@Param("id") Long id);
 
+    @Transactional
     @Modifying
     @Query(value = "UPDATE Extension e " +
             "SET e.source_repository_link = :source_repository_link  WHERE id = :id")

@@ -34,6 +34,9 @@
                 <a th:href="@{/public/download/{id}(id=${extension.id})}">Download</a>
             </td>
             <td>
+                <a sec:authorize="isAuthenticated()" th:href="@{/update/updateURL/{id}(id = ${extension.id})}">Update Source Repository link</a>
+            </td>
+            <td>
                 <a sec:authorize="isAuthenticated()" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
             </td>
             <!--<td>-->

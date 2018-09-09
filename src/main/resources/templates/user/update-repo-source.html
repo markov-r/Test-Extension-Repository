@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <header class="text-center"><h6 class="display-6">Update GitHub Repository Link</h6></header>
                 <br/>
-                <form th:method="post" th:object="${extension}" th:action="@{/admin/updateURL/{id}(id=${extension.id})}">
+                <form th:method="post" th:object="${extension}" th:action="@{/update/updateURL/{id}(id=${extension.id})}">
                     <div class="form-group row">
                         <label class="form-control-label">New Source Repository Link</label>
                         <input type="text" class="form-control" th:field="*{source_repository_link}" required/>

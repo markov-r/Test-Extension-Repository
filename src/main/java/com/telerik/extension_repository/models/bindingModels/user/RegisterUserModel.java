@@ -1,12 +1,15 @@
 package com.telerik.extension_repository.models.bindingModels.user;
 
 import com.telerik.extension_repository.entities.Authority;
+import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.utils.Constants;
 import com.telerik.extension_repository.validations.annotations.ExtendedEmailValidator;
 import com.telerik.extension_repository.validations.annotations.IsPasswordMatching;
 import com.telerik.extension_repository.validations.annotations.IsUsernameExisting;
 
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -103,4 +106,5 @@ public class RegisterUserModel {
                 .collect(Collectors.toSet());
         return  names.contains(Constants.ADMIN_ROLE);
     }
+
 }

@@ -15,14 +15,20 @@ import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import com.telerik.extension_repository.services.interfaces.StorageService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
+import static junit.framework.TestCase.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -45,9 +51,37 @@ public class UserServiceTest {
     @InjectMocks
     private AuthorityServiceImpl roleService;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     public static class Helpers {
 
 
+    }
+
+    private static final String PASSWORD_HASH = "myCustomHash";
+
+
+    @Before
+    public void setUp() {
+        when(this.passwordEncoder.encode(anyString()))
+                .thenReturn(PASSWORD_HASH);
+    }
+
+    @Test
+    public void testRegister_withUsernameAndPassword_passwordShouldBeEncoded() {
+        when(mockUserRepository.save(any()))
+                .thenAnswer(i -> i.getArgument(0));
+        final String USERNAME = "pesho";
+        final String PASSWORD = "pesho123";
+
+        User result = this.userService.registerByUsernameAndPassword(USERNAME, PASSWORD);
+
+        assertEquals(
+                "Password was not or wrongly encoded!",
+                PASSWORD_HASH,
+                result.getPassword()
+        );
     }
 
     @Test

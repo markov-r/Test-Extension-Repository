@@ -43,6 +43,8 @@
                 </div>
                 <div>
                     <a th:href="${extension.getSource_repository_link()}" class="btn btn-info team">Repository</a>
+                    <a th:href="@{/update/updateURL/{id}(id = ${extension.getId()})}"
+                       class="btn btn-primary team">Update Repository Link</a>
                     <a th:href="@{/public/download/{id}(id = ${extension.getId()})}"
                        class="btn btn-primary team">Download</a>
                     <a sec:authorize="hasRole('ADMIN')"

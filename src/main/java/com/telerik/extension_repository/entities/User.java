@@ -43,6 +43,11 @@ public class User implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User() {
         this.extensions = new HashSet<>(0);
     }

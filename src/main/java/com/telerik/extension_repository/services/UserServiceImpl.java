@@ -64,16 +64,20 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
     }
 
+    @Override
+    public User registerByUsernameAndPassword(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(this.bCryptPasswordEncoder.encode(password));
+        return this.userRepository.save(user);
+    }
 
     @Override
     public List<RegisterUserModel> getAll() {
-        List<User> users = this.userRepository.findAll();
-        List<RegisterUserModel> userModelViews = new ArrayList<>();
-        for (User user : users) {
-            RegisterUserModel userModelView = this.modelMapper.map(user, RegisterUserModel.class);
-            userModelViews.add(userModelView);
-        }
-        return userModelViews;
+        return this.userRepository.findAll()
+                .stream()
+                .map(user -> this.modelMapper.map(user, RegisterUserModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override
