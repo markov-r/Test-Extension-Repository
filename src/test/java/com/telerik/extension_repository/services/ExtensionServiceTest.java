@@ -112,30 +112,4 @@ public class ExtensionServiceTest {
 
     }
 
-    @Test
-    public void deleteExtension_ById_ShouldPassed(){
-        Long id = 3456778L;
-//        when(mockExtensionRepository.deleteById(id)
-
-    }
-
-//    @Test
-//    public void delete_shouldReturnExtension_ifUpdateSuccessful() {
-//        // Arrange
-//        Extension extension = new Extension();
-//        Extension extension1 = new Extension();
-//
-//
-//        when(extensionRepository.delete(extension)).thenReturn(extension);
-//        when(extensionRepository.delete(extension1)).thenReturn(null);
-//
-//        // Act
-//        boolean isDeleteSuccessful = extensionService.delete(extension);
-//        boolean failedDelete = extensionService.delete(extension1);
-//
-//        // Assert
-//        Assert.assertTrue(isDeleteSuccessful);
-//        Assert.assertFalse(failedDelete);
-//    }
-
 }

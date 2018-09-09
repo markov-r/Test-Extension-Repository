@@ -18,6 +18,7 @@ public class IsPasswordMatchingValidator implements ConstraintValidator<IsPasswo
         if (object instanceof RegisterUserModel){
             RegisterUserModel registrationModel = (RegisterUserModel) object;
             return registrationModel.getPassword().equals(registrationModel.getConfirmPassword());
+
         }
 
         return false;

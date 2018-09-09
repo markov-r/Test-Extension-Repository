@@ -20,10 +20,13 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
+    @Query(value = "SELECT u FROM User AS u WHERE username = :username")
     User findOneByUsername(@Param("username") String username);
 
-    User findByUsernameAndPassword(String username, String password);
+    @Query(value = "SELECT u FROM User AS u WHERE username = :username AND password = :password")
+    User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
+    @Query(value = "SELECT u FROM User AS u WHERE username = :username")
     Optional<User> findByUsername(String username);
 
     User findById(Long id);

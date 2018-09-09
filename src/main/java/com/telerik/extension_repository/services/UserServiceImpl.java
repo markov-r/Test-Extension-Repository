@@ -106,12 +106,6 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.existsById(String.valueOf(id));
     }
 
-//    private User getCurrentUser() {
-//        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
-//                .getAuthentication().getPrincipal();
-//        return this.userRepository.findOneByUsername(user.getUsername());
-//    }
-
     @Override
     public User findByUsername(String username) {
         return this.userRepository.findOneByUsername(username);
@@ -189,15 +183,16 @@ public class UserServiceImpl implements UserService {
         this.userRepository.disableUser(id);
     }
 
-//    private String getUserAuthority(String userId) {
-//        return this
-//                .userRepository
-//                .findById(userId)
-//                .get()
-//                .getAuthorities()
-//                .stream()
-//                .findFirst()
-//                .get()
-//                .getAuthority();
-//    }
+    private String getUserAuthority(String userId) {
+        return this
+                .userRepository
+                .findById(userId)
+                .get()
+                .getAuthorities()
+                .stream()
+                .findFirst()
+                .get()
+                .getAuthority();
+    }
+
 }

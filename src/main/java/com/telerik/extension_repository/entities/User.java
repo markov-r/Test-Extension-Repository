@@ -36,6 +36,13 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Extension> extensions;
 
+
+    public User(String username, String email, boolean isEnabled) {
+        this.username = username;
+        this.email = email;
+        this.isEnabled = isEnabled;
+    }
+
     public User() {
         this.extensions = new HashSet<>(0);
     }
