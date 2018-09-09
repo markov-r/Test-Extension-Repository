@@ -13,13 +13,12 @@ import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import com.telerik.extension_repository.services.interfaces.StorageService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import org.junit.Assert;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import static org.junit.Assert.assertEquals;
@@ -88,6 +87,23 @@ public class ExtensionServiceTest {
         List<ExtensionDto> result = extensionService.getAllByName(name);
         Assert.assertEquals(new ArrayList<Extension>(), result);
 
+    }
+
+    @Test
+    public void findAllByStatusAPPROVED_ShouldPassed(){
+        Status status = Status.APPROVED;
+        when(mockExtensionRepository.findAllByStatus(status)).thenReturn(
+                new ArrayList<>()
+        );
+        List<ExtensionDto> result = extensionService.getAllPending();
+        Assert.assertEquals(new ArrayList<Extension>(), result);
+
+    }
+
+    @Test
+    public void deleteExtension_ById_ShouldPassed(){
+        Long id = 3456778L;
+//        when(mockExtensionRepository.deleteById(id)
 
     }
 
