@@ -43,18 +43,19 @@
                 </div>
                 <div>
                     <a th:href="${extension.getSource_repository_link()}" class="btn btn-info team">Repository</a>
+
                     <a th:href="@{/update/updateURL/{id}(id = ${extension.getId()})}"
                        sec:authorize="hasRole('ADMIN')" class="btn btn-primary team">Update Repository Link</a>
                     <a th:href="@{/public/download/{id}(id = ${extension.getId()})}"
                        class="btn btn-primary team">Download</a>
 
-                    <form sec:authorize="hasRole('ADMIN')" method="post"
-                       th:if="*{isFeatured() == false}" class="card-button btn btn-success team"
-                          th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}" name="Make Featured">Make Featured</form>
+                    <!--<form sec:authorize="hasRole('ADMIN')" method="post"-->
+                       <!--th:if="*{isFeatured() == false}" class="card-button btn btn-success team"-->
+                          <!--th:href="@{/admin/makeFeatured/{id}(id=${extension.getId()})}" name="Make Featured">Make Featured</form>-->
 
-                    <form sec:authorize="hasRole('ADMIN')" method="post"
-                       th:if="*{isFeatured() == true}" class="card-button btn btn-success team"
-                       th:href="@{/admin/removeFeatured/{id}(id=${extension.getId()})}" name="Remove Featured">Remove Featured</form>
+                    <!--<form sec:authorize="hasRole('ADMIN')" method="post"-->
+                       <!--th:if="*{isFeatured() == true}" class="card-button btn btn-success team"-->
+                       <!--th:href="@{/admin/removeFeatured/{id}(id=${extension.getId()})}" name="Remove Featured">Remove Featured</form>-->
 
 
                     <a sec:authorize="hasRole('ADMIN')"
@@ -69,7 +70,7 @@
                     <!--<a sec:authorize="hasRole('ADMIN')"-->
                     <!--th:action="@{/admin/synchronizeGitData/{id}(id = ${extension.getId()})}" class="btn btn-info">Synchronize</a>-->
                     <a sec:authorize="hasRole('ADMIN')"
-                       th:href="@{/extension/delete/{id}(id = ${extension.getId()})}" class="btn btn-danger team">Delete</a>
+                       th:href="@{/extensions/delete/{id}(id = ${extension.getId()})}" class="btn btn-danger team">Delete Permanently</a>
                 </div>
             </div>
         </div>
