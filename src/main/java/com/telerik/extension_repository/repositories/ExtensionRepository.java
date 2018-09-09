@@ -175,6 +175,21 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SET e.source_repository_link = :source_repository_link  WHERE id = :id")
     void updateSourceLink(@Param("source_repository_link") String source_repository_link, @Param("id") Long id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE Extension e " +
+            "SET e.fileName= :filename  WHERE id = :id")
+    void updateFileName(@Param("filename") String filename, @Param("id") Long id);
+
     List<Extension> getAllByNameOrderByNameAsc(String name);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Extension " +
+            "SET name = :name, description = :description, " +
+            "source_repository_link = :source_repository_link, " +
+            "fileName = :fileName WHERE id = :id")
+    void editExtension(@Param("name") String name, @Param("description") String description,
+                   @Param("source_repository_link") String source_repository_link, @Param("fileName") String fileName, @Param("id") Long id);
 }
 

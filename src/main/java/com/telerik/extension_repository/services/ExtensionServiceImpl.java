@@ -82,6 +82,11 @@ public class ExtensionServiceImpl implements ExtensionService {
                 .collect(Collectors.toList());
     }
 
+    public void updateTags(String newLink, Long id) {
+        this.extensionRepository.updateSourceLink(newLink, id);
+    }
+
+
     @Override
     public void updateLink(String newLink, Long id) {
         this.extensionRepository.updateSourceLink(newLink, id);
@@ -162,6 +167,7 @@ public class ExtensionServiceImpl implements ExtensionService {
         extension.setStatus(Status.PENDING);
         extension.setName(addExtensionModel.getName());
         extension.setDescription(addExtensionModel.getDescription());
+        extension.setVersion(addExtensionModel.getVersion());
         extension.setSource_repository_link(addExtensionModel.getSource_repository_link());
         GitHubData gitHubData = this.getGitHubData(extension);
         extension.setGitHubData(gitHubData);
@@ -172,6 +178,28 @@ public class ExtensionServiceImpl implements ExtensionService {
         extension.setUploadDate(new Date());
         extension.setFileName(addExtensionModel.getFile().getOriginalFilename());
         this.extensionRepository.saveAndFlush(extension);
+    }
+
+
+    @Override
+    @PreAuthorize("isAuthenticated()")
+    public void editExtension(ExtensionDto extensionModel) {
+        Extension extension = this.extensionRepository.getOne(extensionModel.getId());
+        extension.setName(extensionModel.getName());
+        extension.setDescription(extensionModel.getDescription());
+        extension.setVersion(extensionModel.getVersion());
+        extension.setSource_repository_link(extensionModel.getSource_repository_link());
+        GitHubData gitHubData = this.getGitHubData(extension);
+        extension.setGitHubData(gitHubData);
+        HashSet<Tag> tags = getTags(extensionModel);
+        extension.getTags().addAll(tags);
+        extension.setFileName(extensionModel.getFile().getOriginalFilename());
+        this.extensionRepository.saveAndFlush(extension);
+    }
+
+    @Override
+    public void updateFilename(String filename, Long id) {
+        this.extensionRepository.updateFileName(filename, id);
     }
 
     private HashSet<Tag> getTags(ExtensionDto addExtensionModel) {

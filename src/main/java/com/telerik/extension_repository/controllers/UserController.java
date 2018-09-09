@@ -119,20 +119,6 @@ public class UserController {
         return "base-layout";
     }
 
-    @GetMapping("update/updateURL/{id}")
-    public String getUpdateURLPage(Model model, @PathVariable Long id) {
-        ExtensionDto extensionDto = this.extensionService.findExtensionById(id);
-        String sourceRepositoryURL = extensionDto.getSource_repository_link();
-        model.addAttribute("extension", extensionDto);
-        model.addAttribute("view", "/user/update-repo-source");
-        return "base-layout";
-    }
-
-    @PostMapping("/update/updateURL/{id}")
-    public String updateURL(ExtensionDto extensionDto, @PathVariable Long id) {
-        this.extensionService.updateLink(extensionDto.getSource_repository_link(), id);
-         return "redirect:/user/own";
-    }
 
     private User getCurrentUser() {
 

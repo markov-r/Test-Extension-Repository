@@ -30,8 +30,10 @@ public interface ExtensionService {
     List<ExtensionDto> getAllSortedByPopularity();
     ExtensionDto findExtensionById(Long id);
     void updateLink(String newLink, Long id);
-    List<ExtensionDto> filter(String name, String sortBy);
+    void updateFilename(String filename, Long id);
 
+    List<ExtensionDto> filter(String name, String sortBy);
+    void editExtension(ExtensionDto addExtensionModel);
     List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword);
 
 //    Extension downloadFileAsExtension(Long id);
