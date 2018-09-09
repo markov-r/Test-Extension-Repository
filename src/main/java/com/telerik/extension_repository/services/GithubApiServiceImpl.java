@@ -64,7 +64,6 @@ public class GithubApiServiceImpl implements GithubApiService/*, InitializingBea
                 String pullsCount = gitHubData.getPullsCount();
                 String issuesCount = gitHubData.getIssuesCount();
                 Date lastCommitDate = gitHubData.getLastCommit();
-//                String lastCommit = lastCommitDate.toString();
                 Long id = extensionDto.getId();
                 this.gitHubRepository.update(pullsCount, issuesCount, lastCommitDate, id);
                 System.out.println("### GH DATA UPDATED ### " + extensionDto.getName());

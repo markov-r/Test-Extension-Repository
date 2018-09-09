@@ -14,6 +14,11 @@ import java.util.List;
 public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     @Query(value =
+            "SELECT e.numberOfDownloads FROM Extension e " +
+                    "WHERE e.id = :id")
+    int getNumberOfDownloadsById(@Param("id") Long id);
+
+    @Query(value =
             "SELECT e FROM Extension e " +
                     "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
                     "AND e.name = :name " +

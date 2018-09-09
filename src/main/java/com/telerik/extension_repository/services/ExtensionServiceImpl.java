@@ -218,9 +218,8 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void incrementDownloadsCount(Long id) {
-//    public void incrementDownloadsCount(ExtensionDto extensionDto) {
-        ExtensionDto extensionDto = this.getById(id);
-        this.extensionRepository.incrementDownloadsCount(extensionDto.getNumberOfDownloads() + 1, extensionDto.getId());
+        int numOfDLoadsOld = this.extensionRepository.getNumberOfDownloadsById(id);
+        this.extensionRepository.incrementDownloadsCount(numOfDLoadsOld + 1, id);
     }
 
     @Override
