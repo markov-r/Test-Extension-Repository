@@ -2,10 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="text-center"><h1 class="display-3" th:text="|${type} extension|">Add Extension</h1></div>
+                <div class="text-center"><h1 class="display-3" th:text="|${type} extension|">Edit Extension</h1></div>
                 <br/>
                 <form th:method="post" enctype="multipart/form-data" th:object="${extension}"
-                       th:action="@{/extensions/edit/{id}(id = ${extension.id})}">
+                      th:action="@{/extensions/edit/{id}(id = ${extension.id})}">
                     <div class="form-group row">
                         <label class="form-control-label">Name</label>
                         <input type="text" class="form-control" th:field="*{name}" required/>
@@ -31,28 +31,28 @@
                         </div>
                     </div>
                     <br/>
-                    <!--<div class="form-group row" th:object="${extension}">-->
-                        <!--<form sec:authorize="isAuthenticated()" method="post" th:action="@{/extensions/deleteFile/{id}(id = ${extension.id})}">-->
-                            <!--<button type="submit" class="card-button btn btn-warning" name="Remove Old File" th:value="${extension.getFile()}">Remove Old File</button>-->
-                        <!--</form>-->
-                    <!--</div>-->
-                    <br/>
                     <div class="form-group row">
                         <table>
-                            <tr>
-                                <td>New File to upload:</td>
-                                <td><input type="file" name="file" th:field="*{file}"/></td>
-                            </tr>
-                            <tr>
-                                <td th:object="${extension}">
-                                    <form th:action="@{/extensions/edit/{id}(id = ${extension.id})}" method="post">
-                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <div>
+                                <tr>
+                                    <td>New File to upload:</td>
+                                    <td><input type="file" name="file" th:field="*{file}"/></td>
+                                </tr>
+                                <tr>
+                            </div>
+                            <br/>
+                            <td th:object="${extension}">
+                                <form th:action="@{/extensions/edit/{id}(id = ${extension.id})}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}"/>
                                     <input type="submit" class="btn btn-outline-warning btn-lg btn-block"
-                                           th:text="|${type}|"  th:value="EDIT"/>
+                                           value="Edit"/>
                                     <br/>
-                                    <a class="btn btn-danger" th:href="@{/extensions/all/}">Cancel</a>
-                                    </form>
-                                </td>
+                                    <div>
+                                        <a class="btn btn-danger" th:href="@{/extensions/all/}">Cancel</a>
+                                    </div>
+                                </form>
+                            </td>
                             </tr>
                         </table>
                     </div>
