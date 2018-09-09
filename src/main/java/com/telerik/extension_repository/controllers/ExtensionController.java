@@ -59,7 +59,7 @@ public class ExtensionController {
     public String getAddExtensionPage(Model model) {
         ExtensionDto addExtensionModel = new ExtensionDto();
         model.addAttribute("extension", addExtensionModel);
-        model.addAttribute("view", "/extensions/extension-add_old");
+        model.addAttribute("view", "/extensions/extension-add");
         model.addAttribute("type","Add");
         return "base-layout";
     }
@@ -108,7 +108,7 @@ public class ExtensionController {
     public String edit(Model model, @PathVariable Long id) {
         ExtensionDto extension = extensionService.findExtensionById(id);
         model.addAttribute("type", "Edit");
-        model.addAttribute("view", "/extensions/extension-add_old")
+        model.addAttribute("view", "/extensions/extension-add")
                 .addAttribute("extension", extension);
         return "base-layout";
     }

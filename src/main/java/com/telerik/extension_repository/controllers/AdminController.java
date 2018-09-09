@@ -95,13 +95,15 @@ public class AdminController {
     }
 
     @PostMapping("makeFeatured/{id}")
-    public String makeFeatured(@PathVariable Long id) {
+    public String makeFeatured(@PathVariable Long id, Model model) {
+        model.addAttribute("type", "All");
         this.extensionService.setFeatured(id);
         return "redirect:/admin/extensions";
     }
 
     @PostMapping("removeFeatured/{id}")
-    public String removeFeatured(@PathVariable Long id) {
+    public String removeFeatured(@PathVariable Long id, Model model) {
+        model.addAttribute("type", "All");
         this.extensionService.removeFeatured(id);
         return "redirect:/admin/extensions";
     }
