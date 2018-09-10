@@ -4,7 +4,6 @@ import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.ExtensionDto;
-import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
 import com.telerik.extension_repository.repositories.ExtensionRepository;

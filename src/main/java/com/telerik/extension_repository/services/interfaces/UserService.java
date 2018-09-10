@@ -14,7 +14,7 @@ public interface UserService extends UserDetailsService {
     void register(RegisterUserModel registrationModel);
     List<RegisterUserModel> getAll();
     RegisterUserModel getById(Long id);
-    void  edit(RegisterUserModel registerUserModel);
+    void edit(RegisterUserModel registerUserModel);
     LoggedUser getByUsernameAndPassword(String username, String password);
     LoginUser getByUsername(String username);
     RegisterUserModel getUserByUsername(String username);

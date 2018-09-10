@@ -119,7 +119,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void edit(RegisterUserModel registerUserModel) {
-        this.userRepository.update(registerUserModel.getUsername(), registerUserModel.getEmail(), registerUserModel.getPassword(), registerUserModel.getId());
+        User user = this.modelMapper.map(registerUserModel, User.class);
+        user.setUsername(registerUserModel.getUsername());
+        user.setEmail(registerUserModel.getEmail());
+        user.setPassword(registerUserModel.getPassword());
+       // this.userRepository.update(registerUserModel.getUsername(), registerUserModel.getEmail(), registerUserModel.getPassword(), registerUserModel.getId());
     }
 
     @Override
