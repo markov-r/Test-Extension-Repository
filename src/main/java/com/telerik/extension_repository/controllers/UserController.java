@@ -93,13 +93,11 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public String profilePage(Model model) {
         UserDetails userDetails = UserSession.getCurrentUser();
-//        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
         model.addAttribute("user", userDetails);
         model.addAttribute("view", "user/profile");
         return "base-layout";
     }
 
-    //@ModelAttribute(name = "roles")
     private List<AuthorityModel> getRoles(){
         return this.roleService.getAll();
     }
@@ -107,38 +105,23 @@ public class UserController {
     @GetMapping("user/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     private String getEditUserPage(Model model, @PathVariable Long id){
-        if (!this.userService.exists(id)) {
-            return "redirect:/";
-        }
-       // UserDetails userDetails = UserSession.getCurrentUser();
-        //RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-        RegisterUserModel registerUserModel = this.userService.getById(id);
+//        if (!this.userService.exists(id)) {
+//            return "redirect:/";
+//        }
+        UserDetails registerUserModel = UserSession.getCurrentUser();
+//        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
+//        RegisterUserModel registerUserModel = this.userService.getById(id);
         model.addAttribute("type", "Edit");
-        model.addAttribute("user", registerUserModel);
-        model.addAttribute("view","user/register-user");
+        model.addAttribute("registerUserModel", registerUserModel);
+        model.addAttribute("view","user/edit-user");
         return "base-layout";
     }
 
-
-    private User getCurrentUser() {
-
-        if (!(SecurityContextHolder.getContext().getAuthentication()
-                instanceof AnonymousAuthenticationToken)) {
-            UserDetails principal = (UserDetails) SecurityContextHolder.getContext()
-                    .getAuthentication()
-                    .getPrincipal();
-
-            return this.userRepository.findOneByUsername(principal.getUsername());
-
-        }
-        return null;
-    }
-
-    @Transient
-    private boolean equalsById(Extension extension, ExtensionDto dto) {
-        return Objects.equals(
-                this.userRepository.findAllByExtensionsAndId().contains(extension.getId()),
-                extension.getOwner().getId());
+    @PostMapping("user/edit/{id}")
+    public String  editUser(@PathVariable Long id){
+        RegisterUserModel registerUserModel = this.userService.getById(id);
+        this.userService.edit(registerUserModel);
+        return "redirect:/user/profile";
     }
 
 //    @GetMapping("/user/edit/{id}")
@@ -157,10 +140,19 @@ public class UserController {
 //        return "admin/admin_panel-layout";
 //    }
 
-    @PostMapping("user/edit/{id}")
-    public String  editUser(@PathVariable Long id){
-        RegisterUserModel registerUserModel = this.userService.getById(id);
-        this.userService.edit(registerUserModel);
-        return "redirect:/user/profile";
+
+    private User getCurrentUser() {
+
+        if (!(SecurityContextHolder.getContext().getAuthentication()
+                instanceof AnonymousAuthenticationToken)) {
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            return this.userRepository.findOneByUsername(principal.getUsername());
+
+        }
+        return null;
     }
+
 }

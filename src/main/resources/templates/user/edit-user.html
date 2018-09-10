@@ -1,6 +1,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div class="container">
-    <form method="post" th:object="${user}">
+
+<main>
+<div class="container" th:object="${registerUserModel}">
+    <form method="post" th:object="${registerUserModel}">
         <div class="form-group">
             <label class="form-control-label" for="nameId">Name</label>
             <input type="text" class="form-control" id="nameId" aria-describedby="nameHelp" name="username" th:field="*{username}" readonly/>
@@ -11,7 +13,7 @@
         <div class="form-group">
             <label for="exampleSelect2">ROLES</label>
             <select multiple="true" class="form-control" id="exampleSelect2" name="authorities" th:field="*{authorities}" >
-                <option th:each="role : ${roles}" th:value="${role.authority}" th:text="${role.authority}"  >1</option>
+                <option th:each="role : ${authorities}" th:value="${role}" th:text="${role}"  >1</option>
             </select>
         </div>
 
@@ -21,3 +23,4 @@
     </form>
 
 </div>
+</main>
