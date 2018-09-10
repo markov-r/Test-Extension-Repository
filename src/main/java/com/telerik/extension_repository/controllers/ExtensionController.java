@@ -121,7 +121,7 @@ public class ExtensionController {
     @PostMapping("edit/{id}")
     public String editExtension(@ModelAttribute ExtensionDto extensionModel, @PathVariable Long id) {
         if (!extensionService.exists(id)) {
-            return "redirect:/error/404";
+            return "redirect:/notFound/404";
         }
         extensionModel.setId(id);
         //this.storageService.delete(extensionModel.getFilename());

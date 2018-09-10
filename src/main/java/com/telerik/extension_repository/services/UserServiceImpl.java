@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RegisterUserModel getById(Long id) {
-        User user = this.userRepository.findById(id);
+        Optional<User> user = this.userRepository.findById(String.valueOf(id));
         if (user == null) {
             throw new UserNotFoundException();
         }

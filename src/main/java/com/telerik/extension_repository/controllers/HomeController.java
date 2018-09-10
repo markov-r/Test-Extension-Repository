@@ -94,9 +94,15 @@ public class HomeController {
 
 
 
-//    @GetMapping("/unauthorized")
-//    public String getNoAccessPage(Model model) {
-//        model.addAttribute("view", "no-access");
-//        return "base-layout";
-//    }
+    @GetMapping("/unauthorized")
+    public String getNoAccessPage(Model model) {
+        model.addAttribute("view", "errors/403");
+        return "base-layout";
+    }
+
+    @GetMapping("/notFound/404")
+    public String getNotFound(Model model) {
+        model.addAttribute("view", "errors/404");
+        return "base-layout";
+    }
 }
