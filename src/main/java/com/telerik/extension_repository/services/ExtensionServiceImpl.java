@@ -73,13 +73,24 @@ public class ExtensionServiceImpl implements ExtensionService {
                 .collect(Collectors.toList());
     }
 
+//    @Override
+//    public boolean isOwnExtension(String username) {
+//
+//        return false;
+//    }
+
     // no wo
     @Override
-    public List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword) {
-        return this.extensionRepository.getAllMatchingKeywordOrderByName(keyword)
+    public List<ExtensionDto> getAllMatchingNameOrderByName(String name) {
+        return this.extensionRepository.getAllMatchingNameOrderByName(name)
                 .stream()
                 .map(e -> this.modelMapper.map(e, ExtensionDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isOwnExtension(String username) {
+        return false;
     }
 
     public void updateTags(String newLink, Long id) {

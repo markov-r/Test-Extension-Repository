@@ -14,13 +14,11 @@ public interface AdminService{
 
     void disableUser(Long id);
 
-//    void enableUser(UserView userView);
-//
-//    void disableUser(UserModelView userView);
-
     void editExtension(ExtensionDto extensionStatusView);
 
     void deleteUserById(Long id);
 
     void setFeatured(Long id);
+
+    void activateUser(Long userId);
 }

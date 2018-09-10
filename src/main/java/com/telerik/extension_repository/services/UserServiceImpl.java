@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         } else {
             user.setAuthorities(this.getAuthorities("ROLE_USER"));
         }
+
         this.userRepository.save(user);
     }
 
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RegisterUserModel getById(Long id) {
-        Optional<User> user = this.userRepository.findById(String.valueOf(id));
+        User user = this.userRepository.getUserById(id);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -186,6 +187,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<RegisterUserModel> getAllByUsername(String username) {
+        return this.userRepository.findAllByUsername(username)
+                .stream()
+                .map(user -> this.modelMapper.map(user, RegisterUserModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void deleteUserById(Long id) {
         User user = this.userRepository.findById(id);
         this.userRepository.delete(user);
@@ -216,4 +225,8 @@ public class UserServiceImpl implements UserService {
                 .getAuthority();
     }
 
+    @Override
+    public RegisterUserModel getUserById(Long id) {
+        return this.modelMapper.map(userRepository.getUserById(id), RegisterUserModel.class);
+    }
 }

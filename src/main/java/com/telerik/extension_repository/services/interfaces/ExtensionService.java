@@ -31,10 +31,10 @@ public interface ExtensionService {
     ExtensionDto findExtensionById(Long id);
     void updateLink(String newLink, Long id);
     void updateFilename(String filename, Long id);
-
     List<ExtensionDto> filter(String name, String sortBy);
     void editExtension(ExtensionDto addExtensionModel);
-    List<ExtensionDto> getAllMatchingKeywordOrderByName(String keyword);
+    List<ExtensionDto> getAllMatchingNameOrderByName(String keyword);
+    boolean isOwnExtension(String username);
 
 //    Extension downloadFileAsExtension(Long id);
 

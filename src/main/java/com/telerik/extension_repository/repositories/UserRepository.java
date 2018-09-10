@@ -32,6 +32,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "SELECT u FROM User AS u WHERE u.id = :id")
     User findById(@Param("id") Long id);
 
+    User getUserById(Long id);
+
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE User " +
@@ -44,6 +47,10 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> findAll();
 
 
+    // Search
+    @Query(value = "SELECT u FROM User AS u WHERE u.username =:username")
+    List<User> findAllByUsername(@Param("username") String username);
+
     @Query(value = "SELECT u FROM User AS u " +
             "WHERE u.username LIKE CONCAT('%', :searchWord, '%')")
     Page<User> findAllByUsername(@Param("searchWord") String searchWord, Pageable pageable);
@@ -54,8 +61,23 @@ public interface UserRepository extends JpaRepository<User, String> {
             "SET isEnabled = false WHERE id =:id")
     void disableUser(@Param("id") Long id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE User " +
+            "SET isEnabled = true WHERE id =:id")
+    void activateUser(@Param("id") Long id);
+
     @Query(value = "SELECT u.extensions FROM User AS u")
     Set<Extension> findAllByExtensionsAndId();
+
+
+    @Modifying
+    @Transactional
+    @Query(value =
+            "DELETE FROM User AS u " +
+                    "WHERE u.id = :id")
+    void deleteById(@Param("id") Long id);
+
 
 
 }

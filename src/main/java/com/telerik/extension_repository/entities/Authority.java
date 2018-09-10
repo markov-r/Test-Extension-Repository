@@ -14,7 +14,7 @@ public class Authority implements GrantedAuthority {
 
     private Set<User> users;
 
-    Authority() {
+    public Authority() {
         this.users = new HashSet<>();
     }
 
@@ -34,7 +34,7 @@ public class Authority implements GrantedAuthority {
         return authority;
     }
 
-    @ManyToMany(mappedBy = "authorities", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authorities", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<User> getUsers() {
         return users;
     }

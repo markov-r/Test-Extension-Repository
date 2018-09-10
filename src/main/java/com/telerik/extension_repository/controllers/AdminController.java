@@ -151,10 +151,20 @@ public class AdminController {
     }
 
     @PostMapping("/users/disableUser/{userId}")
-    public String changeUserAccountAccess(@PathVariable Long userId) {
+    public String changeUserAccountAccessToDisable(@PathVariable Long userId) {
         RegisterUserModel user = this.userService.getById(userId);
         if (user != null) {
             this.adminService.disableUser(userId);
+        }
+
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/users/beAbleUser/{userId}")
+    public String changeUserAccountAccesstoBeAble(@PathVariable Long userId) {
+        RegisterUserModel user = this.userService.getById(userId);
+        if (user != null) {
+            this.adminService.activateUser(userId);
         }
 
         return "redirect:/admin/users";
@@ -164,20 +174,10 @@ public class AdminController {
     @ExceptionHandler(UserNotFoundException.class)
     public String catchUserNotFoundException() {
 
-        return "exceptions/user-not-found";
+        return "errors/404";
     }
 
-    //    @PostMapping("pending")
-//    public String approveExtensions(@Valid @ModelAttribute("addExtensionModel") AddExtensionModel addExtensionModel, BindingResult bindingResult){
-//        if(bindingResult.hasErrors()){
-//            return "admin";
-//        }
-//
-//        this.adminService.register(registrationModel);
-//
-//        return "redirect:/users/login";
-//    }
-//
+
     @GetMapping("all")
     public String getAllExtensionPage(Model model) {
         List<ExtensionDto> extensionViews = this.extensionService.getAllExt();

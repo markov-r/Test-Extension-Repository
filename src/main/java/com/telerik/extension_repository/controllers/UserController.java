@@ -104,15 +104,15 @@ public class UserController {
 
     @GetMapping("user/edit/{id}")
     @PreAuthorize("isAuthenticated()")
-    private String getEditUserPage(Model model, @PathVariable Long id){
-//        if (!this.userService.exists(id)) {
-//            return "redirect:/";
-//        }
-        UserDetails registerUserModel = UserSession.getCurrentUser();
-//        RegisterUserModel currUser = this.userService.getUserByUsername(userDetails.getUsername());
-//        RegisterUserModel registerUserModel = this.userService.getById(id);
+    private String getEditUserPage(Model model, RegisterUserModel registerUserModel, Long id){
+        if (this.userService.getUserById(id) == null) {
+            return "redirect:/";
+        }
+        UserDetails userDetails = UserSession.getCurrentUser();
+        RegisterUserModel userById = this.userService.getUserById(id);
+
         model.addAttribute("type", "Edit");
-        model.addAttribute("registerUserModel", registerUserModel);
+        model.addAttribute("registerUserModel", userById);
         model.addAttribute("view","user/edit-user");
         return "base-layout";
     }

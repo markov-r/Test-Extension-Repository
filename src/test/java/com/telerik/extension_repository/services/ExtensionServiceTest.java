@@ -5,6 +5,7 @@ import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.ExtensionDto;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
 import com.telerik.extension_repository.repositories.TagRepository;
@@ -57,13 +58,13 @@ public class ExtensionServiceTest {
 
         public static List<ExtensionDto> createFakeExtensionList(){
             List<ExtensionDto> extensions = Arrays.asList(
-                    new ExtensionDto("First Extension1", "First Extension1 description", "1.009.1", 45, "1.1/link", "1.1.zip", true, Status.PENDING,  new LoggedUser()),
-                    new ExtensionDto("First Extension2", "First Extension2 description", "1.05.1", 5, "1.2/link", "1.2.zip", true, Status.APPROVED,  new LoggedUser()),
-                    new ExtensionDto("Second Extension1", "Second Extension1 description", "8.009.1", 459, "2.1/link", "2.1.zip", false, Status.PENDING,  new LoggedUser()),
-                    new ExtensionDto("Second Extension2", "Second Extension2 description", "9.1", 87, "2.2/link", "2.2.zip", true, Status.PENDING,  new LoggedUser()),
-                    new ExtensionDto("Third Extension1", "Third Extension1 description", "67.1.09", 7776445, "3.1/link", "3.1.zip", false, Status.APPROVED,  new LoggedUser()),
-                    new ExtensionDto("Third Extension2", "Third Extension2 description", "19.89.1", 48888888, "3.2/link", "3.1.zip", false, Status.APPROVED,  new LoggedUser()),
-                    new ExtensionDto("Fourth Extension1", "Fourth Extension1 description", "21.009.1", 641545, "4.1/link", "4.1.zip", true, Status.PENDING,  new LoggedUser())
+                    new ExtensionDto("First Extension1", "First Extension1 description", "1.009.1", 45, "1.1/link", "1.1.zip", true, Status.PENDING,  new RegisterUserModel()),
+                    new ExtensionDto("First Extension2", "First Extension2 description", "1.05.1", 5, "1.2/link", "1.2.zip", true, Status.APPROVED,  new RegisterUserModel()),
+                    new ExtensionDto("Second Extension1", "Second Extension1 description", "8.009.1", 459, "2.1/link", "2.1.zip", false, Status.PENDING,  new RegisterUserModel()),
+                    new ExtensionDto("Second Extension2", "Second Extension2 description", "9.1", 87, "2.2/link", "2.2.zip", true, Status.PENDING,  new RegisterUserModel()),
+                    new ExtensionDto("Third Extension1", "Third Extension1 description", "67.1.09", 7776445, "3.1/link", "3.1.zip", false, Status.APPROVED,  new RegisterUserModel()),
+                    new ExtensionDto("Third Extension2", "Third Extension2 description", "19.89.1", 48888888, "3.2/link", "3.1.zip", false, Status.APPROVED,  new RegisterUserModel()),
+                    new ExtensionDto("Fourth Extension1", "Fourth Extension1 description", "21.009.1", 641545, "4.1/link", "4.1.zip", true, Status.PENDING,  new RegisterUserModel())
             );
             return extensions;
         }

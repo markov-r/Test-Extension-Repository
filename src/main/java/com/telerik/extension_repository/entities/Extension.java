@@ -34,7 +34,7 @@ public class Extension {
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User owner;
 

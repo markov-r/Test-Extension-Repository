@@ -1,7 +1,7 @@
 <form style="margin-outside: 10px" class="form-inline" th:action="@{/public/searchByName}">
     <div class="container align-left ">
         <div class="col-sm-6 col-md-4">
-            <form class="focus-input100">
+            <form class="focus-input100" th:action="@{/public/searchByName}">
                 <div class="form-group">
                     <div class="input-group">
                         <input th:value="${#request.getParameter('name')}" type="search" class="form-control" name="name" placeholder="Keyword..."/>

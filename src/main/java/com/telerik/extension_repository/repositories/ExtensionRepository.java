@@ -52,7 +52,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     List<Extension> getAllApprovedByUploadDateDesc(@Param("name") String name);
 
 
-
     Extension findByName(@Param("name")String name);
 
     @Modifying
@@ -127,7 +126,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.status = :approved")
     List<Extension> findAllByStatusApproved(@Param("approved") Status pending);
 
-
     List<Extension> getAllByTags(String tag);
 
 
@@ -136,8 +134,19 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
                     "AND e.name = :name " +
                     "ORDER BY e.name")
-    List<Extension> getAllMatchingKeywordOrderByName(@Param("name") String name);
-// TODO: SHOULD BE "LIKE CONCAT('%', ?1, '%') but is somehow cached and doesn't work
+    List<Extension> getAllMatchingNameOrderByName(@Param("name") String name);
+    // TODO: SHOULD BE "LIKE CONCAT('%', ?1, '%') but is somehow cached and doesn't work
+
+
+//    @Query(value =
+//            "SELECT e FROM Extension e " +
+//                    "WHERE e.status = com.telerik.extension_repository.entities.enums.Status.APPROVED " +
+//                    "AND e.name LIKE CONCAT('%', :searchWord, '%') " +
+//                    "ORDER BY e.name")
+//    List<Extension> getAllMatchingKeywordOrderByName(@Param("name") String name);
+
+
+
 
 
 

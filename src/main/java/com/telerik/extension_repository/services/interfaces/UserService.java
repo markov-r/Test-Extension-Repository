@@ -26,7 +26,8 @@ public interface UserService extends UserDetailsService {
     User getCurrentUser();
     boolean exists(Long id);
     List<RegisterUserModel> getAllNonAdminUsers();
+    List<RegisterUserModel> getAllByUsername(String username);
     boolean isExistUsername(String username);
     User registerByUsernameAndPassword(String username, String password);
-
+    RegisterUserModel getUserById(Long id);
 }

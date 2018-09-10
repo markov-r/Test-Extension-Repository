@@ -4,6 +4,7 @@ import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +29,7 @@ public class ExtensionDto {
 
     private MultipartFile file;
 
-    private LoggedUser owner;
+    private RegisterUserModel owner;
 
     private Status status;
 
@@ -50,7 +51,7 @@ public class ExtensionDto {
                         String filename,
                         boolean isFeatured,
                         Status status,
-                        LoggedUser author) {
+                        RegisterUserModel author) {
 
         this.name = name;
         this.description = description;
@@ -66,7 +67,7 @@ public class ExtensionDto {
     public ExtensionDto(String name,
                         String description,
                         Set<TagView> tags,
-                        LoggedUser owner,
+                        RegisterUserModel owner,
                         Status status,
                         String version,
                         String source_repository_link,
@@ -84,6 +85,7 @@ public class ExtensionDto {
 
     public ExtensionDto() {
     }
+
 
     public String getVersion() {
         return version;
@@ -157,11 +159,11 @@ public class ExtensionDto {
         this.tags = tags;
     }
 
-    public LoggedUser getOwner() {
+    public RegisterUserModel getOwner() {
         return owner;
     }
 
-    public void setOwner(LoggedUser owner) {
+    public void setOwner(RegisterUserModel owner) {
         this.owner = owner;
     }
 

@@ -36,9 +36,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class UserServiceTest {
 
-    public static final int EXPECTED_LIST_SIZE = 2;
-
-    public static final int EXPECTED_LIST_SIZE_ZERO = 0;
 
     private ExtensionRepository mockExtensionRepository = mock(ExtensionRepository.class);
     private AuthorityRepository mockAuthorityRepository = mock(AuthorityRepository.class);
@@ -158,11 +155,59 @@ public class UserServiceTest {
 
         when(mockUserService.getAll()).thenReturn(registerUserModels);
 
-        //Act
-        List<RegisterUserModel> actualUserList = userService.getAll();
 
         // Assert
         Assert.assertNotEquals(registerUserModels.size(), 5);
+    }
+
+    @Test
+    public void getAllByUsername_shouldReturnIncorrectNumberOfEntities() {
+        // Arrange
+        List<RegisterUserModel> registerUserModels = Arrays.asList(
+                new RegisterUserModel("User1", "user1@gmail.com", true),
+                new RegisterUserModel("User2", "user2@gmail.com", false),
+                new RegisterUserModel("User3", "user3@gmail.com", true)
+        );
+
+        when(mockUserService.getAll()).thenReturn(registerUserModels);
+
+
+        // Assert
+        Assert.assertNotEquals(registerUserModels.size(), 5);
+    }
+
+    @Test
+    public void getAllUsersByUsername_shouldReturnCorrectNumberOfModels() {
+
+        String name = "User1";
+        // Arrange
+        List<RegisterUserModel> registerUserModels = Arrays.asList(
+                new RegisterUserModel("User1", "user1@gmail.com", true),
+                new RegisterUserModel("User2", "user2@gmail.com", false),
+                new RegisterUserModel("User3", "user3@gmail.com", true)
+        );
+
+        when(mockUserService.getAllByUsername(name)).thenReturn(registerUserModels);
+
+        // Assert
+        Assert.assertEquals(registerUserModels.size(), 1);
+    }
+
+    @Test
+    public void getAllUsersByUsername_shouldReturnIncorrectNumberOfModels() {
+
+        String name = "Oksana";
+        // Arrange
+        List<RegisterUserModel> registerUserModels = Arrays.asList(
+                new RegisterUserModel("User1", "user1@gmail.com", true),
+                new RegisterUserModel("User2", "user2@gmail.com", false),
+                new RegisterUserModel("User3", "user3@gmail.com", true)
+        );
+
+        when(mockUserService.getAllByUsername(name)).thenReturn(registerUserModels);
+
+        // Assert
+        Assert.assertNotEquals(registerUserModels.size(), 1);
     }
 
     @Test

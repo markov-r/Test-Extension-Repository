@@ -2,8 +2,10 @@ package com.telerik.extension_repository.controllers;
 
 import com.telerik.extension_repository.entities.Tag;
 import com.telerik.extension_repository.models.ExtensionDto;
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.repositories.TagRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
+import com.telerik.extension_repository.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +20,12 @@ public class SearchController {
     @Autowired
     private ExtensionService extensionService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/public/searchByName")
     public String extensionsWithName(Model model, @RequestParam(value="name", required = false) String name){
-        List<ExtensionDto> extensions = this.extensionService.getAllMatchingKeywordOrderByName(name);
+        List<ExtensionDto> extensions = this.extensionService.getAllMatchingNameOrderByName(name);
 
         if(extensions == null){
             return "redirect:/extensions/all";
@@ -30,6 +35,21 @@ public class SearchController {
         model.addAttribute("extensions", extensions);
 
         return "base-layout";
+    }
+
+    @GetMapping("/public/searchUserByName")
+    public String usersWithName(Model model, @RequestParam(value="name", required = false) String name){
+        List<RegisterUserModel> userModels = this.userService.getAllByUsername(name);
+
+        if(userModels == null){
+            return "redirect:/admin/all-users";
+        }
+
+        model.addAttribute("view", "/admin/all-users");
+        model.addAttribute("users", userModels);
+
+        return "base-layout";
+
     }
 
     @GetMapping("/public/search")

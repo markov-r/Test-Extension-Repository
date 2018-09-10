@@ -54,17 +54,6 @@ public class HomeController {
         return "base-layout";
     }
 
-
-//    //get Extension details page WO
-//    @GetMapping("details/{id}")
-//    public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
-//        ExtensionDto extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
-//        model.addAttribute("extension", extensionDetailsView);
-//        model.addAttribute("view", "/extensions/details");
-//        return "base-layout";
-//    }
-//
-
     @GetMapping("public/download/{id}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
@@ -83,7 +72,7 @@ public class HomeController {
 
     @PostMapping("search/{keyword}")
     public String search(@PathVariable("keyword") String keyword, Model model) {
-        List<ExtensionDto> extensionViews = this.extensionService.getAllMatchingKeywordOrderByName(keyword);
+        List<ExtensionDto> extensionViews = this.extensionService.getAllMatchingNameOrderByName(keyword);
         if(extensionViews == null){
             return "redirect:/extensions/all";
         }
