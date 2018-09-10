@@ -40,7 +40,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "UPDATE User " +
             "SET username = :username, email = :email, password =:password WHERE id = :id")
     void update(@Param("username") String username, @Param("email") String email,
-                @Param("password") String password, @Param("id") Long id);
+                @Param("password") String password, @Param("id") Long id);// TODO no wo
 
     // Admin
     @Query(value = "SELECT u FROM User AS u")

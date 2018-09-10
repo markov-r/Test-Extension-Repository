@@ -36,7 +36,6 @@ public class ExtensionServiceImpl implements ExtensionService {
     private TagRepository tagRepository;
     @Autowired
     private GitHubRepository gitHubRepository;
-//    private FileSystemStorageService fileStorageService;
 
     @Autowired
     public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository,          //TODO - remove @Lazy
@@ -72,12 +71,6 @@ public class ExtensionServiceImpl implements ExtensionService {
                 .map(e -> this.modelMapper.map(e, ExtensionDto.class))
                 .collect(Collectors.toList());
     }
-
-//    @Override
-//    public boolean isOwnExtension(String username) {
-//
-//        return false;
-//    }
 
     // no wo
     @Override

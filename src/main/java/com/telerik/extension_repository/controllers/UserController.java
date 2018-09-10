@@ -119,22 +119,6 @@ public class UserController {
         return "redirect:/user/profile";
     }
 
-//    @GetMapping("/user/edit/{id}")
-//    @PreAuthorize("isAuthenticated()")
-//    public String edit(Model model, @PathVariable Long id,  @RequestParam(defaultValue = "false") boolean checkbox ) {
-//        if (!this.userService.exists(id)) {
-//            this.notificationService.addErrorMessage(Messages.NOT_FOUND);
-//            return "redirect:/";
-//        }
-//
-//        RegisterUserModel user = this.userService.getById(id);
-////        boolean isAdmin = user.isAdmin();
-////        model.addAttribute("isAdmin", isAdmin);
-//        model.addAttribute("view", "user/edit")
-//                .addAttribute("user", user);
-//        return "admin/admin_panel-layout";
-//    }
-
 
     private User getCurrentUser() {
 

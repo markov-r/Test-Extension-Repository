@@ -70,14 +70,6 @@ public class AdminController {
         return "redirect:/admin/pending";
     }
 
-//    @GetMapping("pending/approve/{id}")
-//    public String getApproveExtensionPage(Model model,@PathVariable Long id){
-//        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
-//        model.addAttribute("type","Approve");
-//        model.addAttribute("view","/admin/admin-extensions-modifiable");
-//        model.addAttribute("extension", extensionStatusView);
-//        return "base-layout";
-//    }
 
     @GetMapping("pending/approve/{id}")
     public String getApproveExtensionPage(Model model, @PathVariable Long id) {
@@ -107,16 +99,6 @@ public class AdminController {
         this.extensionService.removeFeatured(id);
         return "redirect:/admin/extensions";
     }
-
-// WO
-//    @GetMapping("pending/delete/{id}")
-//    public String getDeletePartPage(Model model, @PathVariable Long id){
-//        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
-//        model.addAttribute("type","Delete");
-//        model.addAttribute("view","/admin/admin-extensions-modifiable");
-//        model.addAttribute("extension",extensionStatusView);
-//        return "base-layout";
-//    }
 
     @PostMapping("pending/delete/{id}")
     public String deleteExtension(@PathVariable Long id) {

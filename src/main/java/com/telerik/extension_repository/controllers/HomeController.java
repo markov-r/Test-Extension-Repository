@@ -25,13 +25,6 @@ public class HomeController {
     @Autowired
     private StorageService storageService;
 
-
-//    @GetMapping("/")
-//    public String getHomePage(Model model){
-//        model.addAttribute("view","/extensions/extensions-table");
-//        return "base-layout";
-//    }
-
     // WO
     @GetMapping("/")
     public String getCarouselPage(Model model) {

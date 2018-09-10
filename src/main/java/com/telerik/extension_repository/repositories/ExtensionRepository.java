@@ -145,11 +145,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 //                    "ORDER BY e.name")
 //    List<Extension> getAllMatchingKeywordOrderByName(@Param("name") String name);
 
-
-
-
-
-
     Extension findFirstByName(String name);
 
     @Modifying

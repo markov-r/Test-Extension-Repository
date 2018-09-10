@@ -36,6 +36,4 @@ public interface ExtensionService {
     List<ExtensionDto> getAllMatchingNameOrderByName(String keyword);
     boolean isOwnExtension(String username);
 
-//    Extension downloadFileAsExtension(Long id);
-
 }
